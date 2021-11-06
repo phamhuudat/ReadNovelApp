@@ -7,8 +7,8 @@ namespace NovelApp.Models.BookGwModels
     public class RequestParameter
     {
         public string Name { get; set; }
-        public string Value { get; set; }
-        public RequestParameter(string name, string value)
+        public object Value { get; set; }
+        public RequestParameter(string name, object value)
         {
             this.Name = name;
             this.Value = value;

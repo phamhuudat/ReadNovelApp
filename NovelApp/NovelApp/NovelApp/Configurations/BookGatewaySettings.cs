@@ -8,9 +8,9 @@ namespace NovelApp.Configurations
     {
         public static BookGatewaySettings Instance { get; } = new BookGatewaySettings();
 
-        public string GatewayBase { get; } = "http://book2.somee.com";
+        public string GatewayBase { get; } = AppSettings.BookGatewayUrl;
         public Controller Controllers { get; } = new Controller();
-        public string PathPrefix { get; } = "/api/book/";
+        public string PathPrefix { get; } = "/api/";
         public class Controller
         {
             public string Comment { get; } = "Comments";

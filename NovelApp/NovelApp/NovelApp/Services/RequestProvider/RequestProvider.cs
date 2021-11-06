@@ -1,8 +1,10 @@
-﻿using NovelApp.Configurations;
+﻿using Newtonsoft.Json;
+using NovelApp.Configurations;
 using NovelApp.Models.BookGwModels;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,7 +32,7 @@ namespace NovelApp.Services.RequestProvider
             var request = new RestRequest($"{_pathPrefix}{uri}", method);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             if (!string.IsNullOrWhiteSpace(token))
-                request.AddHeader("Authorization", token);
+                request.AddParameter("token", token);
             request.JsonSerializer = new JsonNetSerializer();
             return request;
         }
@@ -39,14 +41,26 @@ namespace NovelApp.Services.RequestProvider
             throw new NotImplementedException();
         }
 
-        public Task<ResponseObject<TData>> Get<TData>(string uri, IReadOnlyCollection<RequestParameter> parameters)
+        public async Task<ResponseObject<TData>> Get<TData>(string uri, IReadOnlyCollection<RequestParameter> parameters)
         {
-            return null;
+            var restRequest = CreateRestRequest(uri, Method.GET, _token);
+            if (parameters != null && parameters.Any())
+                foreach (var param in parameters)
+                    restRequest.AddParameter(param.Name, param.Value);
+            var response = await _restClient.ExecuteGetAsync(restRequest);
+            var result = response.IsSuccessful ? JsonConvert.DeserializeObject<ResponseObject<TData>>(response.Content) : default;
+            return result;
         }
 
-        public Task<ResponseObject<TData>> Post<TData>(string uri, IReadOnlyCollection<RequestParameter> parameters)
+        public async Task<ResponseObject<TData>> Post<TData>(string uri, IReadOnlyCollection<RequestParameter> parameters)
         {
-            throw new NotImplementedException();
+            var restRequest = CreateRestRequest(uri, Method.POST, _token);
+            if (parameters != null && parameters.Any())
+                foreach (var param in parameters)
+                    restRequest.AddParameter(param.Name, param.Value);
+            var response = await _restClient.ExecutePostAsync(restRequest);
+            var result = response.IsSuccessful ? JsonConvert.DeserializeObject<ResponseObject<TData>>(response.Content) : default;
+            return result;
         }
 
         public Task<ResponseObject<TData>> Put<TData>(string uri, IReadOnlyCollection<RequestParameter> parameters)

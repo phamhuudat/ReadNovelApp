@@ -1,4 +1,6 @@
 ﻿
+using NovelApp.Services.Book;
+using NovelApp.Services.RequestProvider;
 using Prism;
 using Prism.Ioc;
 using System;
@@ -13,11 +15,16 @@ namespace NovelApp
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            #region RegisterService SingleTon
+            containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
+            containerRegistry.RegisterSingleton<IBookService, BookService>();
+            #endregion
         }
         protected override async void OnInitialized()
         {
             InitializeComponent();
             await NavigationService.NavigateAsync("NavigationPage/MainPage");
+           
         }
         public App()
         {

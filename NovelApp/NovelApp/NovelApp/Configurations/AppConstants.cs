@@ -10,11 +10,11 @@ namespace NovelApp.Configurations
         
         public class UrlConstants_Development
         {
-            internal const string BookGatewayUrl = "https://book2.somee.com/api/";
+            internal const string BookGatewayUrl = "http://book2.somee.com";
         }
         public class UrlConstants_Production
         {
-            internal const string BookGatewayUrl = "https://book2.somee.com/api/";
+            internal const string BookGatewayUrl = "http://book2.somee.com";
         }
     }
 }
