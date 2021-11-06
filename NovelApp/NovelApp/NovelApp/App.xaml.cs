@@ -1,27 +1,29 @@
-﻿using System;
+﻿
+using Prism;
+using Prism.Ioc;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace NovelApp
 {
-    public partial class App : Application
+    public partial class App
     {
-        public App()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage>();
+        }
+        protected override async void OnInitialized()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
-
-        protected override void OnStart()
+        public App()
         {
-        }
 
-        protected override void OnSleep()
-        {
         }
-
-        protected override void OnResume()
+        public App(IPlatformInitializer platformInitializer) : base(platformInitializer)
         {
         }
     }
