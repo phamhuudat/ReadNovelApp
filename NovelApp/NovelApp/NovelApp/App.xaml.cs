@@ -1,6 +1,8 @@
 ﻿
 using NovelApp.Services.Book;
 using NovelApp.Services.RequestProvider;
+using NovelApp.ViewModels;
+using NovelApp.Views;
 using Prism;
 using Prism.Ioc;
 using System;
@@ -15,6 +17,7 @@ namespace NovelApp
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<HomePage,HomePageViewModel>();
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();
@@ -23,7 +26,9 @@ namespace NovelApp
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTMwNTY3QDMxMzkyZTMzMmUzMEx2R2dSSFRkdVRDMGFrU1h3d1d3L04ycEJhS2IwdThOY2hIQnNkemwyRXc9");
+            App.Current.UserAppTheme = OSAppTheme.Dark;
+            await NavigationService.NavigateAsync("NavigationPage/HomePage");
            
         }
         public App()

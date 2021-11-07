@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<prism:PrismApplication xmlns:prism="http://prismlibrary.com"
-                        xmlns="http://xamarin.com/schemas/2014/forms"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                        x:Class="NovelApp.App">
+<prism:PrismApplication
+    x:Class="NovelApp.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
-
+        <Color x:Key="Background_Dark">#131219</Color>
+        <Color x:Key="Background_Light">#ffffff</Color>
     </Application.Resources>
 </prism:PrismApplication>

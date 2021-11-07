@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using NovelApp.Configurations;
 
 namespace NovelApp.Models.BookGwModels
 {
@@ -16,5 +18,19 @@ namespace NovelApp.Models.BookGwModels
         public string LastChapter { get; set; }
         public DateTime UpdTime { get; set; }
         public List<string> Tags { get; set; }
+        public string PathImage => AppSettings.BookGatewayUrl + "/" + Image;
+        public string TagString
+        {
+            get
+            {
+                string tags="";
+                if(Tags!=null && Tags.Any())
+                {
+                    foreach(var tag in Tags)
+                    tags += $"#{tag}";
+                }
+                return tags;
+            }
+        }
     }
 }

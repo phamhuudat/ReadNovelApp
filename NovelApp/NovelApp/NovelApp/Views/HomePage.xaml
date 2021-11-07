@@ -1,15 +1,206 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NovelApp.Views.HomePage"
-             NavigationPage.HasNavigationBar="False">
+<ContentPage
+    x:Class="NovelApp.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:helpers="clr-namespace:NovelApp.Helpers"
+    xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    BackgroundColor="Black"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid RowDefinitions="40,*">
-            <StackLayout Grid.Row="0"
-                         Orientation="Vertical">
-                <SearchBar />
-            </StackLayout>
+        <Grid
+            Margin="20,10,20,0"
+            ColumnDefinitions="*,100"
+            RowDefinitions="55,*">
+            <!--  header  -->
+            <Frame
+                Grid.Row="0"
+                Grid.Column="0"
+                Padding="0"
+                BorderColor="gray"
+                CornerRadius="10"
+                HorizontalOptions="FillAndExpand">
+                <SearchBar
+                    BackgroundColor="#1b1b25"
+                    CancelButtonColor="Gray"
+                    HorizontalOptions="Fill"
+                    TextColor="White" />
+            </Frame>
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="{helpers:Translate CANCEL}"
+                TextColor="#253583"
+                VerticalOptions="Center" />
+            <!--  Tab Book  -->
+            <tabView:SfTabView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                TabHeight="70">
+                <tabView:SfTabView.SelectionIndicatorSettings>
+                    <tabView:SelectionIndicatorSettings
+                        Position="Bottom"
+                        StrokeThickness="4"
+                        Color="White" />
+                </tabView:SfTabView.SelectionIndicatorSettings>
+                <tabView:SfTabItem
+                    Title="Novel"
+                    SelectionColor="White"
+                    TitleFontAttributes="Bold"
+                    TitleFontColor="Gray"
+                    TitleFontSize="20">
+                    <tabView:SfTabItem.Content>
+                        <Grid
+                            x:Name="NovelGrid"
+                            Padding="0,20,0,0"
+                            ColumnDefinitions="3*,*,*"
+                            RowDefinitions="Auto,*"
+                            RowSpacing="25">
+                            <!--  Number Novel  -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span
+                                            FontSize="22"
+                                            Text="Novel"
+                                            TextColor="White" />
+                                        <Span
+                                            FontSize="20"
+                                            Text=" 174"
+                                            TextColor="Gray" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="End"
+                                    Text="Filter"
+                                    TextColor="Gray" />
+                                <forms:SvgCachedImage
+                                    Aspect="Fill"
+                                    HeightRequest="15"
+                                    Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="15" />
+                            </StackLayout>
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Orientation="Horizontal">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="End"
+                                    Text="Popular"
+                                    TextColor="#253583" />
+                                <forms:SvgCachedImage
+                                    Aspect="Fill"
+                                    HeightRequest="15"
+                                    Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="15" />
+                            </StackLayout>
+                            <!--  Listbook  -->
+                            <sfListView:SfListView
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                ItemSize="142"
+                                ItemsSource="{Binding ListNovel}">
+                                <sfListView:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Margin="0,0,0,30" ColumnDefinitions="85,*">
+                                                <Frame Padding="0" CornerRadius="6">
+                                                    <ffimageloading:CachedImage
+                                                        Grid.Column="0"
+                                                        Aspect="AspectFill"
+                                                        BackgroundColor="Blue"
+                                                        Source="{Binding PathImage}" />
+                                                </Frame>
+                                                <StackLayout
+                                                    Grid.Column="1"
+                                                    Orientation="Vertical"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        FontSize="22"
+                                                        Text="{Binding Name}"
+                                                        TextColor="White" />
+                                                    <Label
+                                                        FontSize="18"
+                                                        Text="{Binding Author}"
+                                                        TextColor="Gray" />
+                                                    <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
+                                                        <ffimageloading:CachedImage
+                                                            Aspect="AspectFit"
+                                                            Scale="1.4"
+                                                            Source="resource://NovelApp.Resources.icons.ic_views.png" />
+                                                        <Label
+                                                            Margin="0,0,20,0"
+                                                            Text="{Binding Views, StringFormat='{0} Chs'}"
+                                                            TextColor="White" />
+                                                        <ffimageloading:CachedImage
+                                                            Aspect="AspectFit"
+                                                            Scale="1.4"
+                                                            Source="resource://NovelApp.Resources.icons.ic_plus.png" />
+                                                        <Label Text="ADD" TextColor="#253583" />
+                                                    </StackLayout>
 
+                                                </StackLayout>
+
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </sfListView:SfListView.ItemTemplate>
+                            </sfListView:SfListView>
+
+                        </Grid>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="Fan-fic"
+                    SelectionColor="White"
+                    TitleFontAttributes="Bold"
+                    TitleFontColor="Gray"
+                    TitleFontSize="20">
+                    <tabView:SfTabItem.Content>
+                        <Grid x:Name="FavoritesGrid" BackgroundColor="Green" />
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="Comic"
+                    SelectionColor="White"
+                    TitleFontAttributes="Bold"
+                    TitleFontColor="Gray"
+                    TitleFontSize="20">
+                    <tabView:SfTabItem.Content>
+                        <Grid x:Name="ContactsGrid" BackgroundColor="Blue" />
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="eBook"
+                    SelectionColor="White"
+                    TitleFontAttributes="Bold"
+                    TitleFontColor="Gray"
+                    TitleFontSize="20">
+                    <tabView:SfTabItem.Content>
+                        <Grid x:Name="EbookGrid" BackgroundColor="Yellow" />
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+            </tabView:SfTabView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
