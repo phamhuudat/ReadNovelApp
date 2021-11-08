@@ -28,6 +28,9 @@
     <EmbeddedResource Include="Resources\icons\ic_views.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Views\BookDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

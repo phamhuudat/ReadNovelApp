@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
 
@@ -28,13 +29,13 @@ namespace NovelApp.ViewModels
             SearchCommand = new DelegateCommand<string>(SearchNovel);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
         }
-        private void ItemTapped(object obj)
+        private async void ItemTapped(object obj)
         {
             var listView = obj as Syncfusion.ListView.XForms.SfListView;
             if (listView == null) return;
-            var item = listView.SelectedItem;
+            var item = listView.SelectedItem as Novel;
             listView.SelectedItem = null;
-
+            await NavigationService.NavigateAsync($"{nameof(BookDetailPage)}?ID={item.ID}");
         }
         private async void SearchNovel(string name)
         {

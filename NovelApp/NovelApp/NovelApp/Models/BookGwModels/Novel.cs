@@ -16,7 +16,7 @@ namespace NovelApp.Models.BookGwModels
         public string Genre { get; set; }
         public string Description { get; set; }
         public string LastChapter { get; set; }
-        public DateTime UpdTime { get; set; }
+        public DateTime UpdeTime { get; set; }
         public List<string> Tags { get; set; }
         public string PathImage => AppSettings.BookGatewayUrl + "/" + Image;
         public string TagString
