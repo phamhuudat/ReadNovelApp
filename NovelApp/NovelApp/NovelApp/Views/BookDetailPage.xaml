@@ -1,120 +1,245 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:forms1="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+<ContentPage
     x:Class="NovelApp.Views.BookDetailPage"
-             BackgroundColor="#312624">
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    BackgroundColor="#312624">
     <ContentPage.Content>
-        <Grid RowDefinitions="*,85"
-              ColumnSpacing="0"
-              ColumnDefinitions="*,*,*">
-            <ScrollView Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3">
+        <Grid
+            ColumnDefinitions="*,*,*"
+            ColumnSpacing="0"
+            RowDefinitions="*,85">
+            <ScrollView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3">
                 <StackLayout>
-                <Grid ColumnDefinitions="130,*"
-                      Margin="20,0,20,0"
-                      ColumnSpacing="20"
-                      RowDefinitions="180,*">
-                        <Frame
-                            Padding="0"
-                            CornerRadius="6">
-                            <forms:CachedImage
-                                Source="{Binding Novel.PathImage}" />
+                    <Grid
+                        Margin="20,0,20,0"
+                        ColumnDefinitions="130,*"
+                        ColumnSpacing="20"
+                        RowDefinitions="180,*">
+                        <Frame Padding="0" CornerRadius="6">
+                            <forms:CachedImage Aspect="AspectFill" Source="{Binding Novel.PathImage}" />
                         </Frame>
-                        <StackLayout Grid.Column="1"
-                                     Spacing="7"
-                                     Grid.Row="0">
-                            <Label Text="{Binding Novel.Name}"
-                                   TextColor="White"
-                                   FontAttributes="Bold"
-                                   FontSize="30"/>
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Spacing="7">
                             <Label
+                                FontAttributes="Bold"
+                                FontSize="30"
+                                Text="{Binding Novel.Name}"
+                                TextColor="White" />
+                            <Label
+                                FontSize="18"
                                 Text="{Binding Novel.Author}"
-                                TextColor="White"
-                                FontSize="18"/>
+                                TextColor="White" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
+                                    FontSize="18"
                                     Text="{Binding Novel.Genre}"
-                                    TextColor="White"
-                                    FontSize="18" />
+                                    TextColor="White" />
+                                <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
                             </StackLayout>
 
                         </StackLayout>
-                 </Grid>
+                    </Grid>
                     <Frame
                         Margin="0,30,0,0"
-                        HorizontalOptions="Fill"
-                        VerticalOptions="FillAndExpand"
-                        CornerRadius="20"
                         Padding="20"
-                        BackgroundColor="#121116">
-                        <StackLayout
-                            Spacing="20">
+                        BackgroundColor="#121116"
+                        CornerRadius="20"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="FillAndExpand">
+                        <StackLayout Spacing="20">
+                            <!--  View Golden stick and View and Honors  -->
                             <Frame
                                 BackgroundColor="#1b1b25"
-                                HeightRequest="85"
-                                CornerRadius="20">
+                                CornerRadius="20"
+                                HeightRequest="85">
+                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,*">
+                                    <!--  Golden stick  -->
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal">
+                                        <Label
+                                            FontSize="18"
+                                            Text="Golden Tickets"
+                                            TextColor="Gray" />
+                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                    </StackLayout>
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="30"
+                                        HorizontalOptions="Center"
+                                        Text="1.7K"
+                                        TextColor="White"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <!--  View  -->
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="Views"
+                                        TextColor="Gray" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="30"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Novel.Views}"
+                                        TextColor="White"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <!--  Honors  -->
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Grid.Column="2"
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal">
+                                        <Label
+                                            FontSize="18"
+                                            Text="Honors"
+                                            TextColor="Gray" />
+                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                    </StackLayout>
+
+                                    <forms:CachedImage
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        Aspect="AspectFill"
+                                        HeightRequest="60"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Source="resource://NovelApp.Resources.icons.ic_no1.png"
+                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="60" />
+                                </Grid>
                             </Frame>
-                            <Label Text="Synopsis"
-                                   TextColor="White"
-                                   FontSize="20"/>
                             <Label
+                                FontSize="22"
+                                Text="Synopsis"
+                                TextColor="White" />
+                            <Label
+                                FontSize="18"
+                                MaxLines="7"
                                 Text="{Binding Novel.Description}"
-                                TextColor="Gray"
-                                FontSize="18" />
+                                TextColor="Gray">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsExpand}"
+                                        TargetType="Label"
+                                        Value="true">
+                                        <Setter Property="MaxLines" Value="100" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ExpandCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
                             <Label
+                                FontSize="22"
                                 Text="Contents"
-                                TextColor="White"
-                                FontSize="20" />
-                            <Label
-                                Text="{Binding Novel.LastChapter}"
-                                TextColor="Gray"
-                                FontSize="18" />
-                            
-                            <Label
-                                Text="Tags"
-                                TextColor="White"
-                                FontSize="20" />
+                                TextColor="White" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontSize="18"
+                                    Text="{Binding Novel.LastChapter}"
+                                    TextColor="Gray" />
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding Novel.UpdatedTimeNumber, StringFormat='Updated {0}h'}"
+                                    TextColor="Gray" />
+                                <ffimageloading:SvgCachedImage
+                                    HeightRequest="10"
+                                    HorizontalOptions="End"
+                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontSize="22"
+                                    Text="Tags"
+                                    TextColor="White" />
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding Novel.CountTag, StringFormat='{0} tags'}"
+                                    TextColor="Gray" />
+                                <ffimageloading:SvgCachedImage
+                                    HeightRequest="10"
+                                    HorizontalOptions="End"
+                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                            </StackLayout>
+                            <buttons:SfChipGroup
+                                ChipBackgroundColor="#6e2d46"
+                                ChipTextColor="#f0578e"
+                                ChipTextSize="16"
+                                ItemsSource="{Binding Novel.ShowTags}"
+                                Type="Action">
+                                <buttons:SfChipGroup.ChipLayout>
+                                    <FlexLayout
+                                        AlignContent="Start"
+                                        AlignItems="Start"
+                                        Direction="Row"
+                                        HorizontalOptions="Start"
+                                        JustifyContent="Start"
+                                        VerticalOptions="Center"
+                                        Wrap="Wrap" />
+                                </buttons:SfChipGroup.ChipLayout>
+                            </buttons:SfChipGroup>
+
                         </StackLayout>
                     </Frame>
                 </StackLayout>
             </ScrollView>
-            <!--Toolbar-->
-            <!--Download-->
-            <StackLayout Grid.Row="1"
-                BackgroundColor="#1B1B25"
-                Grid.Column="0">
-                <Label Text="DOWNLOAD"
-                       HorizontalOptions="Center"
-                    FontSize="15"
-                    VerticalOptions="CenterAndExpand"
-                       TextColor="Gray"/>
-            </StackLayout>
-            <!--Read Now-->
+            <!--  Toolbar  -->
+            <!--  Download  -->
             <StackLayout
                 Grid.Row="1"
-                BackgroundColor="#6a8efe"
-                Grid.Column="1">
+                Grid.Column="0"
+                BackgroundColor="#1B1B25">
                 <Label
                     FontSize="15"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand"
+                    Text="DOWNLOAD"
+                    TextColor="Gray"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+            <!--  Read Now  -->
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="#6a8efe">
+                <Label
+                    FontSize="15"
+                    HorizontalOptions="Center"
                     Text="READ NOW"
-                    TextColor="White" />
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" />
             </StackLayout>
-            <!--Add To-->
+            <!--  Add To  -->
             <StackLayout
                 Grid.Row="1"
-                BackgroundColor="#1B1B25"
-                Grid.Column="2">
+                Grid.Column="2"
+                BackgroundColor="#1B1B25">
                 <Label
                     FontSize="15"
-                    Text="ADD TO"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand"
-                    TextColor="Gray" />
+                    Text="ADD TO"
+                    TextColor="Gray"
+                    VerticalOptions="CenterAndExpand" />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

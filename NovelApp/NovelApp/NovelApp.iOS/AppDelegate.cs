@@ -24,8 +24,9 @@ namespace NovelApp.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfChipGroupRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }

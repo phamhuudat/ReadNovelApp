@@ -16,9 +16,42 @@ namespace NovelApp.Models.BookGwModels
         public string Genre { get; set; }
         public string Description { get; set; }
         public string LastChapter { get; set; }
-        public DateTime UpdeTime { get; set; }
+        public DateTime UpdTime { get; set; }
         public List<string> Tags { get; set; }
         public string PathImage => AppSettings.BookGatewayUrl + "/" + Image;
+        public List<string> ShowTags
+        {
+            get
+            {
+                var list = new List<string>();
+                if (Tags != null && Tags.Any())
+                {
+                    foreach (var tag in Tags)
+                    {
+                        list.Add($"#{tag} ♡");
+                    }
+                }
+                return list;
+            }
+        }
+        public int CountTag {
+            get
+            {
+                if(Tags!=null && Tags.Any())
+                {
+                    return Tags.Count;
+                }
+                return 0;
+            }
+        }
+        public int UpdatedTimeNumber
+        {
+            get
+            {
+                var deltaTime = DateTime.Now - UpdTime;
+                return deltaTime.Hours;
+            }
+        }
         public string TagString
         {
             get
