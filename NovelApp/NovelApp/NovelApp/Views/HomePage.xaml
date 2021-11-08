@@ -8,6 +8,7 @@
     xmlns:helpers="clr-namespace:NovelApp.Helpers"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:prism="http://prismlibrary.com"
     BackgroundColor="Black"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
@@ -27,7 +28,10 @@
                     BackgroundColor="#1b1b25"
                     CancelButtonColor="Gray"
                     HorizontalOptions="Fill"
-                    TextColor="White" />
+                    TextColor="White"
+                    x:Name="Search"
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"/>
             </Frame>
             <Label
                 Grid.Row="0"
@@ -118,12 +122,20 @@
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
-                                ItemSize="142"
+                                ItemSize="112"
+                                ItemSpacing="0,0,0,30"
+                                x:Name="listView"
+                                LoadMoreOption="AutoOnScroll"
+                                SelectionBackgroundColor="Transparent"
+                                SelectionChangedCommand="{Binding ItemTappedCommand}"
+                                SelectionChangedCommandParameter="{x:Reference listView}"
+                                LoadMoreCommandParameter="{Binding Source={x:Reference listView}}"
+                                LoadMoreCommand="{Binding LoadMoreCommand}"
                                 ItemsSource="{Binding ListNovel}">
                                 <sfListView:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid Margin="0,0,0,30" ColumnDefinitions="85,*">
+                                            <Grid  ColumnDefinitions="85,*">
                                                 <Frame Padding="0" CornerRadius="6">
                                                     <ffimageloading:CachedImage
                                                         Grid.Column="0"
@@ -134,6 +146,7 @@
                                                 <StackLayout
                                                     Grid.Column="1"
                                                     Orientation="Vertical"
+                                                    Spacing="10"
                                                     VerticalOptions="Center">
                                                     <Label
                                                         FontSize="22"
@@ -143,22 +156,43 @@
                                                         FontSize="18"
                                                         Text="{Binding Author}"
                                                         TextColor="Gray" />
-                                                    <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
-                                                        <ffimageloading:CachedImage
-                                                            Aspect="AspectFit"
-                                                            Scale="1.4"
-                                                            Source="resource://NovelApp.Resources.icons.ic_views.png" />
-                                                        <Label
-                                                            Margin="0,0,20,0"
-                                                            Text="{Binding Views, StringFormat='{0} Chs'}"
-                                                            TextColor="White" />
-                                                        <ffimageloading:CachedImage
-                                                            Aspect="AspectFit"
-                                                            Scale="1.4"
-                                                            Source="resource://NovelApp.Resources.icons.ic_plus.png" />
-                                                        <Label Text="ADD" TextColor="#253583" />
-                                                    </StackLayout>
-
+                                                    <Grid
+                                                        ColumnDefinitions="Auto,100">
+                                                        <StackLayout
+                                                            Grid.Column="0"
+                                                            WidthRequest="100"
+                                                            Orientation="Horizontal">
+                                                            <ffimageloading:CachedImage
+                                                                Aspect="AspectFit"
+                                                                Scale="1.4"
+                                                                Source="resource://NovelApp.Resources.icons.ic_views.png" />
+                                                            <Label
+                                                                Margin="0,0,20,0"
+                                                                Text="{Binding Views, StringFormat='{0} Chs'}"
+                                                                TextColor="White" />
+                                                            <StackLayout.Triggers>
+                                                                <DataTrigger
+                                                                    TargetType="StackLayout"
+                                                                    Binding="{Binding Views}"
+                                                                    Value="0">
+                                                                    <Setter
+                                                                        Property="IsVisible"
+                                                                        Value="False" />
+                                                                </DataTrigger>
+                                                            </StackLayout.Triggers>
+                                                        </StackLayout>
+                                                        <StackLayout
+                                                            Grid.Column="1"
+                                                            Orientation="Horizontal">
+                                                            <ffimageloading:CachedImage
+                                                                Aspect="AspectFit"
+                                                                Scale="1.4"
+                                                                Source="resource://NovelApp.Resources.icons.ic_plus.png" />
+                                                            <Label
+                                                                Text="ADD"
+                                                                TextColor="#253583" />
+                                                        </StackLayout>
+                                                    </Grid>
                                                 </StackLayout>
 
                                             </Grid>
