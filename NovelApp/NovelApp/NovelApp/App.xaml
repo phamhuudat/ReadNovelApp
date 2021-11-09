@@ -8,25 +8,17 @@
         <Color x:Key="Background_Dark">#131219</Color>
         <Color x:Key="Background_Light">#ffffff</Color>
 
-        <Color
-            x:Key="Background_brown">#312624</Color>
+        <Color x:Key="Background_brown">#312624</Color>
         <Color x:Key="GrayColor">Gray</Color>
-        <Color
-            x:Key="WhiteColor">White</Color>
-        <Color
-            x:Key="PinkBgColor">#6e2d46</Color>
-        <Color
-            x:Key="PinkColor">#f0578e</Color>
-        <Color
-            x:Key="YellowColor">Yellow</Color>
-        <x:Double
-            x:Key="TextBigSiZe">30</x:Double>
-        <x:Double
-            x:Key="TextTagSiZe">22</x:Double>
-        <x:Double
-            x:Key="TextNormalSiZe">20</x:Double>
-        <x:Double
-            x:Key="TextSmallSiZe">18</x:Double>
+        <Color x:Key="WhiteColor">White</Color>
+        <Color x:Key="PinkBgColor">#6e2d46</Color>
+        <Color x:Key="PinkColor">#f0578e</Color>
+        <Color x:Key="YellowColor">Yellow</Color>
+        <Color x:Key="BgVioletColor">#1b1b25</Color>
+        <x:Double x:Key="TextBigSiZe">30</x:Double>
+        <x:Double x:Key="TextTagSiZe">22</x:Double>
+        <x:Double x:Key="TextNormalSiZe">20</x:Double>
+        <x:Double x:Key="TextSmallSiZe">18</x:Double>
 
     </Application.Resources>
 </prism:PrismApplication>

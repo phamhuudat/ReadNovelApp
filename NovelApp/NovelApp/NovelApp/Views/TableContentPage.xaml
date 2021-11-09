@@ -1,42 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
-    x:Class="NovelApp.Views.TableContentPage">
+<ContentPage
+    x:Class="NovelApp.Views.TableContentPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
+    <NavigationPage.TitleView>
+        <ContentView>
+            <Grid ColumnDefinitions="*,40">
+                <Label
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    FontSize="{StaticResource TextTagSiZe}"
+                    HorizontalOptions="Center"
+                    Text="Contents"
+                    TextColor="{StaticResource WhiteColor}"
+                    VerticalOptions="Center" />
+                <forms:CachedImage
+                    Grid.Column="1"
+                    Aspect="AspectFit"
+                    HeightRequest="20"
+                    HorizontalOptions="Start"
+                    Source="resource://NovelApp.Resources.icons.ic_sort_up.png"
+                    VerticalOptions="Center"
+                    WidthRequest="20">
+                    <forms:CachedImage.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsSortDown}"
+                            TargetType="forms:CachedImage"
+                            Value="true">
+                            <Setter Property="Source" Value="resource://NovelApp.Resources.icons.ic_sort_down.png" />
+                        </DataTrigger>
+                    </forms:CachedImage.Triggers>
+                    <forms:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SortCommand}" />
+                    </forms:CachedImage.GestureRecognizers>
+                </forms:CachedImage>
+            </Grid>
+        </ContentView>
+    </NavigationPage.TitleView>
+
     <ContentPage.Content>
-        <StackLayout
-            Padding="20,20,20,0"
-            BackgroundColor="#121116">
+        <StackLayout Padding="15,25,15,0" BackgroundColor="#121116">
             <Frame
-                CornerRadius="6"
-                Padding="10"
-                BackgroundColor="#1b1b25">
-                <Label Text="49 Chapters"
-                    TextColor="{StaticResource GrayColor}"/>
+                Padding="12,13,12,13"
+                BackgroundColor="#262630"
+                CornerRadius="8">
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="{StaticResource TextSmallSiZe}"
+                        Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
+                        TextColor="{StaticResource GrayColor}" />
+                    <forms:CachedImage
+                        Aspect="AspectFill"
+                        HeightRequest="30"
+                        HorizontalOptions="EndAndExpand"
+                        Source="resource://NovelApp.Resources.icons.ic_infor.png"
+                        VerticalOptions="Center"
+                        WidthRequest="30" />
+                </StackLayout>
+
             </Frame>
-            <Label Text="VOLUME 1 "
+            <Label
+                Margin="12,20,0,10"
+                FontAttributes="Bold"
+                FontSize="15"
+                Text="VOLUME 1"
                 TextColor="{StaticResource GrayColor}" />
             <xforms:SfListView
+                ItemSize="70"
+                ItemSpacing="12,0,12,10"
                 ItemsSource="{Binding ListChapter}"
-                SelectionMode="None"
-                ItemSize="50">
+                SelectionMode="None">
                 <xforms:SfListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid
-                                ColumnDefinitions="20,*">
+                            <Grid ColumnDefinitions="25,*">
                                 <Label
                                     Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
                                     Text="{Binding No}"
-                                    TextColor="{StaticResource WhiteColor}"/>
+                                    TextColor="{StaticResource WhiteColor}"
+                                    VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
                                     Text="{Binding Name}"
-                                    TextColor="{StaticResource WhiteColor}" />
-                                <Label Grid.Column="1"
-                                       Text="{Binding UpdTime}"
-                                       HorizontalOptions="EndAndExpand"
-                                       TextColor="{StaticResource WhiteColor}" />
+                                    TextColor="{StaticResource WhiteColor}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontSize="15"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding UpdTime, StringFormat='Updated {0}'}"
+                                    TextColor="{StaticResource GrayColor}"
+                                    VerticalOptions="End" />
+                                <forms:CachedImage
+                                    Grid.Column="1"
+                                    Aspect="AspectFill"
+                                    HorizontalOptions="EndAndExpand"
+                                    Source="resource://NovelApp.Resources.icons.ic_lock.png"
+                                    VerticalOptions="Center">
+                                    <forms:CachedImage.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Type}"
+                                            TargetType="forms:CachedImage"
+                                            Value="0">
+                                            <Setter Property="IsVisible" Value="false" />
+                                        </DataTrigger>
+                                    </forms:CachedImage.Triggers>
+                                </forms:CachedImage>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

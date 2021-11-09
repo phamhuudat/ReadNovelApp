@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="NovelApp.Views.PostCommentPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#121116">
+    <ContentPage.Content>
+        <Label Text="Post Command" />
+    </ContentPage.Content>
+</ContentPage>

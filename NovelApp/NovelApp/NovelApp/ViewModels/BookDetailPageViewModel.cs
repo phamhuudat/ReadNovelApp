@@ -24,6 +24,7 @@ namespace NovelApp.ViewModels
         public bool IsExpand { get => isExpand; set => SetProperty(ref isExpand, value); }
         public ICommand ExpandCommand { get; set; }
         public ICommand SearchChapterCommand { get; set; }
+        public ICommand NavigationCmtCommand { get; set; }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
         public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
@@ -34,6 +35,11 @@ namespace NovelApp.ViewModels
                 IsExpand = !IsExpand;
             });
             SearchChapterCommand = new DelegateCommand(NavigationSearchChapter);
+            NavigationCmtCommand = new DelegateCommand(NavigationCommentPage);
+        }
+        private async void NavigationCommentPage()
+        {
+            await NavigationService.NavigateAsync($"{nameof(PostCommentPage)}?ID={_novelId}");
         }
         private async void NavigationSearchChapter()
         {

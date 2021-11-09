@@ -31,6 +31,10 @@
     <EmbeddedResource Include="Resources\icons\ic_views.png" />
     <EmbeddedResource Include="Resources\icons\ic_no1.png" />
     <EmbeddedResource Include="Resources\Svg\ic_arrow_right_gray.svg" />
+    <EmbeddedResource Include="Resources\icons\ic_lock.png" />
+    <EmbeddedResource Include="Resources\icons\ic_infor.png" />
+    <EmbeddedResource Include="Resources\icons\ic_sort_up.png" />
+    <EmbeddedResource Include="Resources\icons\ic_sort_down.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\BookDetailPage.xaml">
@@ -63,6 +67,10 @@
     <None Remove="Resources\icons\ic_no1.png" />
     <None Remove="Resources\Svg\ic_arrow_right_gray.svg" />
     <None Remove="Syncfusion.Xamarin.Buttons" />
+    <None Remove="Resources\icons\ic_lock.png" />
+    <None Remove="Resources\icons\ic_infor.png" />
+    <None Remove="Resources\icons\ic_sort_up.png" />
+    <None Remove="Resources\icons\ic_sort_down.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
