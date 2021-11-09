@@ -15,6 +15,7 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRating" Version="19.3.0.48" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.3.0.48" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\icons\ic_edit.png" />
     <EmbeddedResource Include="Resources\Svg\icon_arrow_down.svg" />
     <EmbeddedResource Include="Resources\icons\ic_plus.png" />
     <EmbeddedResource Include="Resources\icons\ic_views.png" />
@@ -41,10 +43,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\TableContentPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\" />
     <None Remove="Helpers\" />
+    <None Remove="Resources\icons\ic_edit.png" />
     <None Remove="Syncfusion.Xamarin.SfTabView" />
     <None Remove="Xamarin.FFImageLoading.Svg.Forms" />
     <None Remove="Resources\Svg\" />
@@ -60,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
-    <Folder Include="Resources\icons\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

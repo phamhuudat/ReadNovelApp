@@ -19,6 +19,7 @@ namespace NovelApp
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<HomePage,HomePageViewModel>();
             containerRegistry.RegisterForNavigation<BookDetailPage>();
+            containerRegistry.RegisterForNavigation<TableContentPage,TableContentPageViewModel>();
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();

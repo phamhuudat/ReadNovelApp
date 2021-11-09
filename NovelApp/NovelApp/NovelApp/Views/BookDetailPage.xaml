@@ -6,14 +6,25 @@
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    BackgroundColor="#312624">
+    xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:xforms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    BackgroundColor="{StaticResource Background_brown}">
     <ContentPage.Content>
         <Grid
             ColumnDefinitions="*,*,*"
             ColumnSpacing="0"
-            RowDefinitions="*,85">
+            RowSpacing="0"
+            RowDefinitions="*,60,85">
+            <forms:CachedImage
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="2"
+                Aspect="AspectFill"
+                Source="{Binding Novel.PathImage}" />
             <ScrollView
                 Grid.Row="0"
+                Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3">
                 <StackLayout>
@@ -22,8 +33,12 @@
                         ColumnDefinitions="130,*"
                         ColumnSpacing="20"
                         RowDefinitions="180,*">
-                        <Frame Padding="0" CornerRadius="6">
-                            <forms:CachedImage Aspect="AspectFill" Source="{Binding Novel.PathImage}" />
+                        <Frame
+                            Padding="0"
+                            CornerRadius="6">
+                            <forms:CachedImage
+                                Aspect="AspectFill"
+                                Source="{Binding Novel.PathImage}" />
                         </Frame>
                         <StackLayout
                             Grid.Row="0"
@@ -33,35 +48,41 @@
                                 FontAttributes="Bold"
                                 FontSize="30"
                                 Text="{Binding Novel.Name}"
-                                TextColor="White" />
+                                TextColor="{StaticResource WhiteColor}" />
                             <Label
                                 FontSize="18"
                                 Text="{Binding Novel.Author}"
-                                TextColor="White" />
-                            <StackLayout Orientation="Horizontal">
+                                TextColor="{StaticResource WhiteColor}" />
+                            <StackLayout
+                                Orientation="Horizontal">
                                 <Label
                                     FontSize="18"
                                     Text="{Binding Novel.Genre}"
-                                    TextColor="White" />
-                                <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                    TextColor="{StaticResource WhiteColor}" />
+                                <ffimageloading:SvgCachedImage
+                                    HeightRequest="10"
+                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
                             </StackLayout>
 
                         </StackLayout>
                     </Grid>
                     <Frame
-                        Margin="0,30,0,0"
+                        Margin="0,30,0,-10"
                         Padding="20"
                         BackgroundColor="#121116"
                         CornerRadius="20"
                         HorizontalOptions="Fill"
                         VerticalOptions="FillAndExpand">
-                        <StackLayout Spacing="20">
+                        <StackLayout
+                            Spacing="20">
                             <!--  View Golden stick and View and Honors  -->
                             <Frame
                                 BackgroundColor="#1b1b25"
                                 CornerRadius="20"
                                 HeightRequest="85">
-                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,*">
+                                <Grid
+                                    ColumnDefinitions="*,*,*"
+                                    RowDefinitions="Auto,*">
                                     <!--  Golden stick  -->
                                     <StackLayout
                                         Grid.Row="0"
@@ -71,8 +92,10 @@
                                         <Label
                                             FontSize="18"
                                             Text="Golden Tickets"
-                                            TextColor="Gray" />
-                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                            TextColor="{StaticResource GrayColor}" />
+                                        <ffimageloading:SvgCachedImage
+                                            HeightRequest="10"
+                                            Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
                                     </StackLayout>
 
                                     <Label
@@ -82,7 +105,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="1.7K"
-                                        TextColor="White"
+                                        TextColor="{StaticResource WhiteColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  View  -->
                                     <Label
@@ -91,7 +114,7 @@
                                         FontSize="18"
                                         HorizontalOptions="Center"
                                         Text="Views"
-                                        TextColor="Gray" />
+                                        TextColor="{StaticResource GrayColor}" />
                                     <Label
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -99,7 +122,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="{Binding Novel.Views}"
-                                        TextColor="White"
+                                        TextColor="{StaticResource WhiteColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  Honors  -->
                                     <StackLayout
@@ -110,8 +133,10 @@
                                         <Label
                                             FontSize="18"
                                             Text="Honors"
-                                            TextColor="Gray" />
-                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                            TextColor="{StaticResource GrayColor}" />
+                                        <ffimageloading:SvgCachedImage
+                                            HeightRequest="10"
+                                            Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
                                     </StackLayout>
 
                                     <forms:CachedImage
@@ -125,66 +150,118 @@
                                         WidthRequest="60" />
                                 </Grid>
                             </Frame>
+                            <!--Description-->
                             <Label
                                 FontSize="22"
                                 Text="Synopsis"
-                                TextColor="White" />
-                            <Label
-                                FontSize="18"
-                                MaxLines="7"
-                                Text="{Binding Novel.Description}"
-                                TextColor="Gray">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding IsExpand}"
-                                        TargetType="Label"
-                                        Value="true">
-                                        <Setter Property="MaxLines" Value="100" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ExpandCommand}" />
-                                </Label.GestureRecognizers>
-                            </Label>
+                                TextColor="{StaticResource WhiteColor}" />
+                            <Grid
+                                ColumnDefinitions="*,30"
+                                RowDefinitions="*,20">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Grid.RowSpan="2"
+                                    FontSize="18"
+                                    MaxLines="7"
+                                    x:Name="Description"
+                                    Text="{Binding Novel.Description}"
+                                    TextColor="{StaticResource GrayColor}">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsExpand}"
+                                            TargetType="Label"
+                                            Value="true">
+                                            <Setter
+                                                Property="MaxLines"
+                                                Value="999" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding ExpandCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Frame
+                                    Padding="0"
+                                    BackgroundColor="#27262c"
+                                    HasShadow="True"
+                                    CornerRadius="6"
+                                    Grid.Column="1"
+                                    Grid.Row="1">
+                                    <Frame.Triggers>
+                                        <DataTrigger
+                                            TargetType="Frame"
+                                            Binding="{Binding Source={x:Reference Description},Path=MaxLines}"
+                                            Value="999">
+                                            <Setter
+                                                Property="IsVisible"
+                                                Value="False" />
+                                        </DataTrigger>
+                                    </Frame.Triggers>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding ExpandCommand}" />
+                                    </Frame.GestureRecognizers>
+                                    <ffimageloading:SvgCachedImage
+                                        Scale=".5"
+                                        Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                                </Frame>
+                            </Grid>
+                            <!--Block Contents-->
+                            <BoxView
+                                HeightRequest=".5"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="{StaticResource GrayColor}" />
                             <Label
                                 FontSize="22"
                                 Text="Contents"
-                                TextColor="White" />
-                            <StackLayout Orientation="Horizontal">
+                                TextColor="{StaticResource WhiteColor}" />
+                            <StackLayout
+                                Orientation="Horizontal">
                                 <Label
                                     FontSize="18"
                                     Text="{Binding Novel.LastChapter}"
-                                    TextColor="Gray" />
+                                    TextColor="{StaticResource GrayColor}" />
                                 <Label
                                     FontSize="18"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.UpdatedTimeNumber, StringFormat='Updated {0}h'}"
-                                    TextColor="Gray" />
+                                    TextColor="{StaticResource GrayColor}" />
                                 <ffimageloading:SvgCachedImage
                                     HeightRequest="10"
                                     HorizontalOptions="End"
                                     Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding SearchChapterCommand}" />
+                                </StackLayout.GestureRecognizers>
                             </StackLayout>
-
-                            <StackLayout Orientation="Horizontal">
+                            <!--Block tags-->
+                            <BoxView
+                                HeightRequest=".5"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="{StaticResource GrayColor}" />
+                            <StackLayout
+                                Orientation="Horizontal">
                                 <Label
                                     FontSize="22"
                                     Text="Tags"
-                                    TextColor="White" />
+                                    TextColor="{StaticResource WhiteColor}" />
                                 <Label
                                     FontSize="18"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.CountTag, StringFormat='{0} tags'}"
-                                    TextColor="Gray" />
+                                    TextColor="{StaticResource GrayColor}" />
                                 <ffimageloading:SvgCachedImage
                                     HeightRequest="10"
                                     HorizontalOptions="End"
                                     Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
                             </StackLayout>
                             <buttons:SfChipGroup
-                                ChipBackgroundColor="#6e2d46"
-                                ChipTextColor="#f0578e"
+                                ChipBackgroundColor="{StaticResource PinkBgColor }"
+                                ChipTextColor="{StaticResource PinkColor}"
                                 ChipTextSize="16"
                                 ItemsSource="{Binding Novel.ShowTags}"
                                 Type="Action">
@@ -199,15 +276,99 @@
                                         Wrap="Wrap" />
                                 </buttons:SfChipGroup.ChipLayout>
                             </buttons:SfChipGroup>
+                            <!--Comment-->
+                            <BoxView
+                                HeightRequest=".5"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="{StaticResource GrayColor}" />
+                            <StackLayout
+                                Orientation="Horizontal">
+                                <Label
+                                    FontSize="22"
+                                    Text="Reviews"
+                                    TextColor="{StaticResource WhiteColor}" />
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding CountReview, StringFormat='{0} Reviews'}"
+                                    TextColor="{StaticResource GrayColor}" />
+                                <ffimageloading:SvgCachedImage
+                                    HeightRequest="10"
+                                    HorizontalOptions="End"
+                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                            </StackLayout>
+                            <sfListView:SfListView
+                                ItemsSource="{Binding ListComment}"
+                                AutoFitMode="DynamicHeight"
+                                SelectionMode="None">
+                                <sfListView:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid
+                                                ColumnDefinitions="50,*"
+                                                RowDefinitions="50,*">
+                                                <Frame
+                                                    CornerRadius="25"
+                                                    Grid.Column="0"
+                                                    BackgroundColor="Red"
+                                                    Grid.Row="0">
 
+                                                </Frame>
+                                                <Label
+                                                    VerticalOptions="Center"
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Text="{Binding Name}"
+                                                    FontSize="{StaticResource TextNormalSiZe}"
+                                                    TextColor="{StaticResource WhiteColor}" />
+                                                <Label
+                                                    VerticalOptions="Center"
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Text="{Binding Content}"
+                                                    FontSize="{StaticResource TextSmallSiZe}"
+                                                    TextColor="{StaticResource WhiteColor}" />
+                                                <xforms:SfRating
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    ItemSize="10"
+                                                    Value="{Binding Star}"
+                                                    VerticalOptions="End"
+                                                    ReadOnly="true">
+                                                    <xforms:SfRating.RatingSettings>
+                                                        <xforms:SfRatingSettings
+                                                            RatedFill="{StaticResource YellowColor}" />
+                                                    </xforms:SfRating.RatingSettings>
+                                                </xforms:SfRating>
+
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </sfListView:SfListView.ItemTemplate>
+
+                            </sfListView:SfListView>
                         </StackLayout>
                     </Frame>
                 </StackLayout>
             </ScrollView>
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*,60"
+                Grid.Column="2">
+                <Frame
+                    CornerRadius="30"
+                    BackgroundColor="#1b1b25"
+                    Padding="0"
+                    Grid.Column="1">
+                    <forms:CachedImage
+                        Scale=".5"
+                        Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                </Frame>
+            </Grid>
             <!--  Toolbar  -->
             <!--  Download  -->
             <StackLayout
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 BackgroundColor="#1B1B25">
                 <Label
@@ -219,7 +380,7 @@
             </StackLayout>
             <!--  Read Now  -->
             <StackLayout
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 BackgroundColor="#6a8efe">
                 <Label
@@ -231,7 +392,7 @@
             </StackLayout>
             <!--  Add To  -->
             <StackLayout
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="2"
                 BackgroundColor="#1B1B25">
                 <Label
