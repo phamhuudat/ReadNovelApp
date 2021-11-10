@@ -82,7 +82,7 @@ namespace NovelApp.Services.Book
                 new RequestParameter(name:"content",value:content),
                 new RequestParameter(name:"star",value:numbstar),
                 new RequestParameter(name:"email",value:email)};
-            var result = await _requestProvider.Post<ResponsePost>("book/postcomment", parameters);
+            var result = await _requestProvider.Get<ResponsePost>("book/postcomment", parameters);
             if (result != null)
                 return result.Data;
             return null;

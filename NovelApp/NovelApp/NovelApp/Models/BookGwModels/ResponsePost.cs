@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NovelApp.Models.BookGwModels
 {
-    public class ResponsePost : Dictionary<int, string>
+    public class ResponsePost : List<object>
     {
     }
 }
