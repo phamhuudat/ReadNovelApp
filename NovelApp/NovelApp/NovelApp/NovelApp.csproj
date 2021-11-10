@@ -35,6 +35,11 @@
     <EmbeddedResource Include="Resources\icons\ic_infor.png" />
     <EmbeddedResource Include="Resources\icons\ic_sort_up.png" />
     <EmbeddedResource Include="Resources\icons\ic_sort_down.png" />
+    <EmbeddedResource Include="Resources\icons\ic_like.png" />
+    <EmbeddedResource Include="Resources\icons\ic_reply.png" />
+    <EmbeddedResource Include="Resources\icons\ic_read_now.png" />
+    <EmbeddedResource Include="Resources\icons\ic_download.png" />
+    <EmbeddedResource Include="Resources\icons\ic_add.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\BookDetailPage.xaml">
@@ -71,6 +76,12 @@
     <None Remove="Resources\icons\ic_infor.png" />
     <None Remove="Resources\icons\ic_sort_up.png" />
     <None Remove="Resources\icons\ic_sort_down.png" />
+    <None Remove="Resources\icons\ic_like.png" />
+    <None Remove="Resources\icons\ic_reply.png" />
+    <None Remove="Resources\icons\ic_add.png" />
+    <None Remove="Resources\icons\ic_read_now.png" />
+    <None Remove="Resources\icons\ic_download.png" />
+    <None Remove="Resources\icons\ic_add.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />

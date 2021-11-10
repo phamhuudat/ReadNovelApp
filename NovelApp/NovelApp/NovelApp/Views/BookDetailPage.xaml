@@ -277,16 +277,20 @@
                                 <sfListView:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid ColumnDefinitions="50,*" RowDefinitions="50,*">
+                                            <Grid
+                                                ColumnDefinitions="40,*"
+                                                ColumnSpacing="20"
+                                                RowDefinitions="40,*,30,.5"
+                                                RowSpacing="10">
                                                 <Frame
                                                     Grid.Row="0"
                                                     Grid.Column="0"
-                                                    BackgroundColor="Red"
-                                                    CornerRadius="25" />
+                                                    BackgroundColor="Blue"
+                                                    CornerRadius="20" />
                                                 <Label
                                                     Grid.Row="0"
                                                     Grid.Column="1"
-                                                    FontSize="{StaticResource TextNormalSiZe}"
+                                                    FontSize="{StaticResource TextSmallSiZe}"
                                                     Text="{Binding Name}"
                                                     TextColor="{StaticResource WhiteColor}"
                                                     VerticalOptions="Center" />
@@ -297,12 +301,39 @@
                                                     Text="{Binding Content}"
                                                     TextColor="{StaticResource WhiteColor}"
                                                     VerticalOptions="Center" />
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Text="{Binding ModifiedTime}"
+                                                    TextColor="{StaticResource GrayColor}"
+                                                    VerticalOptions="EndAndExpand" />
+                                                <StackLayout
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Orientation="Horizontal"
+                                                    Spacing="40"
+                                                    VerticalOptions="Center">
+                                                    <forms:CachedImage
+                                                        HeightRequest="20"
+                                                        HorizontalOptions="EndAndExpand"
+                                                        Source="resource://NovelApp.Resources.icons.ic_like.png" />
+                                                    <forms:CachedImage
+                                                        HeightRequest="20"
+                                                        HorizontalOptions="End"
+                                                        Source="resource://NovelApp.Resources.icons.ic_reply.png" />
+
+                                                </StackLayout>
+                                                <BoxView
+                                                    Grid.Row="3"
+                                                    Grid.Column="1"
+                                                    BackgroundColor="{StaticResource GrayColor}" />
                                                 <xforms:SfRating
                                                     Grid.Row="0"
                                                     Grid.Column="1"
                                                     ItemSize="10"
                                                     ReadOnly="true"
-                                                    VerticalOptions="End"
+                                                    VerticalOptions="EndAndExpand"
                                                     Value="{Binding Star}">
                                                     <xforms:SfRating.RatingSettings>
                                                         <xforms:SfRatingSettings RatedFill="{StaticResource YellowColor}" />
@@ -336,41 +367,62 @@
             </Grid>
             <!--  Toolbar  -->
             <!--  Download  -->
-            <StackLayout
+            <Grid
                 Grid.Row="2"
                 Grid.Column="0"
-                BackgroundColor="#1B1B25">
+                BackgroundColor="#1B1B25"
+                RowDefinitions="*,*">
+                <forms:CachedImage
+                    Grid.Row="0"
+                    HeightRequest="20"
+                    HorizontalOptions="Center"
+                    Source="resource://NovelApp.Resources.icons.ic_download.png"
+                    VerticalOptions="End" />
                 <Label
+                    Grid.Row="1"
                     FontSize="15"
                     HorizontalOptions="Center"
                     Text="DOWNLOAD"
-                    TextColor="Gray"
-                    VerticalOptions="CenterAndExpand" />
-            </StackLayout>
+                    TextColor="Gray" />
+            </Grid>
             <!--  Read Now  -->
-            <StackLayout
+            <Grid
                 Grid.Row="2"
                 Grid.Column="1"
-                BackgroundColor="#6a8efe">
+                BackgroundColor="#6a8efe"
+                RowDefinitions="*,*">
+                <forms:CachedImage
+                    Grid.Row="0"
+                    HeightRequest="20"
+                    HorizontalOptions="Center"
+                    Source="resource://NovelApp.Resources.icons.ic_read_now.png"
+                    VerticalOptions="End" />
                 <Label
+                    Grid.Row="1"
                     FontSize="15"
                     HorizontalOptions="Center"
                     Text="READ NOW"
-                    TextColor="White"
-                    VerticalOptions="CenterAndExpand" />
-            </StackLayout>
+                    TextColor="White" />
+            </Grid>
             <!--  Add To  -->
-            <StackLayout
+            <Grid
                 Grid.Row="2"
                 Grid.Column="2"
-                BackgroundColor="#1B1B25">
+                BackgroundColor="#1B1B25"
+                RowDefinitions="*,*">
+                <forms:CachedImage
+                    Grid.Row="0"
+                    HeightRequest="20"
+                    HorizontalOptions="Center"
+                    Source="resource://NovelApp.Resources.icons.ic_add.png"
+                    VerticalOptions="End" />
                 <Label
+                    Grid.Row="1"
                     FontSize="15"
                     HorizontalOptions="Center"
                     Text="ADD TO"
-                    TextColor="Gray"
-                    VerticalOptions="CenterAndExpand" />
-            </StackLayout>
+                    TextColor="Gray" />
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

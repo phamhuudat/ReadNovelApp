@@ -75,7 +75,7 @@ namespace NovelApp.ViewModels
         }
         private void CheckCanPostComment()
         {
-            if (string.IsNullOrEmpty(Comment) || Star <= 0)
+            if (string.IsNullOrEmpty(Comment) || Star <= 0|| Comment.Length<50 || Comment.Length>100)
                 IsCanPost = false;
             else
                 IsCanPost = true;
