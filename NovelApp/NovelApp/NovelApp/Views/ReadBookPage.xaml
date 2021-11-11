@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Class="NovelApp.Views.ReadBookPage">
+    <ContentPage.Content>
+        <Grid
+            ColumnDefinitions="*,60"
+            RowDefinitions="*,60">
+            <Frame
+                Grid.Row="1"
+                Grid.Column="1"
+                Padding="0"
+                BackgroundColor="#1b1b25"
+                CornerRadius="30">
+                <forms:CachedImage
+                    Scale=".5"
+                    Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding NavigationSettingsCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

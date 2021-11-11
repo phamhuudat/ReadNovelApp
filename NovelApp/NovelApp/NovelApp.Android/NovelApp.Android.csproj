@@ -58,6 +58,9 @@
     <PackageReference Include="Prism.DryIoc.Forms">
       <Version>8.1.97</Version>
     </PackageReference>
+    <PackageReference Include="Prism.Plugin.Popups">
+      <Version>8.0.76</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Unity.Forms">
       <Version>8.1.97</Version>
     </PackageReference>

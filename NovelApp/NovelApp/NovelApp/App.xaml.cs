@@ -3,8 +3,10 @@ using NovelApp.Services.Book;
 using NovelApp.Services.RequestProvider;
 using NovelApp.ViewModels;
 using NovelApp.Views;
+using NovelApp.Views.Popup;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,12 +17,15 @@ namespace NovelApp
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<HomePage,HomePageViewModel>();
             containerRegistry.RegisterForNavigation<BookDetailPage>();
             containerRegistry.RegisterForNavigation<TableContentPage,TableContentPageViewModel>();
             containerRegistry.RegisterForNavigation<PostCommentPage, PostCommentPageViewModel>();
+            containerRegistry.RegisterForNavigation<ReadBookPage, ReadBookPageViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsPopup, SettingsPopupViewModel>();
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();

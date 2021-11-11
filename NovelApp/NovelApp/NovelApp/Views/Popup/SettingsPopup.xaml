@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:NovelApp.Animations"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    CloseWhenBackgroundIsClicked="True"
+    x:Class="NovelApp.Views.Popup.SettingsPopup">
+    <pages:PopupPage.Animation>
+        <animations:PopupAnimation />
+    </pages:PopupPage.Animation>
+    <Grid
+        RowDefinitions="*,2*"
+        >
+        <Frame
+            Grid.Row="1"
+            CornerRadius="30"
+            Margin="0,0,0,-30"
+            BackgroundColor="#121116">
+            <Grid
+                RowDefinitions="20,*"
+                ColumnDefinitions="*,60,*">
+                <!--Goback popup-->
+                <Frame
+                    Grid.Column="1"
+                    BackgroundColor="#1b1b25"
+                    Padding="20,5,20,5"
+                    CornerRadius="6"
+                    Grid.Row="0">
+                    <ffimageloading:SvgCachedImage
+                        HeightRequest="10"
+                        Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <!--View danh sách-->
+                <tabView:SfTabView
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    TabHeight="60"
+                    Grid.Row="1">
+                    <tabView:SfTabView.SelectionIndicatorSettings>
+                        <tabView:SelectionIndicatorSettings
+                            Position="Bottom"
+                            StrokeThickness="2"
+                            Color="White" />
+                    </tabView:SfTabView.SelectionIndicatorSettings>
+                    <tabView:SfTabItem
+                        Title="General"
+                        SelectionColor="White"
+                        TitleFontAttributes="Bold"
+                        TitleFontColor="Gray"
+                        TitleFontSize="25">
+                        <tabView:SfTabItem.Content>
+                            <Grid
+                                BackgroundColor="Red" />
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem
+                        Title="Display"
+                        SelectionColor="White"
+                        TitleFontAttributes="Bold"
+                        TitleFontColor="Gray"
+                        TitleFontSize="25">
+                        <tabView:SfTabItem.Content>
+                            <Grid
+                                BackgroundColor="Blue" />
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                </tabView:SfTabView>
+            </Grid>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

@@ -25,6 +25,7 @@ namespace NovelApp.ViewModels
         public ICommand ExpandCommand { get; set; }
         public ICommand SearchChapterCommand { get; set; }
         public ICommand NavigationCmtCommand { get; set; }
+        public ICommand NavigationReadCommand { get; set; }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
         public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
@@ -36,6 +37,11 @@ namespace NovelApp.ViewModels
             });
             SearchChapterCommand = new DelegateCommand(NavigationSearchChapter);
             NavigationCmtCommand = new DelegateCommand(NavigationCommentPage);
+            NavigationReadCommand = new DelegateCommand(NavigationReadNow);
+        }
+        private async void NavigationReadNow()
+        {
+            await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}");
         }
         private async void NavigationCommentPage()
         {
@@ -49,11 +55,14 @@ namespace NovelApp.ViewModels
         {
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey("ID"))
+            {
                 _novelId = int.Parse(parameters["ID"].ToString());
-            Novel = await _bookService.GetDetailNovel(_novelId);
-            var list = await _bookService.GetCommentList(_novelId);
-            ListComment = list?.ToList();
-            CountReview = ListComment.Count();
+                Novel = await _bookService.GetDetailNovel(_novelId);
+                var list = await _bookService.GetCommentList(_novelId);
+                ListComment = list?.ToList();
+                CountReview = ListComment.Count();
+            }
+               
         }
     }
 }

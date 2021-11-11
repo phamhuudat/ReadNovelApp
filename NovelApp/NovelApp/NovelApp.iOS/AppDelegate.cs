@@ -22,10 +22,12 @@ namespace NovelApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            global::Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipGroupRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
+
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }

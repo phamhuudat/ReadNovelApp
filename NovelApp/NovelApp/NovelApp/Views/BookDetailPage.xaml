@@ -384,6 +384,7 @@
                     HorizontalOptions="Center"
                     Text="DOWNLOAD"
                     TextColor="Gray" />
+               
             </Grid>
             <!--  Read Now  -->
             <Grid
@@ -403,6 +404,10 @@
                     HorizontalOptions="Center"
                     Text="READ NOW"
                     TextColor="White" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding NavigationReadCommand}" />
+                </Grid.GestureRecognizers>
             </Grid>
             <!--  Add To  -->
             <Grid

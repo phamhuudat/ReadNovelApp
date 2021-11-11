@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Prism.Plugin.Popups;
 
 namespace NovelApp.Droid
 {
@@ -16,7 +17,12 @@ namespace NovelApp.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            global::Rg.Plugins.Popup.Popup.Init(this);
             LoadApplication(new App());
+        }
+        public override void OnBackPressed()
+        {
+            PopupPlugin.OnBackPressed();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
