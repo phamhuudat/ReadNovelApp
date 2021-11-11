@@ -6,7 +6,10 @@
     xmlns:animations="clr-namespace:NovelApp.Animations"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     CloseWhenBackgroundIsClicked="True"
+    xmlns:sys="clr-namespace:System.Collections.Generic;assembly=netstandard"
     x:Class="NovelApp.Views.Popup.SettingsPopup">
     <pages:PopupPage.Animation>
         <animations:PopupAnimation />
@@ -21,16 +24,16 @@
             BackgroundColor="#121116">
             <Grid
                 RowDefinitions="20,*"
-                ColumnDefinitions="*,60,*">
+                ColumnDefinitions="*,80,*">
                 <!--Goback popup-->
                 <Frame
                     Grid.Column="1"
-                    BackgroundColor="#1b1b25"
+                    BackgroundColor="{StaticResource GrayColor}"
                     Padding="20,5,20,5"
                     CornerRadius="6"
                     Grid.Row="0">
                     <ffimageloading:SvgCachedImage
-                        HeightRequest="10"
+                        HeightRequest="15"
                         Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer
@@ -57,7 +60,33 @@
                         TitleFontSize="25">
                         <tabView:SfTabItem.Content>
                             <Grid
-                                BackgroundColor="Red" />
+                                RowSpacing="10"
+                                ColumnSpacing="20"
+                                ColumnDefinitions="20,*"
+                                RowDefinitions="60,60,*">
+                                <forms:CachedImage
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Source="resource://NovelApp.Resources.icons.ic_listchapter.png"
+                                    />
+                                <Label Text="List Chapter"
+                                       Grid.Column="1"
+                                       FontSize="20"
+                                       VerticalOptions="Center"
+                                       TextColor="{StaticResource WhiteColor}"
+                                       Grid.Row="0"/>
+                                <forms:CachedImage
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Source="resource://NovelApp.Resources.icons.ic_book.png" />
+                                <Label
+                                    Text="About the novel"
+                                    Grid.Column="1"
+                                    FontSize="20"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource WhiteColor}"
+                                    Grid.Row="1" />
+                            </Grid>
                         </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
                     <tabView:SfTabItem
@@ -67,8 +96,65 @@
                         TitleFontColor="Gray"
                         TitleFontSize="25">
                         <tabView:SfTabItem.Content>
-                            <Grid
-                                BackgroundColor="Blue" />
+                            <ScrollView>
+                                <StackLayout>
+                                    <!--Reading mode-->
+                                    <Label Text="Reading mode"
+                                           FontSize="20"
+                                           Margin="0,20,0,0"
+                                           TextColor="{StaticResource WhiteColor}"
+                                           FontAttributes="Bold"/>
+                                    <buttons:SfSegmentedControl
+                                        VisibleSegmentsCount="3"
+                                        SelectedIndex="2"
+                                        BorderColor="#3F3F3F"
+                                        FontColor="{StaticResource WhiteColor}"
+                                        Color="Transparent"
+                                        CornerRadius="25"
+                                        SelectionTextColor="#6a8efe">
+                                        <buttons:SfSegmentedControl.SelectionIndicatorSettings>
+                                            <buttons:SelectionIndicatorSettings
+                                                CornerRadius="25"
+                                                Color="#1b1b25">
+                                            </buttons:SelectionIndicatorSettings>
+                                        </buttons:SfSegmentedControl.SelectionIndicatorSettings>
+                                        <sys:List
+                                            x:TypeArguments="x:String">
+                                            <x:String>SCROLLING</x:String>
+                                            <x:String>PAGING</x:String>
+                                            <x:String>TAPPING</x:String>
+                                        </sys:List>
+                                    </buttons:SfSegmentedControl>
+                                    <!--Brigtness-->
+                                    <Label
+                                        Text="Brightness"
+                                        FontSize="20"
+                                        Margin="0,20,0,0"
+                                        TextColor="{StaticResource WhiteColor}"
+                                        FontAttributes="Bold" />
+                                    <!--Color-->
+                                    <Label
+                                        Text="Color"
+                                        FontSize="20"
+                                        Margin="0,20,0,0"
+                                        TextColor="{StaticResource WhiteColor}"
+                                        FontAttributes="Bold" />
+                                    <!--Text size-->
+                                    <Label
+                                        Text="Text size"
+                                        FontSize="20"
+                                        Margin="0,20,0,0"
+                                        TextColor="{StaticResource WhiteColor}"
+                                        FontAttributes="Bold" />
+                                    <!--Reading fonts-->
+                                    <Label
+                                        Text="Reading fonts"
+                                        FontSize="20"
+                                        Margin="0,20,0,0"
+                                        TextColor="{StaticResource WhiteColor}"
+                                        FontAttributes="Bold" />
+                                </StackLayout>
+                            </ScrollView>
                         </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
                 </tabView:SfTabView>
