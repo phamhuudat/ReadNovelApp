@@ -1,51 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="NovelApp.Views.Popup.SettingsPopup"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:animations="clr-namespace:NovelApp.Animations"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    CloseWhenBackgroundIsClicked="True"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
     xmlns:sys="clr-namespace:System.Collections.Generic;assembly=netstandard"
-    x:Class="NovelApp.Views.Popup.SettingsPopup">
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    CloseWhenBackgroundIsClicked="True">
     <pages:PopupPage.Animation>
         <animations:PopupAnimation />
     </pages:PopupPage.Animation>
-    <Grid
-        RowDefinitions="*,2*"
-        >
+    <Grid RowDefinitions="*,2*">
         <Frame
             Grid.Row="1"
-            CornerRadius="30"
             Margin="0,0,0,-30"
-            BackgroundColor="#121116">
-            <Grid
-                RowDefinitions="20,*"
-                ColumnDefinitions="*,80,*">
-                <!--Goback popup-->
+            BackgroundColor="#1b1b25"
+            CornerRadius="30">
+            <Grid ColumnDefinitions="*,80,*" RowDefinitions="20,*">
+                <!--  Goback popup  -->
                 <Frame
+                    Grid.Row="0"
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource GrayColor}"
                     Padding="20,5,20,5"
-                    CornerRadius="6"
-                    Grid.Row="0">
-                    <ffimageloading:SvgCachedImage
-                        HeightRequest="15"
-                        Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    BackgroundColor="#36363d"
+                    CornerRadius="6">
+                    <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding GoBackCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                     </Frame.GestureRecognizers>
                 </Frame>
-                <!--View danh sách-->
+                <!--  View danh sách  -->
                 <tabView:SfTabView
+                    Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    TabHeight="60"
-                    Grid.Row="1">
+                    TabHeight="60">
                     <tabView:SfTabView.SelectionIndicatorSettings>
                         <tabView:SelectionIndicatorSettings
                             Position="Bottom"
@@ -60,32 +54,32 @@
                         TitleFontSize="25">
                         <tabView:SfTabItem.Content>
                             <Grid
-                                RowSpacing="10"
-                                ColumnSpacing="20"
                                 ColumnDefinitions="20,*"
-                                RowDefinitions="60,60,*">
+                                ColumnSpacing="20"
+                                RowDefinitions="60,60,*"
+                                RowSpacing="10">
                                 <forms:CachedImage
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Source="resource://NovelApp.Resources.icons.ic_listchapter.png"
-                                    />
-                                <Label Text="List Chapter"
-                                       Grid.Column="1"
-                                       FontSize="20"
-                                       VerticalOptions="Center"
-                                       TextColor="{StaticResource WhiteColor}"
-                                       Grid.Row="0"/>
+                                    Source="resource://NovelApp.Resources.icons.ic_listchapter.png" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="20"
+                                    Text="List Chapter"
+                                    TextColor="{StaticResource WhiteColor}"
+                                    VerticalOptions="Center" />
                                 <forms:CachedImage
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Source="resource://NovelApp.Resources.icons.ic_book.png" />
                                 <Label
-                                    Text="About the novel"
+                                    Grid.Row="1"
                                     Grid.Column="1"
                                     FontSize="20"
-                                    VerticalOptions="Center"
+                                    Text="About the novel"
                                     TextColor="{StaticResource WhiteColor}"
-                                    Grid.Row="1" />
+                                    VerticalOptions="Center" />
                             </Grid>
                         </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
@@ -98,61 +92,78 @@
                         <tabView:SfTabItem.Content>
                             <ScrollView>
                                 <StackLayout>
-                                    <!--Reading mode-->
-                                    <Label Text="Reading mode"
-                                           FontSize="20"
-                                           Margin="0,20,0,0"
-                                           TextColor="{StaticResource WhiteColor}"
-                                           FontAttributes="Bold"/>
+                                    <!--  Reading mode  -->
+                                    <Label
+                                        Margin="0,20,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                        Text="Reading mode"
+                                        TextColor="{StaticResource WhiteColor}" />
                                     <buttons:SfSegmentedControl
-                                        VisibleSegmentsCount="3"
-                                        SelectedIndex="2"
+                                        BackgroundColor="#131219"
                                         BorderColor="#3F3F3F"
-                                        FontColor="{StaticResource WhiteColor}"
-                                        Color="Transparent"
                                         CornerRadius="25"
-                                        SelectionTextColor="#6a8efe">
+                                        FontAttributes="Bold"
+                                        FontColor="{StaticResource WhiteColor}"
+                                        SelectedIndex="2"
+                                        SelectionTextColor="#6a8efe"
+                                        VisibleSegmentsCount="3"
+                                        Color="Transparent">
                                         <buttons:SfSegmentedControl.SelectionIndicatorSettings>
-                                            <buttons:SelectionIndicatorSettings
-                                                CornerRadius="25"
-                                                Color="#1b1b25">
-                                            </buttons:SelectionIndicatorSettings>
+                                            <buttons:SelectionIndicatorSettings CornerRadius="25" Color="#1b1b25" />
                                         </buttons:SfSegmentedControl.SelectionIndicatorSettings>
-                                        <sys:List
-                                            x:TypeArguments="x:String">
+                                        <sys:List x:TypeArguments="x:String">
                                             <x:String>SCROLLING</x:String>
                                             <x:String>PAGING</x:String>
                                             <x:String>TAPPING</x:String>
                                         </sys:List>
                                     </buttons:SfSegmentedControl>
-                                    <!--Brigtness-->
+                                    <!--  Brigtness  -->
                                     <Label
+                                        Margin="0,20,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
                                         Text="Brightness"
-                                        FontSize="20"
-                                        Margin="0,20,0,0"
-                                        TextColor="{StaticResource WhiteColor}"
-                                        FontAttributes="Bold" />
-                                    <!--Color-->
+                                        TextColor="{StaticResource WhiteColor}" />
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#131219"
+                                        CornerRadius="25">
+                                        <range:SfRangeSlider
+                                            HeightRequest="30"
+                                            KnobColor="#6a8efe"
+                                            Minimum="0"
+                                            Orientation="Horizontal"
+                                            ShowRange="False"
+                                            SnapsTo="None"
+                                            TickPlacement="None"
+                                            ToolTipPlacement="BottomRight"
+                                            TrackColor="Gray"
+                                            TrackSelectionColor="#6a8efe"
+                                            TrackSelectionThickness="3" />
+                                    </Frame>
+
+                                    <!--  Color  -->
                                     <Label
+                                        Margin="0,20,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
                                         Text="Color"
-                                        FontSize="20"
-                                        Margin="0,20,0,0"
-                                        TextColor="{StaticResource WhiteColor}"
-                                        FontAttributes="Bold" />
-                                    <!--Text size-->
+                                        TextColor="{StaticResource WhiteColor}" />
+                                    <!--  Text size  -->
                                     <Label
+                                        Margin="0,20,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
                                         Text="Text size"
-                                        FontSize="20"
-                                        Margin="0,20,0,0"
-                                        TextColor="{StaticResource WhiteColor}"
-                                        FontAttributes="Bold" />
-                                    <!--Reading fonts-->
+                                        TextColor="{StaticResource WhiteColor}" />
+                                    <!--  Reading fonts  -->
                                     <Label
-                                        Text="Reading fonts"
-                                        FontSize="20"
                                         Margin="0,20,0,0"
-                                        TextColor="{StaticResource WhiteColor}"
-                                        FontAttributes="Bold" />
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                        Text="Reading fonts"
+                                        TextColor="{StaticResource WhiteColor}" />
                                 </StackLayout>
                             </ScrollView>
                         </tabView:SfTabItem.Content>

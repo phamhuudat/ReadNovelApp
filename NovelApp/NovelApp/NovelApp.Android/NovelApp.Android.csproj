@@ -84,6 +84,9 @@
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
       <Version>19.3.0.48</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider">
+      <Version>19.3.0.48</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
