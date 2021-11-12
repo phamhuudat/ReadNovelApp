@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 
 namespace NovelApp.ViewModels
 {
@@ -42,15 +43,46 @@ namespace NovelApp.ViewModels
                 _novelId = int.Parse(parameters["ID"].ToString());
             if (parameters.ContainsKey("NO"))
                 _no = int.Parse(parameters["NO"].ToString());
+            // Get Metrics
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+            var density = mainDisplayInfo.Density;
+            // Width (in pixels)
+            var width = mainDisplayInfo.Width / density;
 
-            var content = await _bookService.GetContentChapter(_novelId, _no);
-            CarouselItems = new ObservableCollection<string>();
-            CarouselItems.Add(content.Text);
-            CarouselItems.Add(content.Text);
-            CarouselItems.Add(content.Text);
-            CarouselItems.Add(content.Text);
-            CarouselItems.Add(content.Text);
-            CarouselItems.Add(content.Text);
+            // Height (in pixels)
+            var height = mainDisplayInfo.Height / density;
+
+            Debug.WriteLine("height: " + height);
+            Debug.WriteLine("width: " + width);
+            try
+            {
+                var content = await _bookService.GetContentChapter(_novelId, _no);
+                var text = content.Text;
+                var length = content.Text.Length;
+                var rowheight = (int)width / 20;
+                var columnHeight = (int)height / 20;
+                var counttext = rowheight * columnHeight;
+                var pages = length / counttext;
+                var div = length % counttext;
+                CarouselItems = new ObservableCollection<string>();
+                int start = 0;
+
+                for (int i = 1; i <= pages; i++)
+                {
+                    int end = i * counttext - 1;
+                    Debug.WriteLine($"end:{start} {end} {i} {counttext} {length}");
+                    var textsub = text.Substring(start, end);
+                    start = end + 1;
+                }
+                if (div > 0)
+                    CarouselItems.Add(text.Substring(start, length - 1));
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
         }
     }
 }
