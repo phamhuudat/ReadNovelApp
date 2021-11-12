@@ -1,5 +1,6 @@
 ﻿using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -17,15 +18,25 @@ namespace NovelApp.ViewModels
         private int _novelId;
         private int countChapter;
         private bool isSortDown;
-
+       
         public List<ChapInfo> ListChapter { get => listChapter; set => SetProperty(ref listChapter, value); }
         public int CountChapter { get => countChapter; set => SetProperty(ref countChapter, value); }
         public ICommand SortCommand { get; set; }
+        public ICommand ItemTappedCommand { get; set; }
         public bool IsSortDown { get => isSortDown; set => SetProperty(ref isSortDown, value); }
         public TableContentPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
         {
             _bookService = bookService;
             SortCommand = new DelegateCommand(Sort);
+            ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
+        }
+        private async void ItemTapped(object obj)
+        {
+            var listView = obj as Syncfusion.ListView.XForms.SfListView;
+            if (listView == null) return;
+            var item = listView.SelectedItem as ChapInfo;
+            listView.SelectedItem = null;
+            await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}&NO={item.No}");
         }
         private void Sort()
         {

@@ -3,11 +3,62 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:cards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
+    xmlns:carousel="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
     x:Class="NovelApp.Views.ReadBookPage">
     <ContentPage.Content>
         <Grid
+            x:Name="page"
             ColumnDefinitions="*,60"
             RowDefinitions="*,60">
+            <syncfusion:SfRotator
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                x:Name="rotator"
+                ItemsSource="{Binding CarouselItems}"
+                SelectedIndex="1"
+               
+                EnableLooping="False"
+                DotPlacement="Default"
+                
+                NavigationDirection="Horizontal">
+                <syncfusion:SfRotator.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label
+                                Text="{Binding}" />
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfRotator.ItemTemplate>
+            </syncfusion:SfRotator>
+            <!--<carousel:SfCarousel
+                
+                BackgroundColor="Red"
+                x:Name="carousel"
+                ItemHeight="{Binding Source={x:Reference page}, Path=Height}"
+                ItemWidth="{Binding Source={x:Reference page}, Path=Width}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                ItemsSource="{Binding CarouselItems}"
+                Duration="100"
+                ScaleOffset="1"
+                SelectedItemOffset="0"
+                ViewMode="Linear">
+                <carousel:SfCarousel.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="Blue">
+                                <Label
+                                    Text="{Binding}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </carousel:SfCarousel.ItemTemplate>
+            </carousel:SfCarousel>-->
+
             <Frame
                 Grid.Row="1"
                 Grid.Column="1"

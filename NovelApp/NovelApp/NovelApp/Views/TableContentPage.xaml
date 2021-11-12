@@ -71,8 +71,11 @@
             <xforms:SfListView
                 ItemSize="70"
                 ItemSpacing="12,0,12,10"
+                x:Name="listView"
+                SelectionChangedCommand="{Binding ItemTappedCommand}"
+                SelectionChangedCommandParameter="{x:Reference listView}"
                 ItemsSource="{Binding ListChapter}"
-                SelectionMode="None">
+                SelectionMode="Single">
                 <xforms:SfListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

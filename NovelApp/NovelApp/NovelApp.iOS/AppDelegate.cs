@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Syncfusion.SfRotator.XForms.iOS;
 using UIKit;
 
 namespace NovelApp.iOS
@@ -27,7 +28,9 @@ namespace NovelApp.iOS
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipGroupRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
-
+            Syncfusion.XForms.iOS.Cards.SfCardViewRenderer.Init();
+            Syncfusion.SfCarousel.XForms.iOS.SfCarouselRenderer.Init();
+            new SfRotatorRenderer();
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }

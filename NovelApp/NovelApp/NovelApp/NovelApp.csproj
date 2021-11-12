@@ -16,7 +16,10 @@
     <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
+    <PackageReference Include="Syncfusion.Xamarin.Cards" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfCarousel" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfRating" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRotator" Version="19.3.0.48" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.3.0.48" />
