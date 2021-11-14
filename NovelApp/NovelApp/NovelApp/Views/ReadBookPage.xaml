@@ -1,52 +1,204 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="NovelApp.Views.ReadBookPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:cards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
-    xmlns:carousel="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
-    xmlns:syncfusion="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
-    x:Class="NovelApp.Views.ReadBookPage">
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid
             x:Name="page"
             ColumnDefinitions="*,60"
-            RowDefinitions="*,60">
-            <syncfusion:SfRotator
-                Grid.Column="0"
+            RowDefinitions="*,60,30">
+            <!--  Scrolling  -->
+            <Grid
                 Grid.Row="0"
-                Grid.RowSpan="2"
+                Grid.RowSpan="3"
+                Grid.Column="0"
                 Grid.ColumnSpan="2"
+                Padding="20"
+                ColumnDefinitions="60,*"
+                IsVisible="false"
+                RowDefinitions="50,*">
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ShowReadMode}"
+                        TargetType="Grid"
+                        Value="Scrolling">
+                        <Setter Property="IsVisible" Value="true" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Back"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding ContentChapter.Name}"
+                    VerticalOptions="CenterAndExpand" />
+                <ScrollView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,0,0">
+                    <Label
+                        FontSize="{Binding TextSizeChapter}"
+                        HorizontalOptions="Fill"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding ContentChapter.Text}"
+                        VerticalOptions="Fill" />
+                </ScrollView>
+            </Grid>
+            <!--  Tapping  -->
+
+            <!--  -40,-10,-100,-10  -->
+            <!--  Paging  -->
+            <cards:SfCardLayout
+                x:Name="book"
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="-50,-20,-40,-20"
+                BackgroundColor="Transparent"
+                BindableLayout.ItemsSource="{Binding CarouselItems}"
+                IsVisible="false"
+                ShowSwipedCard="False"
+                SwipeDirection="Left"
+                VerticalOptions="Center"
+                VisibleCardIndexChanged="book_VisibleCardIndexChanged">
+                <cards:SfCardLayout.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ShowReadMode}"
+                        TargetType="cards:SfCardLayout"
+                        Value="Paging">
+                        <Setter Property="IsVisible" Value="true" />
+                    </DataTrigger>
+                    <DataTrigger
+                        Binding="{Binding PageTypeShow}"
+                        TargetType="cards:SfCardLayout"
+                        Value="TwoPages">
+                        <Setter Property="Margin" Value="-40, -20, -110, -20" />
+                    </DataTrigger>
+                    <DataTrigger
+                        Binding="{Binding PageTypeShow}"
+                        TargetType="cards:SfCardLayout"
+                        Value="ThreePages">
+                        <Setter Property="Margin" Value="-40, -20, -120, -20" />
+                    </DataTrigger>
+                </cards:SfCardLayout.Triggers>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <cards:SfCardView
+                            Padding="30"
+                            BorderThickness="0"
+                            FadeOutOnSwiping="True"
+                            HasShadow="true"
+                            IndicatorThickness="0">
+                            <cards:SfCardView.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding PageTypeShow}"
+                                    TargetType="cards:SfCardView"
+                                    Value="TwoPages">
+                                    <Setter Property="Padding" Value="30" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding PageTypeShow}"
+                                    TargetType="cards:SfCardView"
+                                    Value="ThreePages">
+                                    <Setter Property="Padding" Value="50,20,20,20" />
+                                </DataTrigger>
+                            </cards:SfCardView.Triggers>
+                            <Grid
+                                Padding="10,10,10,0"
+                                ColumnDefinitions="*,60"
+                                RowDefinitions="40,*,20">
+                                <StackLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Orientation="Horizontal">
+                                    <Label Text="Back" VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}" VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,10,0,0"
+                                    FontSize="{Binding Source={x:Reference book}, Path=BindingContext.TextSizeChapter}"
+                                    HorizontalOptions="Fill"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Text}" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="EndAndExpand"
+                                    VerticalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding IndexPage}" />
+                                            <Span Text="/" />
+                                            <Span Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </cards:SfCardView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </cards:SfCardLayout>
+            <!--<syncfusion:SfRotator
                 x:Name="rotator"
-                ItemsSource="{Binding CarouselItems}"
-                SelectedIndex="1"
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                DotPlacement="None"
                 EnableLooping="False"
-                DotPlacement="Default"
-                NavigationDirection="Horizontal">
+                ItemsSource="{Binding CarouselItems}"
+                NavigationDirection="Horizontal"
+                SelectedIndex="0">
                 <syncfusion:SfRotator.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Label
-                                Margin="20"
-                                LineBreakMode="WordWrap"
-                                Text="{Binding}" 
-                                FontSize="20"/>
-                        </Grid>
+                        <Frame Padding="20" BorderColor="{StaticResource GrayColor}">
+                            <Grid ColumnDefinitions="*,40" RowDefinitions="*,20">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    FontSize="12"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Text}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding IndexPage}" />
+                                            <Span Text="/" />
+                                            <Span Text="{Binding Source={x:Reference rotator}, Path=BindingContext.CountPage}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </syncfusion:SfRotator.ItemTemplate>
-            </syncfusion:SfRotator>
+            </syncfusion:SfRotator>-->
             <Frame
                 Grid.Row="1"
                 Grid.Column="1"
                 Padding="0"
                 BackgroundColor="#1b1b25"
                 CornerRadius="30">
-                <forms:CachedImage
-                    Scale=".5"
-                    Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                <forms:CachedImage Scale=".5" Source="resource://NovelApp.Resources.icons.ic_edit.png" />
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding NavigationSettingsCommand}" />
+                    <TapGestureRecognizer Command="{Binding NavigationSettingsCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
         </Grid>

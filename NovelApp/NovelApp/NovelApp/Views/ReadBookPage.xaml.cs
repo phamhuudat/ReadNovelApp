@@ -16,5 +16,9 @@ namespace NovelApp.Views
         {
             InitializeComponent();
         }
+        private void book_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
+        {
+            // handle event action.
+        }
     }
 }

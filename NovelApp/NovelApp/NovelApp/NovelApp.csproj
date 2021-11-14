@@ -27,6 +27,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.48" />
   </ItemGroup>
 
   <ItemGroup>
@@ -98,9 +99,12 @@
     <None Remove="Resources\icons\ic_download.png" />
     <None Remove="Resources\icons\ic_add.png" />
     <None Remove="Syncfusion.Xamarin.SfRangeSlider" />
+    <None Remove="Syncfusion.Xamarin.SfPopupLayout" />
+    <None Remove="Services\CacheService\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
+    <Folder Include="Services\CacheService\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

@@ -68,7 +68,11 @@
                                     FontSize="20"
                                     Text="List Chapter"
                                     TextColor="{StaticResource WhiteColor}"
-                                    VerticalOptions="Center" />
+                                    VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding NavigationListChapterCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                                 <forms:CachedImage
                                     Grid.Row="1"
                                     Grid.Column="0"
@@ -79,7 +83,11 @@
                                     FontSize="20"
                                     Text="About the novel"
                                     TextColor="{StaticResource WhiteColor}"
-                                    VerticalOptions="Center" />
+                                    VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding NavigationNovelInforCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                         </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
@@ -105,7 +113,7 @@
                                         CornerRadius="25"
                                         FontAttributes="Bold"
                                         FontColor="{StaticResource WhiteColor}"
-                                        SelectedIndex="2"
+                                        SelectedIndex="{Binding IndexReadMode, Mode=TwoWay}"
                                         SelectionTextColor="#6a8efe"
                                         VisibleSegmentsCount="3"
                                         Color="Transparent">
@@ -140,7 +148,8 @@
                                             ToolTipPlacement="BottomRight"
                                             TrackColor="Gray"
                                             TrackSelectionColor="#6a8efe"
-                                            TrackSelectionThickness="3" />
+                                            TrackSelectionThickness="3"
+                                            Value="{Binding Brightness, Mode=TwoWay}" />
                                     </Frame>
 
                                     <!--  Color  -->

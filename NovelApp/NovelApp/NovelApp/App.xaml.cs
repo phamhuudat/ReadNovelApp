@@ -1,5 +1,6 @@
 ﻿
 using NovelApp.Services.Book;
+using NovelApp.Services.CacheService;
 using NovelApp.Services.RequestProvider;
 using NovelApp.ViewModels;
 using NovelApp.Views;
@@ -29,6 +30,7 @@ namespace NovelApp
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();
+            containerRegistry.RegisterSingleton<ICacheService, CacheService>();
             #endregion
         }
         protected override async void OnInitialized()

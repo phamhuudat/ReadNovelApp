@@ -165,6 +165,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider">
       <Version>19.3.0.48</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
+      <Version>19.3.0.48</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
