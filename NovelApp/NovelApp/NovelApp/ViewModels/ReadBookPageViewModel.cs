@@ -5,13 +5,10 @@ using NovelApp.Services.Book;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
-using Syncfusion.SfCarousel.XForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -22,45 +19,40 @@ namespace NovelApp.ViewModels
 {
     public class ReadBookPageViewModel : BaseViewModel
     {
-       /* public int CardIndex
-        {
-            get => cardIndex; set
-            {
-                if (SetProperty(ref cardIndex, value))
-                {
-                    if (cardIndex == 1)
-                    {
-
-                        PagingMargin = new Thickness(-50, -20, -40, -20);
-                        PagingPadding = new Thickness(50, 30, 0, 30);
-                    }
-                    if (cardIndex == 2)
-                    {
-
-                        PagingMargin = new Thickness(-40, -20, -80, -20);
-                        PagingPadding = new Thickness(30, 20, 0, 20);
-                    }
-                    else
-                    {
-                        PagingMargin = new Thickness(-40, -20, -110, -20);
-                        PagingPadding = new Thickness(30);
-                    }
-
-                }
-            }
-        }*/
-
+        //Tapping-------------------------------------
+        private List<string> _prevContentChapterTapList = new List<string>();
+        /// <summary>
+        /// content hieen thi trong mod tap
+        /// </summary>
+        public string ContentChapterTap { get => contentChapterTap; set => SetProperty(ref contentChapterTap, value); }
+        private double _areaTextTap;
+        private string[] _rowTextTap;
+        private int _rowLine;
+        private int _indexPrevContentTap = -1;
+        private int _indexNextContentTap = 0;
+        private int rowInPage = 0 ;
+        private int countPixelInPage;
+        private int _maxLineInPage = 3;
+        public ICommand PrevContentCommand { get; set; }
+        public ICommand NextContentCommand { get; set; }
+        /// <summary>
+        /// margin/padding in paging
+        /// </summary>
+        ///
         public PageType PageTypeShow { get => pageTypeShow; set => SetProperty(ref pageTypeShow, value); }
-
-        //public Thickness PagingPadding { get => pagingPadding; set => SetProperty(ref pagingPadding, value); }
-        //public Thickness PagingMargin { get => pagingMargin; set => SetProperty(ref pagingMargin, value); }
         private TextSize _textSize;
         public Chapter ContentChapter { get => contentChapter; set => SetProperty(ref contentChapter, value); }
         public double TextSizeChapter { get => _textSizeChange; set => SetProperty(ref _textSizeChange, value); }
+        /// <summary>
+        /// Mode show scrolling, paging, tapping
+        /// </summary>
         public ReadMode ShowReadMode
         {
             get => readMode; set => SetProperty(ref readMode, value);
         }
+        /// <summary>
+        /// key register message settings
+        /// </summary>
         private bool _isNavigationSettings;
         /// <summary>
         /// index novelid
@@ -84,10 +76,9 @@ namespace NovelApp.ViewModels
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
-        //private Thickness pagingMargin;
         private int cardIndex;
-        //private Thickness pagingPadding;
         private PageType pageTypeShow;
+        private string contentChapterTap;
 
         /// <summary>
         /// Định nghĩa size trong ứng dụng
@@ -130,16 +121,13 @@ namespace NovelApp.ViewModels
         {
             NavigationSettingsCommand = new DelegateCommand(PopupSettings);
             GoBackCommand = new DelegateCommand(GoBack);
+            PrevContentCommand = new DelegateCommand(PrevContent);
+            NextContentCommand = new DelegateCommand(NextContent);
+
             _bookService = bookService;
             TextSizeChapter = TextSizeMode[TextSize.Normal][CharSize.Normal];
-            _textSize = TextSize.Normal;
+            _textSize = TextSize.Smaller;
             PageTypeShow = PageType.OnePage;
-            //PagingMargin = new Thickness(-50, -20, -20, -20);
-            //PagingPadding = new Thickness(40, 20, 40, 20);
-
-        }
-        private void CardTapped(object obj)
-        {
 
         }
         private async void GoBack()
@@ -211,14 +199,11 @@ namespace NovelApp.ViewModels
 
             // Height (in pixels)
             var height = mainDisplayInfo.Height / density;
-
-
             try
             {
-                var content = await _bookService.GetContentChapter(_novelId, _no);
-                var text = content.Text;
-                var rowheight = ((int)width - 40);
-                var columnHeight = ((int)height - 120);
+                var text = ContentChapter.Text;
+                var rowheight = ((int)width - 60);
+                var columnHeight = ((int)height - 100);
                 var maxRowInPage = columnHeight / normlaSizeChar;
                 //dieenj tich hien thi content
                 var counttext = rowheight * columnHeight;
@@ -318,6 +303,113 @@ namespace NovelApp.ViewModels
             ShowReadMode = readMode;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
                 await SplitPage(_textSize);
+            else if(ShowReadMode == Models.Enums.ReadMode.Tapping)
+            {
+                SetTapReadMode();
+            }
+        }
+        /// <summary>
+        /// Set view Tapping
+        /// </summary>
+        private void SetTapReadMode()
+        {
+            //tinhs do rong view hien thi
+            // Get Metrics
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+            var density = mainDisplayInfo.Density;
+            // Width (in pixels)
+            var width = (mainDisplayInfo.Width / density)/ (2 / 3);
+
+            // Height (in pixels)
+            var height = (mainDisplayInfo.Height / density)/ (2 / 3);
+            //Diện thích hiển thị content
+            _areaTextTap = width * height;
+
+            _rowTextTap = ContentChapter.Text.Split('\n');
+            _rowLine = _rowTextTap.Count();
+            ContentChapterTap = _rowTextTap[0];
+            _indexNextContentTap ++;
+            rowInPage++;
+
+        }
+        
+        /// <summary>
+        /// Xử lý back content
+        /// </summary>
+        private void PrevContent()
+        {
+            if (_prevContentChapterTapList.Any())
+            {
+                var leng = _prevContentChapterTapList.Count;
+                if (_indexPrevContentTap == -1)
+                {
+                    ContentChapterTap = _prevContentChapterTapList.Last();
+                    _indexPrevContentTap = leng - 1;
+                }
+                else if(_indexPrevContentTap > 0)
+                {
+                    ContentChapterTap = _prevContentChapterTapList[--_indexPrevContentTap];
+                }
+            }
+            
+        }
+        /// <summary>
+        /// Xử lý next content
+        /// </summary>
+        private void NextContent()
+        {
+            if (_indexPrevContentTap>0&&_prevContentChapterTapList.Any()&&_indexPrevContentTap < _prevContentChapterTapList.Count-1)
+            {
+                ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
+                return;
+            }
+            var sizeDic = TextSizeMode[TextSize.Normal];
+            int smallSizeChar = sizeDic[CharSize.Small];
+            int normlaSizeChar = sizeDic[CharSize.Normal];
+            if (_indexNextContentTap < _rowLine)
+            {
+                rowInPage++;
+                var text = _rowTextTap[_indexNextContentTap];
+                var listChar = text.ToCharArray();
+                int countminsize = 0;
+                foreach (var textChar in listChar)
+                {
+                    if (_arrayCharFilter.Contains(textChar))
+                    {
+                        countminsize++;
+                    }
+                }
+                var buffPixelInPage = countminsize * smallSizeChar + (text.Length - countminsize) * normlaSizeChar;
+                countPixelInPage += buffPixelInPage;
+                if (countPixelInPage > _areaTextTap)
+                {
+                    countPixelInPage = 0;
+                    _prevContentChapterTapList.Add(ContentChapterTap);
+                    ContentChapterTap = text;
+                }
+                else
+                {
+                    if (rowInPage == _maxLineInPage)
+                    {
+                        ContentChapterTap += "\n"+ text;
+                        RaisePropertyChanged(nameof(ContentChapterTap));
+                        countPixelInPage = 0;
+                    }
+                    else if (rowInPage > _maxLineInPage)
+                    {
+                        rowInPage = 1;
+                        countPixelInPage = buffPixelInPage;
+                        _prevContentChapterTapList.Add(ContentChapterTap);
+                        ContentChapterTap = text;
+                    }
+                    else
+                    {
+                        ContentChapterTap +="\n" + text;
+                        RaisePropertyChanged(nameof(ContentChapterTap));
+                    }
+                    _indexNextContentTap++;
+                }
+            }
         }
         private async void TextSizeReadMode(TextSize textSize)
         {
@@ -331,5 +423,7 @@ namespace NovelApp.ViewModels
                 TextSizeChapter = TextSizeMode[textSize][CharSize.Normal];
             }
         }
+
+
     }
 }

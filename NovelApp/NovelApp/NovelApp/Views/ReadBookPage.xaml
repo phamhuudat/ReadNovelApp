@@ -53,7 +53,57 @@
                 </ScrollView>
             </Grid>
             <!--  Tapping  -->
-
+            <Grid
+                Padding="20"
+                ColumnDefinitions="60,*,60"
+                IsVisible="false"
+                RowDefinitions="50,*,2*,*">
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ShowReadMode}"
+                        TargetType="Grid"
+                        Value="Tapping">
+                        <Setter Property="IsVisible" Value="true" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <!--  Header  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Back"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding ContentChapter.Name}"
+                    VerticalOptions="CenterAndExpand" />
+                <!--  Tap prev  -->
+                <StackLayout Grid.Row="1" Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PrevContentCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <!--  Content  -->
+                <ScrollView
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
+                    <StackLayout>
+                        <Label
+                            FontSize="{Binding TextSizeChapter}"
+                            HorizontalOptions="Fill"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding ContentChapterTap}"
+                            VerticalOptions="EndAndExpand" />
+                    </StackLayout>
+                </ScrollView>
+                <!--  Tap Next  -->
+                <StackLayout Grid.Row="3" Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextContentCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Grid>
             <!--  -40,-10,-100,-10  -->
             <!--  Paging  -->
             <cards:SfCardLayout
