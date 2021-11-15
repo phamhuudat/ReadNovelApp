@@ -15,6 +15,7 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
     <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
+    <PackageReference Include="Realm" Version="10.7.0" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
     <PackageReference Include="Syncfusion.Xamarin.Cards" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfCarousel" Version="19.3.0.48" />
@@ -31,7 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\fonts\Arial-Regular.ttf" />
     <EmbeddedResource Include="Resources\fonts\Font-Awesome-900.ttf" />
+    <EmbeddedResource Include="Resources\fonts\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\fonts\VnTime.ttf" />
     <EmbeddedResource Include="Resources\icons\ic_book.png" />
     <EmbeddedResource Include="Resources\icons\ic_edit.png" />
     <EmbeddedResource Include="Resources\icons\ic_listchapter.png" />
@@ -74,7 +78,10 @@
   <ItemGroup>
     <None Remove="Resources\" />
     <None Remove="Helpers\" />
+    <None Remove="Resources\fonts\Arial-Regular.ttf" />
     <None Remove="Resources\fonts\Font-Awesome-900.ttf" />
+    <None Remove="Resources\fonts\Roboto-Regular.ttf" />
+    <None Remove="Resources\fonts\VnTime.ttf" />
     <None Remove="Resources\icons\ic_book.png" />
     <None Remove="Resources\icons\ic_edit.png" />
     <None Remove="Resources\icons\ic_listchapter.png" />

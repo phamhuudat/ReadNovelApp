@@ -1,5 +1,6 @@
 ﻿using NovelApp.Configurations;
 using NovelApp.DependencyServices;
+using NovelApp.Helpers;
 using NovelApp.Models.Enums;
 using NovelApp.Views;
 using Prism.Commands;
@@ -15,6 +16,12 @@ namespace NovelApp.ViewModels
 {
     public class SettingsPopupViewModel : BaseViewModel
     {
+        private ObservableCollection<SfSegmentItem> imageTextCollection;
+        public ObservableCollection<SfSegmentItem> ImageTextCollection
+        {
+            get { return imageTextCollection; }
+            set { SetProperty(ref imageTextCollection ,value); }
+        }
         public int IndexReadMode
         {
             get => indexReadMode; set
@@ -27,7 +34,12 @@ namespace NovelApp.ViewModels
         }
         private int _novelId;
         private int indexReadMode;
+        /// <summary>
+        /// Font VT, AR, RR
+        /// </summary>
+        public string SelectFont { get => selectFont; set => SetProperty(ref selectFont, value); }
         private ReadModelColor selectTextColor;
+        private string selectFont;
 
         public ReadModelColor SelectTextColor { get => selectTextColor; set => SetProperty(ref selectTextColor, value); }
         public ICommand NavigationListChapterCommand { get; set; }
@@ -38,6 +50,7 @@ namespace NovelApp.ViewModels
         public ICommand ChangeTextFontReadModeCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
         public ICommand ChoiceColorCommand { get; set; }
+        public ICommand SelectFontCommand { get; set; }
         public SettingsPopupViewModel(INavigationService navigationService) : base(navigationService)
         {
             GoBackCommand = new DelegateCommand(Goback);
@@ -45,6 +58,21 @@ namespace NovelApp.ViewModels
             NavigationNovelInforCommand = new DelegateCommand(NavigationNovelInfor);
             ChoiceColorCommand = new DelegateCommand<object>(ChoiceColor);
             SelectTextColor = ReadModelColor.White;
+            SelectFont = AppConstants.FontFamily.ArialFont;
+            SelectFontCommand = new DelegateCommand<object>(ChoiceTextFont);
+            ImageTextCollection = new ObservableCollection<SfSegmentItem>
+        {
+            new SfSegmentItem(){IconFont = FontAwesome.Scroll, 
+                Text = "SCROLLING"},
+            new SfSegmentItem(){IconFont = FontAwesome.LayerGroup, 
+                Text = "PAGING"},
+            new SfSegmentItem(){IconFont = FontAwesome.HandPointUp, 
+                Text = "TAPPING"} };
+        }
+        private void ChoiceTextFont(object obj)
+        {
+            SelectFont = obj.ToString();
+            ChangeTextFontReadMode(SelectFont);
         }
         private void ChoiceColor(object textColor)
         {
@@ -94,7 +122,7 @@ namespace NovelApp.ViewModels
                 }
             });
         }
-        private void ChangeTextFontReadMode(TextFont textFont)
+        private void ChangeTextFontReadMode(string textFont)
         {
             MessagingCenter.Send(this, Message.MessageSettings, new Dictionary<SettingMode, object>() {
 

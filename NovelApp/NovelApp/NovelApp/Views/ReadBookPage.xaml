@@ -13,9 +13,14 @@
             RowDefinitions="*,60,30">
             <Grid.Resources>
                 <ResourceDictionary>
-                    <Style TargetType="Label">
-                        <Setter Property="TextColor"
-                                Value="{Binding TextColor}"/>
+                    <Style
+                        TargetType="Label">
+                        <Setter
+                            Property="TextColor"
+                            Value="{Binding TextColor}" />
+                        <Setter
+                            Property="FontFamily"
+                            Value="{Binding TextFontFamily}" />
                     </Style>
                 </ResourceDictionary>
             </Grid.Resources>
@@ -26,7 +31,7 @@
                     Value="White">
                     <Setter
                         Property="BackgroundColor"
-                        Value="{StaticResource WhiteTextColor}"/>
+                        Value="{StaticResource WhiteTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     TargetType="Grid"

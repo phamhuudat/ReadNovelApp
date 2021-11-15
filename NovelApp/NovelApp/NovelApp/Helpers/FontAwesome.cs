@@ -16,5 +16,9 @@ namespace NovelApp.Helpers
 		public const string CirclePlus = "\uf055";
 		public const string Comment = "\uf075";
 		public const string CircleCheck = "\uf058";
+		public const string Check = "\u2713";
+		public const string LayerGroup = "\uf5fd";
+		public const string Scroll = "\uf70e";
+		public const string HandPointUp = "\u261d";
 	}
 }

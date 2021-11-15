@@ -14,6 +14,13 @@ namespace NovelApp.Configurations
             internal const string NovelId = "ID";
             internal const string NoChapter = "NO";
         }
+        public class FontFamily
+        {
+            internal const string VnTimeFont = "VT";
+            internal const string RobotoFont = "RR";
+            internal const string ArialFont = "AR";
+
+        }
         public class Message
         {
             internal const string MessageSettings = "Settings";

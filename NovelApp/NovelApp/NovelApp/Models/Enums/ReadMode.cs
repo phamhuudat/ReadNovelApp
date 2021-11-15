@@ -40,7 +40,9 @@ namespace NovelApp.Models.Enums
     }
     public enum TextFont
     {
-        Normal
+        Arial,
+        Roboto,
+        VnTime
     }
     public enum PageType
     {

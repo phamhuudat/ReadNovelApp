@@ -34,10 +34,12 @@ namespace NovelApp.ViewModels
         private int countPixelInPage;
         private int _maxLineInPage = 3;
         private Color textColor;
+        public string TextFontFamily { get => textFontFamily; set => SetProperty(ref textFontFamily, value); }
         public Color TextColor { get => textColor; set => SetProperty(ref textColor, value); }
         public ReadModelColor SelectBgColor { get => selectBgColor; set => SetProperty(ref selectBgColor, value); }
         public ICommand PrevContentCommand { get; set; }
         public ICommand NextContentCommand { get; set; }
+
         /// <summary>
         /// margin/padding in paging
         /// </summary>
@@ -82,6 +84,7 @@ namespace NovelApp.ViewModels
         private PageType pageTypeShow;
         private string contentChapterTap;
         private ReadModelColor selectBgColor;
+        private string textFontFamily;
 
         /// <summary>
         /// Định nghĩa size trong ứng dụng
@@ -131,7 +134,7 @@ namespace NovelApp.ViewModels
             TextSizeChapter = TextSizeMode[TextSize.Normal][CharSize.Normal];
             _textSize = TextSize.Smaller;
             PageTypeShow = PageType.OnePage;
-
+            TextFontFamily = AppConstants.FontFamily.ArialFont;
         }
         public async void GoBack()
         {
@@ -161,6 +164,10 @@ namespace NovelApp.ViewModels
                         TextColor = Color.White;
                     else
                         TextColor = Color.Black;
+                }
+                else if (e.ContainsKey(SettingMode.Font))
+                {
+                   TextFontFamily = e[SettingMode.Font].ToString();
                 }
             });
         }

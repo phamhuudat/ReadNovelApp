@@ -38,6 +38,8 @@
             x:Key="IconCircle">&#x25cf;</x:String>
         <x:String
             x:Key="IconCircleCheck">&#xf058;</x:String>
+        <x:String
+            x:Key="IconCheck">&#x2713;</x:String>
 
     </Application.Resources>
 </prism:PrismApplication>
