@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NovelApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,12 @@ namespace NovelApp.Views
         private void book_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
         {
             // handle event action.
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            var viewmdel = BindingContext as ReadBookPageViewModel;
+            viewmdel.GoBack();
+            return false;
         }
     }
 }

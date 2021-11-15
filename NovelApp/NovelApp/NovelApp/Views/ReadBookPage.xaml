@@ -11,6 +11,64 @@
             x:Name="page"
             ColumnDefinitions="*,60"
             RowDefinitions="*,60,30">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="Label">
+                        <Setter Property="TextColor"
+                                Value="{Binding TextColor}"/>
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            <Grid.Triggers>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="White">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource WhiteTextColor}"/>
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="YellowLight">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource YellowTextColor}" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="GreenLight">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource GreenTextColor}" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="GrayLight">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource GrayTextColor}" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="OrangeLight">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource OrangeTextColor}" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Grid"
+                    Binding="{Binding SelectBgColor}"
+                    Value="Black">
+                    <Setter
+                        Property="BackgroundColor"
+                        Value="{StaticResource BlackTextColor}" />
+                </DataTrigger>
+            </Grid.Triggers>
             <!--  Scrolling  -->
             <Grid
                 Grid.Row="0"
@@ -26,7 +84,9 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="Grid"
                         Value="Scrolling">
-                        <Setter Property="IsVisible" Value="true" />
+                        <Setter
+                            Property="IsVisible"
+                            Value="true" />
                     </DataTrigger>
                 </Grid.Triggers>
                 <Label
@@ -63,7 +123,9 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="Grid"
                         Value="Tapping">
-                        <Setter Property="IsVisible" Value="true" />
+                        <Setter
+                            Property="IsVisible"
+                            Value="true" />
                     </DataTrigger>
                 </Grid.Triggers>
                 <!--  Header  -->
@@ -78,9 +140,12 @@
                     Text="{Binding ContentChapter.Name}"
                     VerticalOptions="CenterAndExpand" />
                 <!--  Tap prev  -->
-                <StackLayout Grid.Row="1" Grid.Column="1">
+                <StackLayout
+                    Grid.Row="1"
+                    Grid.Column="1">
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PrevContentCommand}" />
+                        <TapGestureRecognizer
+                            Command="{Binding PrevContentCommand}" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
                 <!--  Content  -->
@@ -98,9 +163,12 @@
                     </StackLayout>
                 </ScrollView>
                 <!--  Tap Next  -->
-                <StackLayout Grid.Row="3" Grid.Column="1">
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.Column="1">
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NextContentCommand}" />
+                        <TapGestureRecognizer
+                            Command="{Binding NextContentCommand}" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Grid>
@@ -125,19 +193,25 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="cards:SfCardLayout"
                         Value="Paging">
-                        <Setter Property="IsVisible" Value="true" />
+                        <Setter
+                            Property="IsVisible"
+                            Value="true" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding PageTypeShow}"
                         TargetType="cards:SfCardLayout"
                         Value="TwoPages">
-                        <Setter Property="Margin" Value="-40, -20, -110, -20" />
+                        <Setter
+                            Property="Margin"
+                            Value="-40, -20, -110, -20" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding PageTypeShow}"
                         TargetType="cards:SfCardLayout"
                         Value="ThreePages">
-                        <Setter Property="Margin" Value="-40, -20, -120, -20" />
+                        <Setter
+                            Property="Margin"
+                            Value="-40, -20, -120, -20" />
                     </DataTrigger>
                 </cards:SfCardLayout.Triggers>
                 <BindableLayout.ItemTemplate>
@@ -153,13 +227,17 @@
                                     Binding="{Binding PageTypeShow}"
                                     TargetType="cards:SfCardView"
                                     Value="TwoPages">
-                                    <Setter Property="Padding" Value="30" />
+                                    <Setter
+                                        Property="Padding"
+                                        Value="30" />
                                 </DataTrigger>
                                 <DataTrigger
                                     Binding="{Binding PageTypeShow}"
                                     TargetType="cards:SfCardView"
                                     Value="ThreePages">
-                                    <Setter Property="Padding" Value="50,20,20,20" />
+                                    <Setter
+                                        Property="Padding"
+                                        Value="50,20,20,20" />
                                 </DataTrigger>
                             </cards:SfCardView.Triggers>
                             <Grid
@@ -171,8 +249,12 @@
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     Orientation="Horizontal">
-                                    <Label Text="Back" VerticalOptions="CenterAndExpand" />
-                                    <Label Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}" VerticalOptions="CenterAndExpand" />
+                                    <Label
+                                        Text="Back"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <Label
+                                        Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}"
+                                        VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
                                 <Label
                                     Grid.Row="1"
@@ -190,9 +272,12 @@
                                     VerticalOptions="Start">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding IndexPage}" />
-                                            <Span Text="/" />
-                                            <Span Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
+                                            <Span
+                                                Text="{Binding IndexPage}" />
+                                            <Span
+                                                Text="/" />
+                                            <Span
+                                                Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
@@ -246,9 +331,12 @@
                 Padding="0"
                 BackgroundColor="#1b1b25"
                 CornerRadius="30">
-                <forms:CachedImage Scale=".5" Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                <forms:CachedImage
+                    Scale=".5"
+                    Source="resource://NovelApp.Resources.icons.ic_edit.png" />
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigationSettingsCommand}" />
+                    <TapGestureRecognizer
+                        Command="{Binding NavigationSettingsCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
         </Grid>

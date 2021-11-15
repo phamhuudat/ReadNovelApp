@@ -4,6 +4,7 @@ namespace NovelApp.Models.Enums
     public enum SettingMode
     {
         ReadMode,
+        Brightness,
         ReadModeColor,
         TextSize,
         Font

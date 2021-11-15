@@ -30,9 +30,12 @@ namespace NovelApp.ViewModels
         private int _rowLine;
         private int _indexPrevContentTap = -1;
         private int _indexNextContentTap = 0;
-        private int rowInPage = 0 ;
+        private int rowInPage = 0;
         private int countPixelInPage;
         private int _maxLineInPage = 3;
+        private Color textColor;
+        public Color TextColor { get => textColor; set => SetProperty(ref textColor, value); }
+        public ReadModelColor SelectBgColor { get => selectBgColor; set => SetProperty(ref selectBgColor, value); }
         public ICommand PrevContentCommand { get; set; }
         public ICommand NextContentCommand { get; set; }
         /// <summary>
@@ -76,9 +79,9 @@ namespace NovelApp.ViewModels
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
-        private int cardIndex;
         private PageType pageTypeShow;
         private string contentChapterTap;
+        private ReadModelColor selectBgColor;
 
         /// <summary>
         /// Định nghĩa size trong ứng dụng
@@ -130,7 +133,7 @@ namespace NovelApp.ViewModels
             PageTypeShow = PageType.OnePage;
 
         }
-        private async void GoBack()
+        public async void GoBack()
         {
             UnRegisterMessageSettings();
             await NavigationService.GoBackAsync();
@@ -149,10 +152,19 @@ namespace NovelApp.ViewModels
                 }
                 else if (e.ContainsKey(SettingMode.TextSize))
                 {
-                    TextSizeReadMode((TextSize)e[SettingMode.ReadMode]);
+                    TextSizeReadMode((TextSize)e[SettingMode.TextSize]);
+                }
+                else if (e.ContainsKey(SettingMode.ReadModeColor))
+                {
+                    SelectBgColor = (ReadModelColor)e[SettingMode.ReadModeColor];
+                    if (SelectBgColor == ReadModelColor.Black)
+                        TextColor = Color.White;
+                    else
+                        TextColor = Color.Black;
                 }
             });
         }
+
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
@@ -186,7 +198,7 @@ namespace NovelApp.ViewModels
         /// </summary>
         /// <param name="textSize"></param>
         /// <returns></returns>
-        private async Task SplitPage(TextSize textSize = TextSize.Smallest)
+        private void SplitPage(TextSize textSize = TextSize.Smallest)
         {
             var sizeDic = TextSizeMode[textSize];
             int smallSizeChar = sizeDic[CharSize.Small];
@@ -298,12 +310,12 @@ namespace NovelApp.ViewModels
         /// <summary>
         /// Tapping, Scrolling, Paging
         /// </summary>
-        private async void ReadMode(ReadMode readMode)
+        private void ReadMode(ReadMode readMode)
         {
             ShowReadMode = readMode;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
-                await SplitPage(_textSize);
-            else if(ShowReadMode == Models.Enums.ReadMode.Tapping)
+                SplitPage(_textSize);
+            else if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
                 SetTapReadMode();
             }
@@ -318,21 +330,21 @@ namespace NovelApp.ViewModels
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             var density = mainDisplayInfo.Density;
             // Width (in pixels)
-            var width = (mainDisplayInfo.Width / density)/ (2 / 3);
+            var width = (mainDisplayInfo.Width / density) / (2 / 3);
 
             // Height (in pixels)
-            var height = (mainDisplayInfo.Height / density)/ (2 / 3);
+            var height = (mainDisplayInfo.Height / density) / (2 / 3);
             //Diện thích hiển thị content
             _areaTextTap = width * height;
 
             _rowTextTap = ContentChapter.Text.Split('\n');
             _rowLine = _rowTextTap.Count();
             ContentChapterTap = _rowTextTap[0];
-            _indexNextContentTap ++;
+            _indexNextContentTap++;
             rowInPage++;
 
         }
-        
+
         /// <summary>
         /// Xử lý back content
         /// </summary>
@@ -346,19 +358,19 @@ namespace NovelApp.ViewModels
                     ContentChapterTap = _prevContentChapterTapList.Last();
                     _indexPrevContentTap = leng - 1;
                 }
-                else if(_indexPrevContentTap > 0)
+                else if (_indexPrevContentTap > 0)
                 {
                     ContentChapterTap = _prevContentChapterTapList[--_indexPrevContentTap];
                 }
             }
-            
+
         }
         /// <summary>
         /// Xử lý next content
         /// </summary>
         private void NextContent()
         {
-            if (_indexPrevContentTap>0&&_prevContentChapterTapList.Any()&&_indexPrevContentTap < _prevContentChapterTapList.Count-1)
+            if (_indexPrevContentTap > 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
             {
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
                 return;
@@ -391,7 +403,7 @@ namespace NovelApp.ViewModels
                 {
                     if (rowInPage == _maxLineInPage)
                     {
-                        ContentChapterTap += "\n"+ text;
+                        ContentChapterTap += "\n" + text;
                         RaisePropertyChanged(nameof(ContentChapterTap));
                         countPixelInPage = 0;
                     }
@@ -404,18 +416,20 @@ namespace NovelApp.ViewModels
                     }
                     else
                     {
-                        ContentChapterTap +="\n" + text;
+                        ContentChapterTap += "\n" + text;
                         RaisePropertyChanged(nameof(ContentChapterTap));
                     }
                     _indexNextContentTap++;
                 }
             }
         }
-        private async void TextSizeReadMode(TextSize textSize)
+        private void TextSizeReadMode(TextSize textSize)
         {
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
             {
-                await SplitPage(textSize);
+                _textSize = textSize;
+                TextSizeChapter = TextSizeMode[textSize][CharSize.Normal];
+                SplitPage(textSize);
             }
             else
             {
@@ -423,7 +437,5 @@ namespace NovelApp.ViewModels
                 TextSizeChapter = TextSizeMode[textSize][CharSize.Normal];
             }
         }
-
-
     }
 }

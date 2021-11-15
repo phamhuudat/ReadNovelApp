@@ -5,6 +5,7 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Prism.Plugin.Popups;
+using Plugin.CurrentActivity;
 
 namespace NovelApp.Droid
 {
@@ -15,6 +16,7 @@ namespace NovelApp.Droid
         {
             base.OnCreate(savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Rg.Plugins.Popup.Popup.Init(this);

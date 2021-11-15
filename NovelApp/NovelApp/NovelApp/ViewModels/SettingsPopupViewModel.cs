@@ -1,9 +1,12 @@
 ﻿using NovelApp.Configurations;
+using NovelApp.DependencyServices;
 using NovelApp.Models.Enums;
 using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
+using Syncfusion.XForms.Buttons;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 using static NovelApp.Configurations.AppConstants;
@@ -22,20 +25,11 @@ namespace NovelApp.ViewModels
                 };
             }
         }
-        private int Brightness
-        {
-            get => brightness; set
-            {
-               if(SetProperty(ref brightness, value))
-                {
-
-                }
-            }
-        } 
         private int _novelId;
         private int indexReadMode;
-        private int brightness;
+        private ReadModelColor selectTextColor;
 
+        public ReadModelColor SelectTextColor { get => selectTextColor; set => SetProperty(ref selectTextColor, value); }
         public ICommand NavigationListChapterCommand { get; set; }
         public ICommand NavigationNovelInforCommand { get; set; }
         public ICommand ChangeReadModeCommand { get; set; }
@@ -43,15 +37,19 @@ namespace NovelApp.ViewModels
         public ICommand ChangeTextSizeReadModeCommand { get; set; }
         public ICommand ChangeTextFontReadModeCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
+        public ICommand ChoiceColorCommand { get; set; }
         public SettingsPopupViewModel(INavigationService navigationService) : base(navigationService)
         {
             GoBackCommand = new DelegateCommand(Goback);
             NavigationListChapterCommand = new DelegateCommand(NavigationListChapter);
             NavigationNovelInforCommand = new DelegateCommand(NavigationNovelInfor);
-            //ChangeReadModeCommand = new DelegateCommand<ReadMode>(ChangeReadMode);
-            //ChangeColorReadModeCommand = new DelegateCommand<ReadModelColor>(ChangeColorReadMode);
-            //ChangeTextSizeReadModeCommand = new DelegateCommand<TextSize>(ChangeTextSizeReadMode);
-            //ChangeTextFontReadModeCommand = new DelegateCommand<TextFont>(ChangeTextFontReadMode);
+            ChoiceColorCommand = new DelegateCommand<object>(ChoiceColor);
+            SelectTextColor = ReadModelColor.White;
+        }
+        private void ChoiceColor(object textColor)
+        {
+            SelectTextColor = (ReadModelColor)int.Parse(textColor.ToString());
+            ChangeColorReadMode(SelectTextColor);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -87,12 +85,12 @@ namespace NovelApp.ViewModels
                 }
             });
         }
-        private void ChangeTextSizeReadMode(TextSize textSize)
+        public void ChangeTextSizeReadMode(TextSize textSize)
         {
             MessagingCenter.Send(this, Message.MessageSettings, new Dictionary<SettingMode, object>() {
 
                 {SettingMode.TextSize,
-                  textSize
+                   textSize
                 }
             });
         }
