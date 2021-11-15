@@ -7,6 +7,7 @@ namespace NovelApp.Configurations
 {
     public class AppConstants
     {
+
         public class NavigationParameter
         {
             internal const string GoBack = "GoBack";
@@ -19,6 +20,16 @@ namespace NovelApp.Configurations
             internal const string VnTimeFont = "VT";
             internal const string RobotoFont = "RR";
             internal const string ArialFont = "AR";
+
+        }
+        public class CacheParameter
+        {
+            internal const string DatabaseLocalRealm = "RealmDatabase.realm";
+            internal const string TextSize = "TextSize";
+            internal const string TextColor = "TextColor";
+            internal const string TextFont = "TextFont";
+            internal const string PageType = "PageType";
+            internal const string ReadMode = "ReadMode";
 
         }
         public class Message

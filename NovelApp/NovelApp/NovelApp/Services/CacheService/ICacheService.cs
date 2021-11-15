@@ -11,12 +11,12 @@ namespace NovelApp.Services.CacheService
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Task SaveCache(string key, string value);
+        void SaveCache(string key, string value);
         /// <summary>
         /// GetCache value
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<string> GetCache(string key);
+        string GetCache(string key);
     }
 }

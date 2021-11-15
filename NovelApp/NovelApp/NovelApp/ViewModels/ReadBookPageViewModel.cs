@@ -2,6 +2,7 @@
 using NovelApp.Models.BookGwModels;
 using NovelApp.Models.Enums;
 using NovelApp.Services.Book;
+using NovelApp.Services.CacheService;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
@@ -71,6 +72,7 @@ namespace NovelApp.ViewModels
         public int CountPage { get => _countPage; set => SetProperty(ref _countPage, value); }
         private ObservableCollection<PageChapter> carouselItems;
         private readonly IBookService _bookService;
+        private readonly ICacheService _cacheService;
         public ICommand NavigationSettingsCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
         public ObservableCollection<PageChapter> CarouselItems { get => carouselItems; set => SetProperty(ref carouselItems, value); }
@@ -123,18 +125,29 @@ namespace NovelApp.ViewModels
             }},
         };
 
-        public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
+        public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
+            ICacheService cacheService
+            ) : base(navigationService)
         {
+            _bookService = bookService;
+            _cacheService = cacheService;
             NavigationSettingsCommand = new DelegateCommand(PopupSettings);
             GoBackCommand = new DelegateCommand(GoBack);
             PrevContentCommand = new DelegateCommand(PrevContent);
             NextContentCommand = new DelegateCommand(NextContent);
-
-            _bookService = bookService;
-            TextSizeChapter = TextSizeMode[TextSize.Normal][CharSize.Normal];
-            _textSize = TextSize.Smaller;
-            PageTypeShow = PageType.OnePage;
-            TextFontFamily = AppConstants.FontFamily.ArialFont;
+            GetCache();
+        }
+        private void GetCache()
+        {
+            _textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
+               TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
+            TextSizeChapter = TextSizeMode[_textSize][CharSize.Normal];
+            PageTypeShow = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.PageType)) ?
+               PageType.OnePage : (PageType)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.PageType));
+            TextFontFamily = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
+               AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
+            //SelectBgColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
+            //   Color.Black :Color.FromHex(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
         }
         public async void GoBack()
         {
@@ -151,14 +164,17 @@ namespace NovelApp.ViewModels
             {
                 if (e.ContainsKey(SettingMode.ReadMode))
                 {
+                    _cacheService.SaveCache(AppConstants.CacheParameter.ReadMode,( (int)(ReadMode)e[SettingMode.ReadMode]).ToString());
                     ReadMode((ReadMode)e[SettingMode.ReadMode]);
                 }
                 else if (e.ContainsKey(SettingMode.TextSize))
                 {
+                    _cacheService.SaveCache(AppConstants.CacheParameter.TextSize, ((int)(TextSize)e[SettingMode.TextSize]).ToString());
                     TextSizeReadMode((TextSize)e[SettingMode.TextSize]);
                 }
                 else if (e.ContainsKey(SettingMode.ReadModeColor))
                 {
+                    _cacheService.SaveCache(AppConstants.CacheParameter.TextSize, ((int)(TextSize)e[SettingMode.TextSize]).ToString());
                     SelectBgColor = (ReadModelColor)e[SettingMode.ReadModeColor];
                     if (SelectBgColor == ReadModelColor.Black)
                         TextColor = Color.White;
@@ -167,7 +183,7 @@ namespace NovelApp.ViewModels
                 }
                 else if (e.ContainsKey(SettingMode.Font))
                 {
-                   TextFontFamily = e[SettingMode.Font].ToString();
+                    TextFontFamily = e[SettingMode.Font].ToString();
                 }
             });
         }
