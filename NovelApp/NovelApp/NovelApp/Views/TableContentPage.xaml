@@ -43,10 +43,10 @@
     <ContentPage.Content>
         <StackLayout
             Padding="15,25,15,0"
-            BackgroundColor="{StaticResource ThemeBg}">
+            BackgroundColor="{StaticResource TableContentThemeBgColor}">
             <Frame
                 Padding="12,13,12,13"
-                BackgroundColor="{StaticResource SearchBarBgColor}"
+                BackgroundColor="{StaticResource TableContentSearchBarBgColor}"
                 CornerRadius="8">
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -54,13 +54,12 @@
                         FontSize="{StaticResource TextSmallSiZe}"
                         Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
                         TextColor="{StaticResource GrayColor}" />
-                    <forms:CachedImage
-                        Aspect="AspectFill"
-                        HeightRequest="30"
+                    <Label
                         HorizontalOptions="EndAndExpand"
-                        Source="resource://NovelApp.Resources.icons.ic_infor.png"
-                        VerticalOptions="Center"
-                        WidthRequest="30" />
+                        FontSize="{StaticResource TextTagSiZe}"
+                        FontFamily="AC"
+                        TextColor="{StaticResource TableContentIconColor}"
+                        Text="{StaticResource IconCircleQuestion}" />
                 </StackLayout>
 
             </Frame>
@@ -87,14 +86,14 @@
                                     FontAttributes="Bold"
                                     FontSize="{StaticResource TextNormalSiZe}"
                                     Text="{Binding No}"
-                                    TextColor="{StaticResource TextTitleBookColor}"
+                                    TextColor="{StaticResource TableContentTextColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSiZe}"
                                     Text="{Binding Name}"
-                                    TextColor="{StaticResource TextTitleBookColor}"
+                                    TextColor="{StaticResource TableContentTextColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
@@ -102,12 +101,14 @@
                                     FontSize="{StaticResource BookDetailTextSmallerSize}"
                                     HorizontalOptions="Start"
                                     Text="{Binding UpdTime, StringFormat='Updated {0}'}"
-                                    TextColor="{StaticResource TextTitleBookColor}"
+                                    TextColor="{StaticResource TableContentTextColor}"
                                     VerticalOptions="End" />
                                 <Label
                                     Grid.Column="1"
                                     HorizontalOptions="EndAndExpand"
                                     VerticalOptions="Center"
+                                    FontSize="{StaticResource TextNormalSiZe}"
+                                    TextColor="{StaticResource TableContentTextColor}"
                                     FontFamily="AC">
                                     <Label.Triggers>
                                         <DataTrigger

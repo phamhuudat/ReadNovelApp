@@ -64,7 +64,6 @@
     <Color
         x:Key="BookDetaiPinkColor">#f7b2ca</Color>
     <!--Post comment-->
-    <!--Post comment-->
     <Color
         x:Key="PostCommentThemeBgColor">White</Color>
     <Color
@@ -73,5 +72,13 @@
         x:Key="PostCommentContentBgColor">#e2e0e1</Color>
     <Color
         x:Key="PostCommentTextColor">Black</Color>
-
+    <!--List chapter-->
+    <Color
+        x:Key="TableContentThemeBgColor">White</Color>
+    <Color
+        x:Key="TableContentSearchBarBgColor">#f7f8fd</Color>
+    <Color
+        x:Key="TableContentTextColor">Black</Color>
+    <Color
+        x:Key="TableContentIconColor">Gray</Color>
 </ResourceDictionary>

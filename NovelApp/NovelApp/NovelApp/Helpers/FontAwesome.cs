@@ -4,8 +4,8 @@ using System.Text;
 
 namespace NovelApp.Helpers
 {
-    public static partial class FontAwesome
-    {
+	public static partial class FontAwesome
+	{
 		public const string Circle = "\u25cf";
 		public const string ArrowDownWideShort = "\uf160";
 		public const string ArrowUpWideShort = "\uf161";
@@ -26,5 +26,6 @@ namespace NovelApp.Helpers
 		public const string Download = "\uf019";
 		public const string Pen = "\uf304";
 		public const string Lock = "\uf023";
+		public const string CircleQuestion = "\uf059";
 	}
 }

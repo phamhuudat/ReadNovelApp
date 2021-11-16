@@ -72,5 +72,16 @@
         x:Key="PostCommentContentBgColor">#333344</Color>
     <Color
         x:Key="PostCommentTextColor">White</Color>
+    <!--List chapter-->
+    <Color
+        x:Key="TableContentThemeBgColor">#121116</Color>
+    <Color
+        x:Key="TableContentSearchBarBgColor">#262630</Color>
+    <Color
+        x:Key="TableContentTextColor">White</Color>
+    <Color
+        x:Key="TableContentIconColor">#f7f8fd</Color>
+    
+    
 
 </ResourceDictionary>
