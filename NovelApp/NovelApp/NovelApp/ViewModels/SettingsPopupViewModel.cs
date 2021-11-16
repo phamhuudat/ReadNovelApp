@@ -97,8 +97,11 @@ namespace NovelApp.ViewModels
             var textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
                TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
             IndexTextSize = (int)textSize;
-            IndexReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
+
+            var readMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
                (int)ReadMode.Scrolling : int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode));
+            _isFirstIndexReadMode = readMode == 0;
+            IndexReadMode = readMode;
             SelectFont = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
                AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
             SelectTextColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
@@ -113,6 +116,12 @@ namespace NovelApp.ViewModels
         private void ChoiceColor(object textColor)
         {
             SelectTextColor = (ReadModelColor)int.Parse(textColor.ToString());
+            if(SelectTextColor == ReadModelColor.White)
+            {
+                DependencyService.Get<IAppTheme>().SetAppTheme(Theme.Light);
+            }
+            else if(SelectTextColor == ReadModelColor.Black)
+                DependencyService.Get<IAppTheme>().SetAppTheme(Theme.Dark);
             ChangeColorReadMode(SelectTextColor);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)

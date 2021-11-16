@@ -85,7 +85,7 @@
                                         HorizontalOptions="Center"
                                         Orientation="Horizontal">
                                         <Label
-                                            FontSize="{StaticResource TextSmallSiZe}"
+                                            FontSize="{StaticResource TextSmallSize}"
                                             Text="Golden Tickets"
                                             TextColor="{StaticResource GrayColor}" />
                                         <Label FontFamily="AC"
@@ -127,7 +127,7 @@
                                         HorizontalOptions="Center"
                                         Orientation="Horizontal">
                                         <Label
-                                            FontSize="{StaticResource TextSmallSiZe}"
+                                            FontSize="{StaticResource TextSmallSize}"
                                             Text="Honors"
                                             TextColor="{StaticResource GrayColor}" />
                                         <Label
@@ -160,7 +160,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    FontSize="{StaticResource TextSmallSiZe}"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     MaxLines="7"
                                     Text="{Binding Novel.Description}"
                                     TextColor="{StaticResource GrayColor}">
@@ -208,11 +208,11 @@
                                 TextColor="{StaticResource BookDetailTextColor}" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontSize="{StaticResource TextSmallSiZe}"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     Text="{Binding Novel.LastChapter}"
                                     TextColor="{StaticResource GrayColor}" />
                                 <Label
-                                    FontSize="{StaticResource TextSmallSiZe}"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.UpdatedTimeNumber, StringFormat='Updated {0}h'}"
                                     TextColor="{StaticResource GrayColor}" />
@@ -236,7 +236,7 @@
                                     Text="Tags"
                                     TextColor="{StaticResource BookDetailTextColor}" />
                                 <Label
-                                    FontSize="{StaticResource TextSmallSiZe}"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.CountTag, StringFormat='{0} tags'}"
                                     TextColor="{StaticResource GrayColor}" />
@@ -274,7 +274,7 @@
                                     Text="Reviews"
                                     TextColor="{StaticResource BookDetailTextColor}" />
                                 <Label
-                                    FontSize="{StaticResource TextSmallSiZe}"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding CountReview, StringFormat='{0} Reviews'}"
                                     TextColor="{StaticResource GrayColor}" />
@@ -304,14 +304,14 @@
                                                 <Label
                                                     Grid.Row="0"
                                                     Grid.Column="1"
-                                                    FontSize="{StaticResource TextSmallSiZe}"
+                                                    FontSize="{StaticResource TextSmallSize}"
                                                     Text="{Binding Name}"
                                                     TextColor="{StaticResource BookDetailTextColor}"
                                                     VerticalOptions="Center" />
                                                 <Label
                                                     Grid.Row="1"
                                                     Grid.Column="1"
-                                                    FontSize="{StaticResource TextSmallSiZe}"
+                                                    FontSize="{StaticResource TextSmallSize}"
                                                     Text="{Binding Content}"
                                                     TextColor="{StaticResource BookDetailTextColor}"
                                                     VerticalOptions="Center" />
@@ -375,7 +375,7 @@
                     CornerRadius="30">
                     <Label
                         FontFamily="AC"
-                        FontSize="{StaticResource TextNormalSiZe}"
+                        FontSize="{StaticResource TextNormalSize}"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         TextColor="{StaticResource WhiteColor}"

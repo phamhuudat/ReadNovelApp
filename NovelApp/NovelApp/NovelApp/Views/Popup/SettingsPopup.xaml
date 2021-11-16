@@ -19,14 +19,16 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <Style TargetType="Label">
-                    <Setter Property="TextColor" Value="{Binding TextColor}" />
+                    <Setter
+                        Property="TextColor"
+                        Value="{StaticResource SettingTextColor}" />
                 </Style>
             </ResourceDictionary>
         </Grid.Resources>
         <Frame
             Grid.Row="1"
             Margin="0,0,0,-30"
-            BackgroundColor="#1b1b25"
+            BackgroundColor="{StaticResource SettingThemeBgColor}"
             CornerRadius="30">
             <Grid ColumnDefinitions="*,80,*" RowDefinitions="20,*">
                 <!--  Goback popup  -->
@@ -34,7 +36,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Padding="20,5,20,5"
-                    BackgroundColor="#36363d"
+                    BackgroundColor="{StaticResource SettingGobackBgColor}"
                     CornerRadius="6">
                     <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
                     <Frame.GestureRecognizers>
@@ -51,11 +53,11 @@
                         <tabView:SelectionIndicatorSettings
                             Position="Bottom"
                             StrokeThickness="2"
-                            Color="White" />
+                            Color="{StaticResource SettingTextColor}" />
                     </tabView:SfTabView.SelectionIndicatorSettings>
                     <tabView:SfTabItem
                         Title="General"
-                        SelectionColor="White"
+                        SelectionColor="{StaticResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
                         TitleFontSize="25">
@@ -65,31 +67,39 @@
                                 ColumnSpacing="20"
                                 RowDefinitions="60,60,*"
                                 RowSpacing="10">
-                                <forms:CachedImage
+                                <Label
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Source="resource://NovelApp.Resources.icons.ic_listchapter.png" />
+                                    FontFamily="AC"
+                                    FontSize="{StaticResource TextNormalSize}"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource SettingTextColor}"
+                                    Text="{StaticResource IconClipboardList}" />
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     Text="List Chapter"
-                                    TextColor="{StaticResource WhiteColor}"
+                                    TextColor="{StaticResource SettingTextColor}"
                                     VerticalOptions="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding NavigationListChapterCommand}" />
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <forms:CachedImage
+                                <Label
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    Source="resource://NovelApp.Resources.icons.ic_book.png" />
+                                    FontFamily="AC"
+                                    FontSize="{StaticResource TextNormalSize}"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource SettingTextColor}"
+                                    Text="{StaticResource IconFileLines}" />
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     Text="About the novel"
-                                    TextColor="{StaticResource WhiteColor}"
+                                    TextColor="{StaticResource SettingTextColor}"
                                     VerticalOptions="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding NavigationNovelInforCommand}" />
@@ -100,7 +110,7 @@
                     </tabView:SfTabItem>
                     <tabView:SfTabItem
                         Title="Display"
-                        SelectionColor="White"
+                        SelectionColor="{StaticResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
                         TitleFontSize="25">
@@ -113,24 +123,26 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Reading mode"
-                                        TextColor="{StaticResource WhiteColor}" />
+                                        TextColor="{StaticResource SettingTextColor}" />
                                     <buttons:SfSegmentedControl
                                         x:Name="ReadModePage"
-                                        BackgroundColor="#131219"
+                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
                                         BorderColor="Transparent"
                                         CornerRadius="30"
                                         DisplayMode="ImageWithText"
-                                        FontColor="{StaticResource WhiteColor}"
-                                        FontIconFontColor="{StaticResource WhiteColor}"
+                                        FontColor="{StaticResource SettingTextColor}"
+                                        FontIconFontColor="{StaticResource SettingTextColor}"
                                         FontIconFontFamily="AC"
                                         FontIconFontSize="25"
                                         ItemsSource="{Binding ImageTextCollection}"
                                         SegmentHeight="60"
                                         SelectedIndex="{Binding IndexReadMode, Mode=TwoWay}"
-                                        SelectionTextColor="#6a8efe"
+                                        SelectionTextColor="{StaticResource SettingSliderBgColor}"
                                         VisibleSegmentsCount="3">
                                         <buttons:SfSegmentedControl.SelectionIndicatorSettings>
-                                            <buttons:SelectionIndicatorSettings CornerRadius="30" Color="#1b1b25" />
+                                            <buttons:SelectionIndicatorSettings
+                                                CornerRadius="30"
+                                                Color="{StaticResource SettingThemeBgColor}" />
                                         </buttons:SfSegmentedControl.SelectionIndicatorSettings>
                                     </buttons:SfSegmentedControl>
                                     <!--  Brigtness  -->
@@ -139,10 +151,10 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Brightness"
-                                        TextColor="{StaticResource WhiteColor}" />
+                                        TextColor="{StaticResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
-                                        BackgroundColor="#131219"
+                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
                                         <Grid ColumnDefinitions="40,*,40">
                                             <Label
@@ -151,12 +163,12 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="☾"
-                                                TextColor="{StaticResource WhiteColor}" />
+                                                TextColor="{StaticResource SettingTextColor}" />
                                             <range:SfRangeSlider
                                                 x:Name="Brightness"
                                                 Grid.Column="1"
                                                 HeightRequest="30"
-                                                KnobColor="#6a8efe"
+                                                KnobColor="{StaticResource SettingSliderBgColor}"
                                                 Maximum="{OnPlatform iOS=100,
                                                                      Android=255}"
                                                 Minimum="0"
@@ -168,7 +180,7 @@
                                                 StepFrequency="1"
                                                 TickPlacement="None"
                                                 TrackColor="Gray"
-                                                TrackSelectionColor="#6a8efe"
+                                                TrackSelectionColor="{StaticResource SettingSliderBgColor}"
                                                 TrackSelectionThickness="3"
                                                 ValueChangeMode="Default"
                                                 ValueChanging="Brightness_ValueChanging" />
@@ -178,7 +190,7 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="🔆"
-                                                TextColor="{StaticResource WhiteColor}" />
+                                                TextColor="{StaticResource SettingTextColor}" />
                                         </Grid>
 
                                     </Frame>
@@ -189,7 +201,7 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Color"
-                                        TextColor="{StaticResource WhiteColor}" />
+                                        TextColor="{StaticResource SettingTextColor}" />
                                     <Grid ColumnDefinitions="*,*,*,*,*">
                                         <Grid.Resources>
                                             <ResourceDictionary>
@@ -201,7 +213,7 @@
                                                 </Style>
                                             </ResourceDictionary>
                                         </Grid.Resources>
-                                        <Label Grid.Column="0" TextColor="{StaticResource WhiteTextColor}">
+                                        <Label Grid.Column="0" TextColor="{StaticResource SettingTextColor}">
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="0" />
                                             </Label.GestureRecognizers>
@@ -287,10 +299,10 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Text size"
-                                        TextColor="{StaticResource WhiteColor}" />
+                                        TextColor="{StaticResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
-                                        BackgroundColor="#131219"
+                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
                                         <Grid ColumnDefinitions="40,*,40">
                                             <Label
@@ -299,12 +311,12 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="A-"
-                                                TextColor="{StaticResource WhiteColor}" />
+                                                TextColor="{StaticResource SettingTextColor}" />
                                             <range:SfRangeSlider
                                                 x:Name="TextSize"
                                                 Grid.Column="1"
                                                 HeightRequest="30"
-                                                KnobColor="#6a8efe"
+                                                KnobColor="{StaticResource SettingSliderBgColor}"
                                                 Maximum="5"
                                                 Minimum="0"
                                                 Orientation="Horizontal"
@@ -316,7 +328,7 @@
                                                 TickPlacement="Inline"
                                                 ToolTipPlacement="None"
                                                 TrackColor="Gray"
-                                                TrackSelectionColor="#6a8efe"
+                                                TrackSelectionColor="{StaticResource SettingSliderBgColor}"
                                                 TrackSelectionThickness="3"
                                                 ValueChangeMode="OnThumb"
                                                 ValueChanging="TextSize_ValueChanging" />
@@ -326,7 +338,7 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="A+"
-                                                TextColor="{StaticResource WhiteColor}" />
+                                                TextColor="{StaticResource SettingTextColor}" />
                                         </Grid>
 
                                     </Frame>
@@ -336,10 +348,10 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Reading fonts"
-                                        TextColor="{StaticResource WhiteColor}" />
+                                        TextColor="{StaticResource SettingTextColor}" />
                                     <Frame
                                         Margin="0,0,0,40"
-                                        BackgroundColor="#131219"
+                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
                                         <Grid ColumnDefinitions="*,40" RowDefinitions="40,40,40">
                                             <!--  Row  1  -->
@@ -347,7 +359,8 @@
                                                 Grid.Row="0"
                                                 Grid.Column="0"
                                                 FontFamily="AR"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="Arial"
                                                 VerticalOptions="Center">
@@ -359,7 +372,8 @@
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
                                                 <Label.Triggers>
@@ -376,7 +390,8 @@
                                                 Grid.Row="1"
                                                 Grid.Column="0"
                                                 FontFamily="RR"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="Roboto"
                                                 VerticalOptions="Center">
@@ -389,7 +404,8 @@
                                                 Grid.Row="1"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
                                                 <Label.Triggers>
@@ -406,7 +422,8 @@
                                                 Grid.Row="2"
                                                 Grid.Column="0"
                                                 FontFamily="VT"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="VnTime"
                                                 VerticalOptions="Center">
@@ -419,7 +436,8 @@
                                                 Grid.Row="2"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                FontSize="{StaticResource TextNormalSiZe}"
+                                                TextColor="{StaticResource SettingTextColor}"
+                                                FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
                                                 <Label.Triggers>

@@ -74,11 +74,11 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span
-                                            FontSize="{StaticResource TextTagSiZe}"
+                                            FontSize="{StaticResource TextTagSize}"
                                             Text="Novel"
                                             TextColor="{StaticResource HomeTextTitleBookColor}" />
                                         <Span
-                                            FontSize="{StaticResource TextNormalSiZe}"
+                                            FontSize="{StaticResource TextNormalSize}"
                                             Text=" 174"
                                             TextColor="{StaticResource GrayColor}" />
                                     </FormattedString>
@@ -89,7 +89,7 @@
                                 Grid.Column="1"
                                 Orientation="Horizontal">
                                 <Label
-                                    FontSize="{StaticResource TextNormalSiZe}"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     HorizontalOptions="End"
                                     Text="Filter"
                                     TextColor="Gray" />
@@ -105,7 +105,7 @@
                                 Grid.Column="2"
                                 Orientation="Horizontal">
                                 <Label
-                                    FontSize="{StaticResource TextNormalSiZe}"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     HorizontalOptions="End"
                                     Text="Popular"
                                     TextColor="{StaticResource HomeBlueColor}" />
@@ -148,11 +148,11 @@
                                                     Spacing="10"
                                                     VerticalOptions="Center">
                                                     <Label
-                                                        FontSize="{StaticResource TextTagSiZe}"
+                                                        FontSize="{StaticResource TextTagSize}"
                                                         Text="{Binding Name}"
                                                         TextColor="{StaticResource HomeTextTitleBookColor}" />
                                                     <Label
-                                                        FontSize="{StaticResource TextSmallSiZe}"
+                                                        FontSize="{StaticResource TextSmallSize}"
                                                         Text="{Binding Author}"
                                                         TextColor="{StaticResource GrayColor}" />
                                                     <Grid

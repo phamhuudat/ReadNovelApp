@@ -57,12 +57,11 @@ namespace NovelApp.ViewModels
             if (parameters.ContainsKey("ID"))
             {
                 _novelId = int.Parse(parameters["ID"].ToString());
-                Novel = await _bookService.GetDetailNovel(_novelId);
-                var list = await _bookService.GetCommentList(_novelId);
-                ListComment = list?.ToList();
-                CountReview = ListComment.Count();
             }
-               
+            Novel = await _bookService.GetDetailNovel(_novelId);
+            var list = await _bookService.GetCommentList(_novelId);
+            ListComment = list?.ToList();
+            CountReview = ListComment.Count();
         }
     }
 }

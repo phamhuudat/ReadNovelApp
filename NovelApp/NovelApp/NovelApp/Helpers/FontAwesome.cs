@@ -27,5 +27,7 @@ namespace NovelApp.Helpers
 		public const string Pen = "\uf304";
 		public const string Lock = "\uf023";
 		public const string CircleQuestion = "\uf059";
+		public const string FileLines = "\uf0f6";
+		public const string ClipboardList = "\uf46d";
 	}
 }

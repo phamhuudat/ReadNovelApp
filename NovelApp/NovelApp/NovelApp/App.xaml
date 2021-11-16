@@ -6,16 +6,16 @@
     xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
 
-        <ResourceDictionary
-            Source="Styles/LightTheme.xaml" />
         <!--<ResourceDictionary
-            Source="Styles/DarkTheme.xaml" />-->
-        <x:Double x:Key="TextBigSiZe">30</x:Double>
-        <x:Double x:Key="TextTagSiZe">22</x:Double>
+            Source="Styles/LightTheme.xaml" />-->
+        <ResourceDictionary
+            Source="Styles/DarkTheme.xaml" />
+        <x:Double x:Key="TextBigSize">30</x:Double>
+        <x:Double x:Key="TextTagSize">22</x:Double>
         <x:Double
             x:Key="BookDetailTextIconSize">25</x:Double>
-        <x:Double x:Key="TextNormalSiZe">20</x:Double>
-        <x:Double x:Key="TextSmallSiZe">18</x:Double>
+        <x:Double x:Key="TextNormalSize">20</x:Double>
+        <x:Double x:Key="TextSmallSize">18</x:Double>
         <x:Double
             x:Key="BookDetailTextSmallerSize">15</x:Double>
         
@@ -39,6 +39,10 @@
 
         <x:String
             x:Key="IconCircleQuestion">&#xf059;</x:String>
+        <x:String
+            x:Key="IconFileLines">&#xf0f6;</x:String>
+        <x:String
+            x:Key="IconClipboardList">&#xf46d;</x:String>
 
     </Application.Resources>
 </prism:PrismApplication>

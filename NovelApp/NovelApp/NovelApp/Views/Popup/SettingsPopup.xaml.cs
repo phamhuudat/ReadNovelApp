@@ -22,13 +22,13 @@ namespace NovelApp.Views.Popup
         {
             InitializeComponent();
         }
-        protected override Task OnAppearingAnimationEndAsync()
+        protected override Task OnAppearingAnimationBeginAsync()
         {
-            if(_viewModel == null)
+            if (_viewModel == null)
                 _viewModel = BindingContext as SettingsPopupViewModel;
             Brightness.Value = _viewModel.IndexBrightness;
             TextSize.Value = _viewModel.IndexTextSize;
-            return base.OnAppearingAnimationEndAsync();
+            return base.OnAppearingAnimationBeginAsync();
         }
         private SettingsPopupViewModel _viewModel;
 

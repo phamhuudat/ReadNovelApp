@@ -173,6 +173,7 @@ namespace NovelApp.ViewModels
             if (parameters.ContainsKey(AppConstants.NavigationParameter.NoChapter))
                 _no = int.Parse(parameters[AppConstants.NavigationParameter.NoChapter].ToString());
             await GetContentChapter(_novelId, _no);
+
         }
         private async Task GetContentChapter(int novelId, int no)
         {

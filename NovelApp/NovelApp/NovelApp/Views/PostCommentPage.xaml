@@ -19,7 +19,7 @@
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    FontSize="{StaticResource TextTagSiZe}"
+                    FontSize="{StaticResource TextTagSize}"
                     TextColor="{StaticResource PostCommentTextColor}" />
                 <Button
                     Text="Post"
@@ -63,7 +63,7 @@
                         Grid.Column="0"
                         Text="Novel Quality"
                         TextColor="{StaticResource PostCommentTextColor}"
-                        FontSize="{StaticResource TextSmallSiZe}" />
+                        FontSize="{StaticResource TextSmallSize}" />
                     <xforms:SfRating
                         Grid.Row="0"
                         Grid.Column="1"
@@ -88,7 +88,7 @@
                         Text="Overall"
                         FontAttributes="Bold"
                         TextColor="{StaticResource PostCommentTextColor}"
-                        FontSize="{StaticResource TextSmallSiZe}" />
+                        FontSize="{StaticResource TextSmallSize}" />
                     <Label
                         Grid.Row="2"
                         Grid.Column="1"
@@ -96,7 +96,7 @@
                         FontAttributes="Bold"
                         HorizontalOptions="EndAndExpand"
                         TextColor="{StaticResource PostCommentTextColor}"
-                        FontSize="{StaticResource TextSmallSiZe}" />
+                        FontSize="{StaticResource TextSmallSize}" />
                 </Grid>
             </Frame>
             <!--Comment-->
@@ -114,7 +114,7 @@
                         <Label
                             Text="Reviews"
                             TextColor="{StaticResource PostCommentTextColor}"
-                            FontSize="{StaticResource TextSmallSiZe}" />
+                            FontSize="{StaticResource TextSmallSize}" />
                         <controls:CustomEditor
                             Text="{Binding Comment}"
                             x:Name="Comment"
@@ -131,7 +131,7 @@
                         HorizontalOptions="EndAndExpand"
                         VerticalOptions="EndAndExpand"
                         TextColor="{StaticResource GrayColor}"
-                        FontSize="{StaticResource TextBigSiZe}" />
+                        FontSize="{StaticResource TextBigSize}" />
 
                 </Grid>
             </Frame>

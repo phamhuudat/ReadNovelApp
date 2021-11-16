@@ -82,6 +82,16 @@
     <Color
         x:Key="TableContentIconColor">#f7f8fd</Color>
     
-    
+    <!--SettingPage-->
+    <Color
+        x:Key="SettingThemeBgColor">#1b1b25</Color>
+    <Color
+        x:Key="SettingGobackBgColor">#36363d</Color>
+    <Color
+        x:Key="SettingTextColor">White</Color>
+    <Color
+        x:Key="SettingBrightnessBgColor">#131219</Color>
+    <Color
+        x:Key="SettingSliderBgColor">#6a8efe</Color>
 
 </ResourceDictionary>

@@ -309,7 +309,7 @@
                 CornerRadius="30">
                 <Label
                     FontFamily="AC"
-                    FontSize="{StaticResource TextNormalSiZe}"
+                    FontSize="{StaticResource TextNormalSize}"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     TextColor="{StaticResource WhiteColor}"
