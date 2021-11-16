@@ -41,15 +41,26 @@
         x:Key="BookDetailBgCheckBtntColor">#6a8efe</Color>
     <!--HomePage-->
     <Color
-        x:Key="SearchBarBgColor">#1b1b25</Color>
+        x:Key="HomeSearchBarBgColor">#1b1b25</Color>
     <Color
-        x:Key="ButtonSearchBarColor">#253583</Color>
+        x:Key="HomeSearchBarColor">#253583</Color>
     <Color
-        x:Key="SelectionIndicatorColor">White</Color>
+        x:Key="HomeSelectionIndicatorColor">White</Color>
     <Color
-        x:Key="TextTitleBookColor">White</Color>
+        x:Key="HomeTextTitleBookColor">White</Color>
     <Color
-        x:Key="ThemeBg">Black</Color>
+        x:Key="HomeThemeBgColor">Black</Color>
     <Color
-        x:Key="BookDetailThemeBg">#f7f8fd</Color>
+        x:Key="HomeBlueColor">#253583</Color>
+    <!--BookDetail-->
+    <Color
+        x:Key="BookDetailThemeBgColor">#121116</Color>
+    <Color
+        x:Key="BookDetailStickBgColor">#1b1b25</Color>
+    <Color
+        x:Key="BookDetailTextColor">#f7f8fd</Color>
+    <Color
+        x:Key="BookDetailExpandColor">#27262c</Color>
+    <Color
+        x:Key="BookDetaiPinkColor">#f0578e</Color>
 </ResourceDictionary>
