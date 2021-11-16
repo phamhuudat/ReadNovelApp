@@ -1,4 +1,5 @@
 ﻿using NovelApp.Configurations;
+using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Models.Enums;
 using NovelApp.Services.Book;
@@ -41,11 +42,7 @@ namespace NovelApp.ViewModels
         public ICommand PrevContentCommand { get; set; }
         public ICommand NextContentCommand { get; set; }
 
-        /// <summary>
-        /// margin/padding in paging
-        /// </summary>
-        ///
-        public PageType PageTypeShow { get => pageTypeShow; set => SetProperty(ref pageTypeShow, value); }
+        
         private TextSize _textSize;
         public Chapter ContentChapter { get => contentChapter; set => SetProperty(ref contentChapter, value); }
         public double TextSizeChapter { get => _textSizeChange; set => SetProperty(ref _textSizeChange, value); }
@@ -83,47 +80,11 @@ namespace NovelApp.ViewModels
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
-        private PageType pageTypeShow;
         private string contentChapterTap;
         private ReadModelColor selectBgColor;
         private string textFontFamily;
 
-        /// <summary>
-        /// Định nghĩa size trong ứng dụng
-        /// </summary>
-        private Dictionary<TextSize, Dictionary<CharSize, int>> TextSizeMode { get; } = new Dictionary<TextSize, Dictionary<CharSize, int>>()
-        {
-            { TextSize.Smallest, new Dictionary<CharSize, int>(){
 
-                {CharSize.Normal, 15},
-                {CharSize.Small, 10}
-            }},
-            { TextSize.Smaller, new Dictionary<CharSize, int>(){
-
-                {CharSize.Normal, 20},
-                {CharSize.Small, 15}
-            }},
-            { TextSize.Small, new Dictionary<CharSize, int>(){
-
-                {CharSize.Normal, 25},
-                {CharSize.Small, 20}
-            }},
-            { TextSize.Normal, new Dictionary<CharSize, int>(){
-
-                {CharSize.Normal, 30},
-                {CharSize.Small, 25}
-            }},
-            { TextSize.Large, new Dictionary<CharSize, int>(){
-
-                {CharSize.Normal, 35},
-                {CharSize.Small, 30}
-            }},
-            { TextSize.Largest, new Dictionary<CharSize, int>(){
-
-                {CharSize.Normal, 40},
-                {CharSize.Small, 35}
-            }},
-        };
 
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
@@ -139,15 +100,24 @@ namespace NovelApp.ViewModels
         }
         private void GetCache()
         {
-            _textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
+            try
+            {
+                _textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
                TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
-            TextSizeChapter = TextSizeMode[_textSize][CharSize.Normal];
-            PageTypeShow = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.PageType)) ?
-               PageType.OnePage : (PageType)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.PageType));
-            TextFontFamily = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
-               AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
-            //SelectBgColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
-            //   Color.Black :Color.FromHex(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
+                TextSizeChapter = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
+                ShowReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
+                   Models.Enums.ReadMode.Paging : (ReadMode)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode));
+                TextFontFamily = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
+                   AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
+                SelectBgColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
+                ReadModelColor.White : (ReadModelColor)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
+                TextColor = SelectBgColor == ReadModelColor.Black ? Color.White : Color.Black;
+            }
+            catch(Exception e)
+            {
+
+            }
+            
         }
         public async void GoBack()
         {
@@ -164,17 +134,17 @@ namespace NovelApp.ViewModels
             {
                 if (e.ContainsKey(SettingMode.ReadMode))
                 {
-                    _cacheService.SaveCache(AppConstants.CacheParameter.ReadMode,( (int)(ReadMode)e[SettingMode.ReadMode]).ToString());
+                    _cacheService.SaveCache(AppConstants.CacheParameter.PageType, ((int)e[SettingMode.ReadMode]).ToString());
                     ReadMode((ReadMode)e[SettingMode.ReadMode]);
                 }
                 else if (e.ContainsKey(SettingMode.TextSize))
                 {
-                    _cacheService.SaveCache(AppConstants.CacheParameter.TextSize, ((int)(TextSize)e[SettingMode.TextSize]).ToString());
+                    _cacheService.SaveCache(AppConstants.CacheParameter.TextSize, ((int)e[SettingMode.TextSize]).ToString());
                     TextSizeReadMode((TextSize)e[SettingMode.TextSize]);
                 }
                 else if (e.ContainsKey(SettingMode.ReadModeColor))
                 {
-                    _cacheService.SaveCache(AppConstants.CacheParameter.TextSize, ((int)(TextSize)e[SettingMode.TextSize]).ToString());
+                    _cacheService.SaveCache(AppConstants.CacheParameter.TextColor, ((int)e[SettingMode.ReadModeColor]).ToString());
                     SelectBgColor = (ReadModelColor)e[SettingMode.ReadModeColor];
                     if (SelectBgColor == ReadModelColor.Black)
                         TextColor = Color.White;
@@ -184,6 +154,7 @@ namespace NovelApp.ViewModels
                 else if (e.ContainsKey(SettingMode.Font))
                 {
                     TextFontFamily = e[SettingMode.Font].ToString();
+                    _cacheService.SaveCache(AppConstants.CacheParameter.TextFont, TextFontFamily);
                 }
             });
         }
@@ -214,6 +185,7 @@ namespace NovelApp.ViewModels
         private async Task GetContentChapter(int novelId, int no)
         {
             ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
+            
         }
 
         /// <summary>
@@ -223,7 +195,7 @@ namespace NovelApp.ViewModels
         /// <returns></returns>
         private void SplitPage(TextSize textSize = TextSize.Smallest)
         {
-            var sizeDic = TextSizeMode[textSize];
+            var sizeDic = TextSizeHelper.TextSizeMode[textSize];
             int smallSizeChar = sizeDic[CharSize.Small];
             int normlaSizeChar = sizeDic[CharSize.Normal];
             // Get Metrics
@@ -398,7 +370,7 @@ namespace NovelApp.ViewModels
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
                 return;
             }
-            var sizeDic = TextSizeMode[TextSize.Normal];
+            var sizeDic = TextSizeHelper.TextSizeMode[TextSize.Normal];
             int smallSizeChar = sizeDic[CharSize.Small];
             int normlaSizeChar = sizeDic[CharSize.Normal];
             if (_indexNextContentTap < _rowLine)
@@ -451,13 +423,13 @@ namespace NovelApp.ViewModels
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
             {
                 _textSize = textSize;
-                TextSizeChapter = TextSizeMode[textSize][CharSize.Normal];
+                TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
                 SplitPage(textSize);
             }
             else
             {
                 _textSize = textSize;
-                TextSizeChapter = TextSizeMode[textSize][CharSize.Normal];
+                TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
             }
         }
     }

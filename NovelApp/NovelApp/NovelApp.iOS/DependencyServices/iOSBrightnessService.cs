@@ -9,6 +9,12 @@ namespace NovelApp.iOS.DependencyServices
 {
     public class iOSBrightnessService : IBrightnessService
     {
+        public float GetBrightness()
+        {
+                //throw new NotImplementedException();
+                return UIScreen.MainScreen.Brightness;
+        }
+
         public void SetBrightness(float brightness)
         {
             UIScreen.MainScreen.Brightness = brightness;

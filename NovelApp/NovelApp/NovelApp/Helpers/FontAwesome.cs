@@ -20,5 +20,7 @@ namespace NovelApp.Helpers
 		public const string LayerGroup = "\uf5fd";
 		public const string Scroll = "\uf70e";
 		public const string HandPointUp = "\u261d";
+		public const string ChevronLeft = "\u2329";
+		public const string ChevronRight = "\u232a";
 	}
 }

@@ -2,6 +2,7 @@
 using NovelApp.DependencyServices;
 using NovelApp.Helpers;
 using NovelApp.Models.Enums;
+using NovelApp.Services.CacheService;
 using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -16,31 +17,52 @@ namespace NovelApp.ViewModels
 {
     public class SettingsPopupViewModel : BaseViewModel
     {
+        private readonly ICacheService _cacheService;
         private ObservableCollection<SfSegmentItem> imageTextCollection;
+        private bool _isFirstIndexReadMode;
+
+        private int _novelId;
+        private int indexReadMode;
+
+        private ReadModelColor selectTextColor;
+        private string selectFont;
+        private int indexTextSize;
+        private Color textColor;
+        private float indexBrightness;
+
+        public float IndexBrightness { get => indexBrightness; set => SetProperty(ref indexBrightness, value); }
         public ObservableCollection<SfSegmentItem> ImageTextCollection
         {
             get { return imageTextCollection; }
-            set { SetProperty(ref imageTextCollection ,value); }
+            set { SetProperty(ref imageTextCollection, value); }
         }
+        public Color TextColor { get => textColor; set => SetProperty(ref textColor, value); }
+        public int IndexTextSize { get => indexTextSize; set => SetProperty(ref indexTextSize, value); }
+        /// <summary>
+        /// scrolling, paging, tappings
+        /// </summary>
         public int IndexReadMode
         {
             get => indexReadMode; set
             {
                 if (SetProperty(ref indexReadMode, value))
                 {
+                    if (!_isFirstIndexReadMode)
+                    {
+                        _isFirstIndexReadMode = true;
+                        return;
+                    }
                     ChangeReadMode((ReadMode)indexReadMode);
                 };
             }
         }
-        private int _novelId;
-        private int indexReadMode;
         /// <summary>
         /// Font VT, AR, RR
         /// </summary>
         public string SelectFont { get => selectFont; set => SetProperty(ref selectFont, value); }
-        private ReadModelColor selectTextColor;
-        private string selectFont;
-
+        /// <summary>
+        /// Color bg read book
+        /// </summary>
         public ReadModelColor SelectTextColor { get => selectTextColor; set => SetProperty(ref selectTextColor, value); }
         public ICommand NavigationListChapterCommand { get; set; }
         public ICommand NavigationNovelInforCommand { get; set; }
@@ -51,23 +73,37 @@ namespace NovelApp.ViewModels
         public ICommand GoBackCommand { get; set; }
         public ICommand ChoiceColorCommand { get; set; }
         public ICommand SelectFontCommand { get; set; }
-        public SettingsPopupViewModel(INavigationService navigationService) : base(navigationService)
+        public SettingsPopupViewModel(INavigationService navigationService, ICacheService cacheService) : base(navigationService)
         {
+            _cacheService = cacheService;
             GoBackCommand = new DelegateCommand(Goback);
             NavigationListChapterCommand = new DelegateCommand(NavigationListChapter);
             NavigationNovelInforCommand = new DelegateCommand(NavigationNovelInfor);
             ChoiceColorCommand = new DelegateCommand<object>(ChoiceColor);
-            SelectTextColor = ReadModelColor.White;
-            SelectFont = AppConstants.FontFamily.ArialFont;
             SelectFontCommand = new DelegateCommand<object>(ChoiceTextFont);
             ImageTextCollection = new ObservableCollection<SfSegmentItem>
         {
-            new SfSegmentItem(){IconFont = FontAwesome.Scroll, 
+            new SfSegmentItem(){IconFont = FontAwesome.Scroll,
                 Text = "SCROLLING"},
-            new SfSegmentItem(){IconFont = FontAwesome.LayerGroup, 
-                Text = "PAGING"},
-            new SfSegmentItem(){IconFont = FontAwesome.HandPointUp, 
+            new SfSegmentItem(){IconFont = FontAwesome.LayerGroup,
+                Text = "PAGING", },
+            new SfSegmentItem(){IconFont = FontAwesome.HandPointUp,
                 Text = "TAPPING"} };
+            Initial();
+        }
+        private void Initial()
+        {
+            IndexBrightness = DependencyService.Get<IBrightnessService>().GetBrightness();
+            var textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
+               TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
+            IndexTextSize = (int)textSize;
+            IndexReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.PageType)) ?
+               (int)PageType.OnePage : int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.PageType));
+            SelectFont = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
+               AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
+            SelectTextColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
+            ReadModelColor.White : (ReadModelColor)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
+            TextColor = SelectTextColor == ReadModelColor.Black ? Color.White : Color.Black;
         }
         private void ChoiceTextFont(object obj)
         {

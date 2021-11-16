@@ -20,6 +20,18 @@ namespace NovelApp.Views.Popup
         {
             InitializeComponent();
         }
+        protected override Task OnAppearingAnimationEndAsync()
+        {
+            if(_viewModel == null)
+                _viewModel = BindingContext as SettingsPopupViewModel;
+            
+            Brightness.Value = _viewModel.IndexBrightness;
+            TextSize.Value = _viewModel.IndexTextSize;
+
+
+
+            return base.OnAppearingAnimationEndAsync();
+        }
         private SettingsPopupViewModel _viewModel;
 
         private void TextSize_ValueChanging(object sender, Syncfusion.SfRangeSlider.XForms.ValueEventArgs e)
@@ -32,7 +44,7 @@ namespace NovelApp.Views.Popup
         private void Brightness_ValueChanging(object sender, Syncfusion.SfRangeSlider.XForms.ValueEventArgs e)
         {
             var brightnessService = DependencyService.Get<IBrightnessService>();
-            brightnessService.SetBrightness((float)Range.Value / 100);
+            brightnessService.SetBrightness((float)Brightness.Value);
         }
     }
 }

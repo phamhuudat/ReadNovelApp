@@ -43,25 +43,33 @@ namespace NovelApp.Services.CacheService
 
         public void SaveCache(string key, string value)
         {
-            using (var realm = _getInstance())
+            try
             {
-                var cache = realm.Find<CacheApp>(key);
-                if (cache != null)
+                using (var realm = _getInstance())
                 {
-                    using (var tran = realm.BeginWrite())
+                    var cache = realm.Find<CacheApp>(key);
+                    if (cache != null)
                     {
-                        cache.Value = value;
-                        tran.Commit();
+                        using (var tran = realm.BeginWrite())
+                        {
+                            cache.Value = value;
+                            tran.Commit();
+                        }
+                    }
+                    else
+                    {
+                        realm.Write(() =>
+                        {
+                            realm.Add(new CacheApp() { Key = key, Value = value });
+                        });
                     }
                 }
-                else
-                {
-                    realm.Write(() =>
-                    {
-                        realm.Add(new CacheApp() { Key=key,Value = value});
-                    });
-                }    
             }
+            catch(Exception e)
+            {
+
+            }
+            
         }
     }
 }
