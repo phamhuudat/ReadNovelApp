@@ -8,8 +8,7 @@
     xmlns:helpers="clr-namespace:NovelApp.Helpers"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
-    xmlns:prism="http://prismlibrary.com"
-    BackgroundColor="Black"
+    BackgroundColor="{StaticResource ThemeBg}"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid
@@ -25,10 +24,10 @@
                 CornerRadius="10"
                 HorizontalOptions="FillAndExpand">
                 <SearchBar
-                    BackgroundColor="#1b1b25"
+                    BackgroundColor="{StaticResource SearchBarBgColor}"
                     CancelButtonColor="Gray"
                     HorizontalOptions="Fill"
-                    TextColor="White"
+                    TextColor="{StaticResource TextTitleBookColor}"
                     x:Name="Search"
                     SearchCommand="{Binding SearchCommand}"
                     SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"/>
@@ -40,7 +39,7 @@
                 FontSize="20"
                 HorizontalOptions="End"
                 Text="{helpers:Translate CANCEL}"
-                TextColor="#253583"
+                TextColor="{StaticResource ButtonSearchBarColor}"
                 VerticalOptions="Center" />
             <!--  Tab Book  -->
             <tabView:SfTabView
@@ -52,13 +51,13 @@
                     <tabView:SelectionIndicatorSettings
                         Position="Bottom"
                         StrokeThickness="4"
-                        Color="White" />
+                        Color="{StaticResource SelectionIndicatorColor}" />
                 </tabView:SfTabView.SelectionIndicatorSettings>
                 <tabView:SfTabItem
                     Title="Novel"
-                    SelectionColor="White"
+                    SelectionColor="{StaticResource SelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
-                    TitleFontColor="Gray"
+                    TitleFontColor="{StaticResource GrayColor}"
                     TitleFontSize="20">
                     <tabView:SfTabItem.Content>
                         <Grid
@@ -75,13 +74,13 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span
-                                            FontSize="22"
+                                            FontSize="{StaticResource TextTagSiZe}"
                                             Text="Novel"
-                                            TextColor="White" />
+                                            TextColor="{StaticResource TextTitleBookColor}" />
                                         <Span
-                                            FontSize="20"
+                                            FontSize="{StaticResource TextNormalSiZe}"
                                             Text=" 174"
-                                            TextColor="Gray" />
+                                            TextColor="{StaticResource GrayColor}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -90,7 +89,7 @@
                                 Grid.Column="1"
                                 Orientation="Horizontal">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSiZe}"
                                     HorizontalOptions="End"
                                     Text="Filter"
                                     TextColor="Gray" />
@@ -106,7 +105,7 @@
                                 Grid.Column="2"
                                 Orientation="Horizontal">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSiZe}"
                                     HorizontalOptions="End"
                                     Text="Popular"
                                     TextColor="#253583" />
@@ -149,13 +148,13 @@
                                                     Spacing="10"
                                                     VerticalOptions="Center">
                                                     <Label
-                                                        FontSize="22"
+                                                        FontSize="{StaticResource TextTagSiZe}"
                                                         Text="{Binding Name}"
-                                                        TextColor="White" />
+                                                        TextColor="{StaticResource TextTitleBookColor}" />
                                                     <Label
-                                                        FontSize="18"
+                                                        FontSize="{StaticResource TextSmallSiZe}"
                                                         Text="{Binding Author}"
-                                                        TextColor="Gray" />
+                                                        TextColor="{StaticResource GrayColor}" />
                                                     <Grid
                                                         ColumnDefinitions="Auto,100">
                                                         <StackLayout
@@ -169,7 +168,7 @@
                                                             <Label
                                                                 Margin="0,0,20,0"
                                                                 Text="{Binding Views, StringFormat='{0} Chs'}"
-                                                                TextColor="White" />
+                                                                TextColor="{StaticResource TextTitleBookColor}" />
                                                             <StackLayout.Triggers>
                                                                 <DataTrigger
                                                                     TargetType="StackLayout"
@@ -184,10 +183,11 @@
                                                         <StackLayout
                                                             Grid.Column="1"
                                                             Orientation="Horizontal">
-                                                            <ffimageloading:CachedImage
-                                                                Aspect="AspectFit"
-                                                                Scale="1.4"
-                                                                Source="resource://NovelApp.Resources.icons.ic_plus.png" />
+                                                            <Label
+                                                                FontSize="{StaticResource BookDetailTextSmallerSize}"
+                                                                TextColor="#253583"
+                                                                Text="{StaticResource IconCirclePlus}"
+                                                                FontFamily="AC"/>
                                                             <Label
                                                                 Text="ADD"
                                                                 TextColor="#253583" />

@@ -22,5 +22,9 @@ namespace NovelApp.Helpers
 		public const string HandPointUp = "\u261d";
 		public const string ChevronLeft = "\u2329";
 		public const string ChevronRight = "\u232a";
+		public const string BookOpen = "\uf518";
+		public const string Download = "\uf019";
+		public const string Pen = "\uf304";
+		public const string Lock = "\uf023";
 	}
 }

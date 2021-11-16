@@ -63,10 +63,10 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Padding="20"
+                Padding="20,0,20,20"
                 ColumnDefinitions="60,*"
                 IsVisible="false"
-                RowDefinitions="50,*">
+                RowDefinitions="60,*">
                 <Grid.Triggers>
                     <DataTrigger
                         Binding="{Binding ShowReadMode}"
@@ -75,12 +75,25 @@
                         <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
                 </Grid.Triggers>
+                <BoxView
+                    HeightRequest="1"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="End"
+                    BackgroundColor="{StaticResource GrayColor}" />
                 <Label
                     Grid.Row="0"
                     Grid.Column="0"
                     FontFamily="AC"
                     Text="{StaticResource IconChevronLeft}"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                
                 <Label
                     Grid.Row="0"
                     Grid.Column="1"
@@ -89,8 +102,7 @@
                 <ScrollView
                     Grid.Row="1"
                     Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="0,10,0,0">
+                    Grid.ColumnSpan="2">
                     <Label
                         FontSize="{Binding TextSizeChapter}"
                         HorizontalOptions="Fill"
@@ -172,19 +184,25 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="cards:SfCardLayout"
                         Value="Paging">
-                        <Setter Property="IsVisible" Value="true" />
+                        <Setter
+                            Property="IsVisible"
+                            Value="true" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding PageTypeShow}"
                         TargetType="cards:SfCardLayout"
                         Value="TwoPages">
-                        <Setter Property="Margin" Value="-40, -20, -110, -20" />
+                        <Setter
+                            Property="Margin"
+                            Value="-40, -20, -110, -20" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding PageTypeShow}"
                         TargetType="cards:SfCardLayout"
                         Value="ThreePages">
-                        <Setter Property="Margin" Value="-40, -20, -120, -20" />
+                        <Setter
+                            Property="Margin"
+                            Value="-40, -20, -120, -20" />
                     </DataTrigger>
                 </cards:SfCardLayout.Triggers>
                 <BindableLayout.ItemTemplate>
@@ -201,54 +219,80 @@
                                     Binding="{Binding PageTypeShow}"
                                     TargetType="cards:SfCardView"
                                     Value="TwoPages">
-                                    <Setter Property="Padding" Value="30" />
+                                    <Setter
+                                        Property="Padding"
+                                        Value="30" />
                                 </DataTrigger>
                                 <DataTrigger
                                     Binding="{Binding PageTypeShow}"
                                     TargetType="cards:SfCardView"
                                     Value="ThreePages">
-                                    <Setter Property="Padding" Value="50,20,20,20" />
+                                    <Setter
+                                        Property="Padding"
+                                        Value="50,20,160,20" />
                                 </DataTrigger>
                             </cards:SfCardView.Triggers>
                             <Grid
-                                Padding="10,10,10,0"
-                                ColumnDefinitions="*,60"
+                                Padding="10,0,10,0"
+                                ColumnDefinitions="60,*,60"
                                 RowDefinitions="40,*,20">
                                 <Grid.Resources>
                                     <ResourceDictionary>
-                                        <Style TargetType="Label">
-                                            <Setter Property="TextColor" Value="{Binding Source={x:Reference book}, Path=BindingContext.TextColor}" />
-                                            <Setter Property="FontFamily" Value="{Binding Source={x:Reference book}, Path=BindingContext.TextFontFamily}" />
+                                        <Style
+                                            TargetType="Label">
+                                            <Setter
+                                                Property="TextColor"
+                                                Value="{Binding Source={x:Reference book}, Path=BindingContext.TextColor}" />
+                                            <Setter
+                                                Property="FontFamily"
+                                                Value="{Binding Source={x:Reference book}, Path=BindingContext.TextFontFamily}" />
                                         </Style>
                                     </ResourceDictionary>
                                 </Grid.Resources>
-                                <StackLayout
+                                <!--Header-->
+                                <BoxView
+                                    HeightRequest="1"
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Orientation="Horizontal">
-                                    <Label FontFamily="AC" Text="{StaticResource IconChevronLeft}" />
-                                    <Label Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}" VerticalOptions="CenterAndExpand" />
-                                </StackLayout>
+                                    Grid.ColumnSpan="3"
+                                    VerticalOptions="End"
+                                    BackgroundColor="{StaticResource GrayColor}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    FontFamily="AC"
+                                    Text="{StaticResource IconChevronLeft}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding GoBackCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}" />
+                                <!--Body-->
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,10,0,0"
+                                    Grid.ColumnSpan="3"
                                     FontSize="{Binding Source={x:Reference book}, Path=BindingContext.TextSizeChapter}"
                                     HorizontalOptions="Fill"
                                     LineBreakMode="WordWrap"
                                     Text="{Binding Text}" />
                                 <Label
                                     Grid.Row="2"
-                                    Grid.Column="1"
-                                    HorizontalOptions="EndAndExpand"
+                                    Grid.Column="2"
+                                    HorizontalOptions="Start"
                                     VerticalOptions="Start">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding IndexPage}" />
-                                            <Span Text="/" />
-                                            <Span Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
+                                            <Span
+                                                Text="{Binding IndexPage}" />
+                                            <Span
+                                                Text="/" />
+                                            <Span
+                                                Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
@@ -257,52 +301,19 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </cards:SfCardLayout>
-            <!--<syncfusion:SfRotator
-                x:Name="rotator"
-                Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                DotPlacement="None"
-                EnableLooping="False"
-                ItemsSource="{Binding CarouselItems}"
-                NavigationDirection="Horizontal"
-                SelectedIndex="0">
-                <syncfusion:SfRotator.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="20" BorderColor="{StaticResource GrayColor}">
-                            <Grid ColumnDefinitions="*,40" RowDefinitions="*,20">
-                                <Label
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    FontSize="12"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Text}" />
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    HorizontalOptions="End">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding IndexPage}" />
-                                            <Span Text="/" />
-                                            <Span Text="{Binding Source={x:Reference rotator}, Path=BindingContext.CountPage}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </syncfusion:SfRotator.ItemTemplate>
-            </syncfusion:SfRotator>-->
             <Frame
                 Grid.Row="1"
                 Grid.Column="1"
                 Padding="0"
-                BackgroundColor="#1b1b25"
+                BackgroundColor="{StaticResource Background_Dark}"
                 CornerRadius="30">
-                <forms:CachedImage Scale=".5" Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                <Label
+                    FontFamily="AC"
+                    FontSize="{StaticResource TextNormalSiZe}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource WhiteColor}"
+                    Text="{StaticResource IconPen}" />
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigationSettingsCommand}" />
                 </Frame.GestureRecognizers>

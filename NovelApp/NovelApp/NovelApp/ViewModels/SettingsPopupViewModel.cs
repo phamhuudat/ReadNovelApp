@@ -97,8 +97,8 @@ namespace NovelApp.ViewModels
             var textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
                TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
             IndexTextSize = (int)textSize;
-            IndexReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.PageType)) ?
-               (int)PageType.OnePage : int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.PageType));
+            IndexReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
+               (int)ReadMode.Scrolling : int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode));
             SelectFont = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
                AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
             SelectTextColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?

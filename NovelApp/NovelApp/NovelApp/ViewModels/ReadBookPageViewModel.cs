@@ -42,7 +42,7 @@ namespace NovelApp.ViewModels
         public ICommand PrevContentCommand { get; set; }
         public ICommand NextContentCommand { get; set; }
 
-        
+        public PageType PageTypeShow { get => pageTypeShow; set => SetProperty(ref pageTypeShow, value); }
         private TextSize _textSize;
         public Chapter ContentChapter { get => contentChapter; set => SetProperty(ref contentChapter, value); }
         public double TextSizeChapter { get => _textSizeChange; set => SetProperty(ref _textSizeChange, value); }
@@ -83,8 +83,7 @@ namespace NovelApp.ViewModels
         private string contentChapterTap;
         private ReadModelColor selectBgColor;
         private string textFontFamily;
-
-
+        private PageType pageTypeShow;
 
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
@@ -100,24 +99,17 @@ namespace NovelApp.ViewModels
         }
         private void GetCache()
         {
-            try
-            {
-                _textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
-               TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
-                TextSizeChapter = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
-                ShowReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
-                   Models.Enums.ReadMode.Paging : (ReadMode)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode));
-                TextFontFamily = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
-                   AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
-                SelectBgColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
-                ReadModelColor.White : (ReadModelColor)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
-                TextColor = SelectBgColor == ReadModelColor.Black ? Color.White : Color.Black;
-            }
-            catch(Exception e)
-            {
+            _textSize = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextSize)) ?
+           TextSize.Small : (TextSize)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextSize));
+            TextSizeChapter = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
+            ShowReadMode = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode)) ?
+               Models.Enums.ReadMode.Scrolling : (ReadMode)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.ReadMode));
+            TextFontFamily = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextFont)) ?
+               AppConstants.FontFamily.ArialFont : _cacheService.GetCache(AppConstants.CacheParameter.TextFont);
+            SelectBgColor = string.IsNullOrEmpty(_cacheService.GetCache(AppConstants.CacheParameter.TextColor)) ?
+            ReadModelColor.White : (ReadModelColor)int.Parse(_cacheService.GetCache(AppConstants.CacheParameter.TextColor));
+            TextColor = SelectBgColor == ReadModelColor.Black ? Color.White : Color.Black;
 
-            }
-            
         }
         public async void GoBack()
         {
@@ -134,7 +126,7 @@ namespace NovelApp.ViewModels
             {
                 if (e.ContainsKey(SettingMode.ReadMode))
                 {
-                    _cacheService.SaveCache(AppConstants.CacheParameter.PageType, ((int)e[SettingMode.ReadMode]).ToString());
+                    _cacheService.SaveCache(AppConstants.CacheParameter.ReadMode, ((int)e[SettingMode.ReadMode]).ToString());
                     ReadMode((ReadMode)e[SettingMode.ReadMode]);
                 }
                 else if (e.ContainsKey(SettingMode.TextSize))
@@ -185,7 +177,7 @@ namespace NovelApp.ViewModels
         private async Task GetContentChapter(int novelId, int no)
         {
             ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
-            
+            ReadMode(ShowReadMode);
         }
 
         /// <summary>

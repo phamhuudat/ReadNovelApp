@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="NovelApp.Styles.DarkTheme">
+    <Color
+        x:Key="Background_Dark">#131219</Color>
+    <Color
+        x:Key="Background_Light">#ffffff</Color>
+
+    <Color
+        x:Key="Background_brown">#312624</Color>
+    <Color
+        x:Key="GrayColor">Gray</Color>
+    <Color
+        x:Key="WhiteColor">White</Color>
+    <Color
+        x:Key="PinkBgColor">#6e2d46</Color>
+    <Color
+        x:Key="PinkColor">#f0578e</Color>
+    <Color
+        x:Key="YellowColor">Yellow</Color>
+    <Color
+        x:Key="BgVioletColor">#1b1b25</Color>
+    <!--  TextColor  -->
+    <Color
+        x:Key="WhiteTextColor">#f7f8fd</Color>
+    <Color
+        x:Key="YellowTextColor">#f2f3e3</Color>
+    <Color
+        x:Key="GreenTextColor">#dee4e2</Color>
+    <Color
+        x:Key="GrayTextColor">#828388</Color>
+    <Color
+        x:Key="OrangeTextColor">#e4d197</Color>
+    <Color
+        x:Key="BlackTextColor">#0d1021</Color>
+    <Color
+        x:Key="BookDetailBgUnCheckBtntColor">#1B1B25</Color>
+    <Color
+        x:Key="BookDetailBgCheckBtntColor">#6a8efe</Color>
+    <!--HomePage-->
+    <Color
+        x:Key="SearchBarBgColor">#1b1b25</Color>
+    <Color
+        x:Key="ButtonSearchBarColor">#253583</Color>
+    <Color
+        x:Key="SelectionIndicatorColor">White</Color>
+    <Color
+        x:Key="TextTitleBookColor">White</Color>
+    <Color
+        x:Key="ThemeBg">Black</Color>
+    <Color
+        x:Key="BookDetailThemeBg">#f7f8fd</Color>
+</ResourceDictionary>

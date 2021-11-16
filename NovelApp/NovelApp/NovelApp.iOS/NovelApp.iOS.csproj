@@ -64,6 +64,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DependencyServices\iOSBrightnessService.cs" />
+    <Compile Include="DependencyServices\ThemeService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CustomEditorRenderer.cs" />

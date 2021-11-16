@@ -28,7 +28,6 @@ namespace NovelApp.Configurations
             internal const string TextSize = "TextSize";
             internal const string TextColor = "TextColor";
             internal const string TextFont = "TextFont";
-            internal const string PageType = "PageType";
             internal const string ReadMode = "ReadMode";
 
         }

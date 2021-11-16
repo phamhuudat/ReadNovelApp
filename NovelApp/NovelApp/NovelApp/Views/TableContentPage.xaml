@@ -41,10 +41,12 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-        <StackLayout Padding="15,25,15,0" BackgroundColor="#121116">
+        <StackLayout
+            Padding="15,25,15,0"
+            BackgroundColor="{StaticResource ThemeBg}">
             <Frame
                 Padding="12,13,12,13"
-                BackgroundColor="#262630"
+                BackgroundColor="{StaticResource SearchBarBgColor}"
                 CornerRadius="8">
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -65,7 +67,7 @@
             <Label
                 Margin="12,20,0,10"
                 FontAttributes="Bold"
-                FontSize="15"
+                FontSize="{StaticResource BookDetailTextSmallerSize}"
                 Text="VOLUME 1"
                 TextColor="{StaticResource GrayColor}" />
             <xforms:SfListView
@@ -83,40 +85,41 @@
                                 <Label
                                     Grid.Column="0"
                                     FontAttributes="Bold"
-                                    FontSize="20"
+                                    FontSize="{StaticResource TextNormalSiZe}"
                                     Text="{Binding No}"
-                                    TextColor="{StaticResource WhiteColor}"
+                                    TextColor="{StaticResource TextTitleBookColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
                                     FontSize="20"
                                     Text="{Binding Name}"
-                                    TextColor="{StaticResource WhiteColor}"
+                                    TextColor="{StaticResource TextTitleBookColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
-                                    FontSize="15"
+                                    FontSize="{StaticResource BookDetailTextSmallerSize}"
                                     HorizontalOptions="Start"
                                     Text="{Binding UpdTime, StringFormat='Updated {0}'}"
-                                    TextColor="{StaticResource GrayColor}"
+                                    TextColor="{StaticResource TextTitleBookColor}"
                                     VerticalOptions="End" />
-                                <forms:CachedImage
+                                <Label
                                     Grid.Column="1"
-                                    Aspect="AspectFill"
                                     HorizontalOptions="EndAndExpand"
-                                    Source="resource://NovelApp.Resources.icons.ic_lock.png"
-                                    VerticalOptions="Center">
-                                    <forms:CachedImage.Triggers>
+                                    VerticalOptions="Center"
+                                    FontFamily="AC">
+                                    <Label.Triggers>
                                         <DataTrigger
                                             Binding="{Binding Type}"
-                                            TargetType="forms:CachedImage"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="false" />
+                                            TargetType="Label"
+                                            Value="1">
+                                            <Setter
+                                                Property="Text"
+                                                Value="{StaticResource IconLock}" />
                                         </DataTrigger>
-                                    </forms:CachedImage.Triggers>
-                                </forms:CachedImage>
+                                    </Label.Triggers>
+                                </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

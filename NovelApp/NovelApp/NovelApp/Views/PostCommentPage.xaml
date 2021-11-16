@@ -20,12 +20,12 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontSize="{StaticResource TextTagSiZe}"
-                    TextColor="{StaticResource WhiteColor}" />
+                    TextColor="{StaticResource TextTitleBookColor}" />
                 <Button
                     Text="Post"
                     TextColor="{StaticResource GrayColor}"
                     Command="{Binding PostCmtCommand}"
-                    BackgroundColor="#262630"
+                    BackgroundColor="{StaticResource SearchBarBgColor}"
                     HeightRequest="50"
                     Grid.Column="1"
                     Grid.Row="1"
@@ -37,7 +37,7 @@
                             Value="True">
                             <Setter
                                 Property="TextColor"
-                                Value="{StaticResource WhiteColor}" />
+                                Value="{StaticResource TextTitleBookColor}" />
 
                         </DataTrigger>
                     </Button.Triggers>
@@ -53,7 +53,7 @@
             <!--star-->
             <Frame
                 CornerRadius="20"
-                BackgroundColor="#1b1b25">
+                BackgroundColor="{StaticResource SearchBarBgColor}">
                 <Grid
                     ColumnDefinitions="*,*"
                     RowDefinitions="*,1,*">
@@ -62,7 +62,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Text="Novel Quality"
-                        TextColor="{StaticResource WhiteColor}"
+                        TextColor="{StaticResource TextTitleBookColor}"
                         FontSize="{StaticResource TextSmallSiZe}" />
                     <xforms:SfRating
                         Grid.Row="0"
@@ -87,7 +87,7 @@
                         Grid.Column="0"
                         Text="Overall"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource WhiteColor}"
+                        TextColor="{StaticResource TextTitleBookColor}"
                         FontSize="{StaticResource TextSmallSiZe}" />
                     <Label
                         Grid.Row="2"
@@ -95,14 +95,14 @@
                         Text="{Binding Source={x:Reference rating}, Path=Value}"
                         FontAttributes="Bold"
                         HorizontalOptions="EndAndExpand"
-                        TextColor="{StaticResource WhiteColor}"
+                        TextColor="{StaticResource TextTitleBookColor}"
                         FontSize="{StaticResource TextSmallSiZe}" />
                 </Grid>
             </Frame>
             <!--Comment-->
             <Frame
                 CornerRadius="20"
-                BackgroundColor="#333344">
+                BackgroundColor="{StaticResource SearchBarBgColor}">
                 <Grid
                     ColumnDefinitions="*,80"
                     RowDefinitions="200,80">
@@ -113,7 +113,7 @@
                         Grid.Column="0">
                         <Label
                             Text="Reviews"
-                            TextColor="{StaticResource WhiteColor}"
+                            TextColor="{StaticResource TextTitleBookColor}"
                             FontSize="{StaticResource TextSmallSiZe}" />
                         <controls:CustomEditor
                             Text="{Binding Comment}"
@@ -121,7 +121,7 @@
                             Placeholder="Review should be more than 50 to 100 characters"
                             PlaceholderColor="{StaticResource GrayColor}"
                             VerticalOptions="FillAndExpand"
-                            TextColor="{StaticResource WhiteColor}"
+                            TextColor="{StaticResource TextTitleBookColor}"
                              />
                     </StackLayout>
                     <Label

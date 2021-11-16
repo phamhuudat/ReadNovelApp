@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyServices\AndroidBrightnessService.cs" />
+    <Compile Include="DependencyServices\ThemeService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\CustomEditorRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

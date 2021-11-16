@@ -55,7 +55,11 @@
                                     FontSize="18"
                                     Text="{Binding Novel.Genre}"
                                     TextColor="{StaticResource WhiteColor}" />
-                                <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                <Label
+                                    FontFamily="AC"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource GrayColor}"
+                                    Text="{StaticResource IconChevronRight}" />
                             </StackLayout>
 
                         </StackLayout>
@@ -63,14 +67,14 @@
                     <Frame
                         Margin="0,30,0,-10"
                         Padding="20"
-                        BackgroundColor="#121116"
+                        BackgroundColor="{StaticResource ThemeBg}"
                         CornerRadius="20"
                         HorizontalOptions="Fill"
                         VerticalOptions="FillAndExpand">
                         <StackLayout Spacing="20">
                             <!--  View Golden stick and View and Honors  -->
                             <Frame
-                                BackgroundColor="#1b1b25"
+                                BackgroundColor="{StaticResource SearchBarBgColor}"
                                 CornerRadius="20"
                                 HeightRequest="85">
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,*">
@@ -81,10 +85,13 @@
                                         HorizontalOptions="Center"
                                         Orientation="Horizontal">
                                         <Label
-                                            FontSize="18"
+                                            FontSize="{StaticResource TextSmallSiZe}"
                                             Text="Golden Tickets"
                                             TextColor="{StaticResource GrayColor}" />
-                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                        <Label FontFamily="AC"
+                                            VerticalOptions="Center"
+                                            TextColor="{StaticResource GrayColor}"
+                                            Text="{StaticResource IconChevronRight}"/>
                                     </StackLayout>
 
                                     <Label
@@ -94,7 +101,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="1.7K"
-                                        TextColor="{StaticResource WhiteColor}"
+                                        TextColor="{StaticResource TextTitleBookColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  View  -->
                                     <Label
@@ -111,7 +118,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="{Binding Novel.Views}"
-                                        TextColor="{StaticResource WhiteColor}"
+                                        TextColor="{StaticResource TextTitleBookColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  Honors  -->
                                     <StackLayout
@@ -120,10 +127,14 @@
                                         HorizontalOptions="Center"
                                         Orientation="Horizontal">
                                         <Label
-                                            FontSize="18"
+                                            FontSize="{StaticResource TextSmallSiZe}"
                                             Text="Honors"
                                             TextColor="{StaticResource GrayColor}" />
-                                        <ffimageloading:SvgCachedImage HeightRequest="10" Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                        <Label
+                                            FontFamily="AC"
+                                            VerticalOptions="Center"
+                                            TextColor="{StaticResource GrayColor}"
+                                            Text="{StaticResource IconChevronRight}" />
                                     </StackLayout>
 
                                     <forms:CachedImage
@@ -141,7 +152,7 @@
                             <Label
                                 FontSize="22"
                                 Text="Synopsis"
-                                TextColor="{StaticResource WhiteColor}" />
+                                TextColor="{StaticResource TextTitleBookColor}" />
                             <Grid ColumnDefinitions="*,30" RowDefinitions="*,20">
                                 <Label
                                     x:Name="Description"
@@ -149,7 +160,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextSmallSiZe}"
                                     MaxLines="7"
                                     Text="{Binding Novel.Description}"
                                     TextColor="{StaticResource GrayColor}">
@@ -194,21 +205,22 @@
                             <Label
                                 FontSize="22"
                                 Text="Contents"
-                                TextColor="{StaticResource WhiteColor}" />
+                                TextColor="{StaticResource TextTitleBookColor}" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextSmallSiZe}"
                                     Text="{Binding Novel.LastChapter}"
                                     TextColor="{StaticResource GrayColor}" />
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextSmallSiZe}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.UpdatedTimeNumber, StringFormat='Updated {0}h'}"
                                     TextColor="{StaticResource GrayColor}" />
-                                <ffimageloading:SvgCachedImage
-                                    HeightRequest="10"
-                                    HorizontalOptions="End"
-                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                <Label
+                                    FontFamily="AC"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource GrayColor}"
+                                    Text="{StaticResource IconChevronRight}" />
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SearchChapterCommand}" />
                                 </StackLayout.GestureRecognizers>
@@ -222,16 +234,17 @@
                                 <Label
                                     FontSize="22"
                                     Text="Tags"
-                                    TextColor="{StaticResource WhiteColor}" />
+                                    TextColor="{StaticResource TextTitleBookColor}" />
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextSmallSiZe}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding Novel.CountTag, StringFormat='{0} tags'}"
                                     TextColor="{StaticResource GrayColor}" />
-                                <ffimageloading:SvgCachedImage
-                                    HeightRequest="10"
-                                    HorizontalOptions="End"
-                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                <Label
+                                    FontFamily="AC"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource GrayColor}"
+                                    Text="{StaticResource IconChevronRight}" />
                             </StackLayout>
                             <buttons:SfChipGroup
                                 ChipBackgroundColor="{StaticResource PinkBgColor}"
@@ -259,16 +272,17 @@
                                 <Label
                                     FontSize="22"
                                     Text="Reviews"
-                                    TextColor="{StaticResource WhiteColor}" />
+                                    TextColor="{StaticResource TextTitleBookColor}" />
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextSmallSiZe}"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding CountReview, StringFormat='{0} Reviews'}"
                                     TextColor="{StaticResource GrayColor}" />
-                                <ffimageloading:SvgCachedImage
-                                    HeightRequest="10"
-                                    HorizontalOptions="End"
-                                    Source="resource://NovelApp.Resources.Svg.ic_arrow_right_gray.svg" />
+                                <Label
+                                    FontFamily="AC"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource GrayColor}"
+                                    Text="{StaticResource IconChevronRight}" />
                             </StackLayout>
                             <sfListView:SfListView
                                 AutoFitMode="DynamicHeight"
@@ -292,14 +306,14 @@
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource TextSmallSiZe}"
                                                     Text="{Binding Name}"
-                                                    TextColor="{StaticResource WhiteColor}"
+                                                    TextColor="{StaticResource TextTitleBookColor}"
                                                     VerticalOptions="Center" />
                                                 <Label
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource TextSmallSiZe}"
                                                     Text="{Binding Content}"
-                                                    TextColor="{StaticResource WhiteColor}"
+                                                    TextColor="{StaticResource TextTitleBookColor}"
                                                     VerticalOptions="Center" />
                                                 <Label
                                                     Grid.Row="2"
@@ -357,9 +371,15 @@
                 <Frame
                     Grid.Column="1"
                     Padding="0"
-                    BackgroundColor="#1b1b25"
+                    BackgroundColor="{StaticResource Background_Dark}"
                     CornerRadius="30">
-                    <forms:CachedImage Scale=".5" Source="resource://NovelApp.Resources.icons.ic_edit.png" />
+                    <Label
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSiZe}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource WhiteColor}"
+                        Text="{StaticResource IconPen}" />
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationCmtCommand}" />
                     </Frame.GestureRecognizers>
@@ -370,17 +390,19 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="0"
-                BackgroundColor="#1B1B25"
+                BackgroundColor="{StaticResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
-                <forms:CachedImage
+                <Label
+                    FontSize="{StaticResource BookDetailTextIconSize}"
                     Grid.Row="0"
-                    HeightRequest="20"
                     HorizontalOptions="Center"
-                    Source="resource://NovelApp.Resources.icons.ic_download.png"
+                    TextColor="{StaticResource GrayColor}"
+                    Text="{StaticResource IconDownload}"
+                    FontFamily="AC"
                     VerticalOptions="End" />
                 <Label
                     Grid.Row="1"
-                    FontSize="15"
+                    FontSize="{StaticResource BookDetailTextSmallerSize}"
                     HorizontalOptions="Center"
                     Text="DOWNLOAD"
                     TextColor="Gray" />
@@ -390,20 +412,22 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="1"
-                BackgroundColor="#6a8efe"
+                BackgroundColor="{StaticResource BookDetailBgCheckBtntColor}"
                 RowDefinitions="*,*">
-                <forms:CachedImage
+                <Label
                     Grid.Row="0"
-                    HeightRequest="20"
+                    FontSize="{StaticResource BookDetailTextIconSize}"
                     HorizontalOptions="Center"
-                    Source="resource://NovelApp.Resources.icons.ic_read_now.png"
-                    VerticalOptions="End" />
+                    TextColor="{StaticResource WhiteColor}"
+                    Text="{StaticResource IconBookOpen}"
+                    FontFamily="AC"
+                    VerticalOptions="End"/>
                 <Label
                     Grid.Row="1"
-                    FontSize="15"
+                    FontSize="{StaticResource BookDetailTextSmallerSize}"
                     HorizontalOptions="Center"
                     Text="READ NOW"
-                    TextColor="White" />
+                    TextColor="{StaticResource WhiteColor}" />
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer
                         Command="{Binding NavigationReadCommand}" />
@@ -413,20 +437,22 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="2"
-                BackgroundColor="#1B1B25"
+                BackgroundColor="{StaticResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
-                <forms:CachedImage
+                <Label
                     Grid.Row="0"
-                    HeightRequest="20"
+                    FontSize="{StaticResource BookDetailTextIconSize}"
                     HorizontalOptions="Center"
-                    Source="resource://NovelApp.Resources.icons.ic_add.png"
+                    TextColor="{StaticResource GrayColor}"
+                    Text="{StaticResource IconCirclePlus}"
+                    FontFamily="AC"
                     VerticalOptions="End" />
                 <Label
                     Grid.Row="1"
-                    FontSize="15"
+                    FontSize="{StaticResource BookDetailTextSmallerSize}"
                     HorizontalOptions="Center"
                     Text="ADD TO"
-                    TextColor="Gray" />
+                    TextColor="{StaticResource GrayColor}" />
             </Grid>
         </Grid>
     </ContentPage.Content>

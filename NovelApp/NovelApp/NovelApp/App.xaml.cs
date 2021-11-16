@@ -1,4 +1,5 @@
 ﻿
+using NovelApp.Models.Enums;
 using NovelApp.Services.Book;
 using NovelApp.Services.CacheService;
 using NovelApp.Services.RequestProvider;
@@ -16,6 +17,7 @@ namespace NovelApp
 {
     public partial class App
     {
+        public static Theme AppTheme { get; set; }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterPopupNavigationService();
