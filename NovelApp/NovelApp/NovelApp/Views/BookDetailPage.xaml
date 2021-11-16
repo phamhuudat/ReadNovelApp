@@ -67,14 +67,14 @@
                     <Frame
                         Margin="0,30,0,-10"
                         Padding="20"
-                        BackgroundColor="{StaticResource BookDetailThemeBgColor}"
+                        BackgroundColor="{DynamicResource BookDetailThemeBgColor}"
                         CornerRadius="20"
                         HorizontalOptions="Fill"
                         VerticalOptions="FillAndExpand">
                         <StackLayout Spacing="20">
                             <!--  View Golden stick and View and Honors  -->
                             <Frame
-                                BackgroundColor="{StaticResource BookDetailStickBgColor}"
+                                BackgroundColor="{DynamicResource BookDetailStickBgColor}"
                                 CornerRadius="20"
                                 HeightRequest="85">
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,*">
@@ -101,7 +101,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="1.7K"
-                                        TextColor="{StaticResource BookDetailTextColor}"
+                                        TextColor="{DynamicResource BookDetailTextColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  View  -->
                                     <Label
@@ -118,7 +118,7 @@
                                         FontSize="30"
                                         HorizontalOptions="Center"
                                         Text="{Binding Novel.Views}"
-                                        TextColor="{StaticResource BookDetailTextColor}"
+                                        TextColor="{DynamicResource BookDetailTextColor}"
                                         VerticalOptions="CenterAndExpand" />
                                     <!--  Honors  -->
                                     <StackLayout
@@ -152,7 +152,7 @@
                             <Label
                                 FontSize="22"
                                 Text="Synopsis"
-                                TextColor="{StaticResource BookDetailTextColor}" />
+                                TextColor="{DynamicResource BookDetailTextColor}" />
                             <Grid ColumnDefinitions="*,30" RowDefinitions="*,20">
                                 <Label
                                     x:Name="Description"
@@ -180,7 +180,7 @@
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Padding="0"
-                                    BackgroundColor="{StaticResource BookDetailExpandColor}"
+                                    BackgroundColor="{DynamicResource BookDetailExpandColor}"
                                     CornerRadius="6"
                                     HasShadow="True">
                                     <Frame.Triggers>
@@ -205,7 +205,7 @@
                             <Label
                                 FontSize="22"
                                 Text="Contents"
-                                TextColor="{StaticResource BookDetailTextColor}" />
+                                TextColor="{DynamicResource BookDetailTextColor}" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
                                     FontSize="{StaticResource TextSmallSize}"
@@ -234,7 +234,7 @@
                                 <Label
                                     FontSize="22"
                                     Text="Tags"
-                                    TextColor="{StaticResource BookDetailTextColor}" />
+                                    TextColor="{DynamicResource BookDetailTextColor}" />
                                 <Label
                                     FontSize="{StaticResource TextSmallSize}"
                                     HorizontalOptions="EndAndExpand"
@@ -247,7 +247,7 @@
                                     Text="{StaticResource IconChevronRight}" />
                             </StackLayout>
                             <buttons:SfChipGroup
-                                ChipBackgroundColor="{StaticResource BookDetaiPinkColor}"
+                                ChipBackgroundColor="{DynamicResource BookDetaiPinkColor}"
                                 ChipTextColor="{StaticResource PinkColor}"
                                 ChipTextSize="16"
                                 ItemsSource="{Binding Novel.ShowTags}"
@@ -272,7 +272,7 @@
                                 <Label
                                     FontSize="22"
                                     Text="Reviews"
-                                    TextColor="{StaticResource BookDetailTextColor}" />
+                                    TextColor="{DynamicResource BookDetailTextColor}" />
                                 <Label
                                     FontSize="{StaticResource TextSmallSize}"
                                     HorizontalOptions="EndAndExpand"
@@ -306,14 +306,14 @@
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource TextSmallSize}"
                                                     Text="{Binding Name}"
-                                                    TextColor="{StaticResource BookDetailTextColor}"
+                                                    TextColor="{DynamicResource BookDetailTextColor}"
                                                     VerticalOptions="Center" />
                                                 <Label
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource TextSmallSize}"
                                                     Text="{Binding Content}"
-                                                    TextColor="{StaticResource BookDetailTextColor}"
+                                                    TextColor="{DynamicResource BookDetailTextColor}"
                                                     VerticalOptions="Center" />
                                                 <Label
                                                     Grid.Row="2"
@@ -390,7 +390,7 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="0"
-                BackgroundColor="{StaticResource BookDetailBgUnCheckBtntColor}"
+                BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
                 <Label
                     FontSize="{StaticResource BookDetailTextIconSize}"
@@ -437,7 +437,7 @@
             <Grid
                 Grid.Row="2"
                 Grid.Column="2"
-                BackgroundColor="{StaticResource BookDetailBgUnCheckBtntColor}"
+                BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
                 <Label
                     Grid.Row="0"

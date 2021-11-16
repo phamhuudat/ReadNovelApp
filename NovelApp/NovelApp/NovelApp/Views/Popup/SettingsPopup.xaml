@@ -6,7 +6,6 @@
     xmlns:animations="clr-namespace:NovelApp.Animations"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
@@ -15,32 +14,39 @@
     <pages:PopupPage.Animation>
         <animations:PopupAnimation />
     </pages:PopupPage.Animation>
-    <Grid RowDefinitions="*,2*">
+    <Grid
+        RowDefinitions="*,2*">
         <Grid.Resources>
             <ResourceDictionary>
-                <Style TargetType="Label">
+                <Style
+                    TargetType="Label">
                     <Setter
                         Property="TextColor"
-                        Value="{StaticResource SettingTextColor}" />
+                        Value="{DynamicResource SettingTextColor}" />
                 </Style>
             </ResourceDictionary>
         </Grid.Resources>
         <Frame
             Grid.Row="1"
             Margin="0,0,0,-30"
-            BackgroundColor="{StaticResource SettingThemeBgColor}"
+            BackgroundColor="{DynamicResource SettingThemeBgColor}"
             CornerRadius="30">
-            <Grid ColumnDefinitions="*,80,*" RowDefinitions="20,*">
+            <Grid
+                ColumnDefinitions="*,80,*"
+                RowDefinitions="20,*">
                 <!--  Goback popup  -->
                 <Frame
                     Grid.Row="0"
                     Grid.Column="1"
                     Padding="20,5,20,5"
-                    BackgroundColor="{StaticResource SettingGobackBgColor}"
+                    BackgroundColor="{DynamicResource SettingGobackBgColor}"
                     CornerRadius="6">
-                    <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    <ffimageloading:SvgCachedImage
+                        HeightRequest="15"
+                        Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                        <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
                     </Frame.GestureRecognizers>
                 </Frame>
                 <!--  View danh sách  -->
@@ -53,11 +59,11 @@
                         <tabView:SelectionIndicatorSettings
                             Position="Bottom"
                             StrokeThickness="2"
-                            Color="{StaticResource SettingTextColor}" />
+                            Color="{DynamicResource SettingTextColor}" />
                     </tabView:SfTabView.SelectionIndicatorSettings>
                     <tabView:SfTabItem
                         Title="General"
-                        SelectionColor="{StaticResource SettingTextColor}"
+                        SelectionColor="{DynamicResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
                         TitleFontSize="25">
@@ -73,17 +79,18 @@
                                     FontFamily="AC"
                                     FontSize="{StaticResource TextNormalSize}"
                                     VerticalOptions="Center"
-                                    TextColor="{StaticResource SettingTextColor}"
+                                    TextColor="{DynamicResource SettingTextColor}"
                                     Text="{StaticResource IconClipboardList}" />
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     FontSize="{StaticResource TextNormalSize}"
                                     Text="List Chapter"
-                                    TextColor="{StaticResource SettingTextColor}"
+                                    TextColor="{DynamicResource SettingTextColor}"
                                     VerticalOptions="Center">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding NavigationListChapterCommand}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding NavigationListChapterCommand}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <Label
@@ -92,17 +99,18 @@
                                     FontFamily="AC"
                                     FontSize="{StaticResource TextNormalSize}"
                                     VerticalOptions="Center"
-                                    TextColor="{StaticResource SettingTextColor}"
+                                    TextColor="{DynamicResource SettingTextColor}"
                                     Text="{StaticResource IconFileLines}" />
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     FontSize="{StaticResource TextNormalSize}"
                                     Text="About the novel"
-                                    TextColor="{StaticResource SettingTextColor}"
+                                    TextColor="{DynamicResource SettingTextColor}"
                                     VerticalOptions="Center">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding NavigationNovelInforCommand}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding NavigationNovelInforCommand}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </Grid>
@@ -110,7 +118,7 @@
                     </tabView:SfTabItem>
                     <tabView:SfTabItem
                         Title="Display"
-                        SelectionColor="{StaticResource SettingTextColor}"
+                        SelectionColor="{DynamicResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
                         TitleFontSize="25">
@@ -123,26 +131,26 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Reading mode"
-                                        TextColor="{StaticResource SettingTextColor}" />
+                                        TextColor="{DynamicResource SettingTextColor}" />
                                     <buttons:SfSegmentedControl
                                         x:Name="ReadModePage"
-                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
+                                        BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
                                         BorderColor="Transparent"
                                         CornerRadius="30"
                                         DisplayMode="ImageWithText"
-                                        FontColor="{StaticResource SettingTextColor}"
-                                        FontIconFontColor="{StaticResource SettingTextColor}"
+                                        FontColor="{StaticResource  GrayColor}"
+                                        FontIconFontColor="{DynamicResource SettingTextColor}"
                                         FontIconFontFamily="AC"
                                         FontIconFontSize="25"
                                         ItemsSource="{Binding ImageTextCollection}"
                                         SegmentHeight="60"
                                         SelectedIndex="{Binding IndexReadMode, Mode=TwoWay}"
-                                        SelectionTextColor="{StaticResource SettingSliderBgColor}"
+                                        SelectionTextColor="{DynamicResource SettingSliderBgColor}"
                                         VisibleSegmentsCount="3">
                                         <buttons:SfSegmentedControl.SelectionIndicatorSettings>
                                             <buttons:SelectionIndicatorSettings
                                                 CornerRadius="30"
-                                                Color="{StaticResource SettingThemeBgColor}" />
+                                                Color="{DynamicResource SettingThemeBgColor}" />
                                         </buttons:SfSegmentedControl.SelectionIndicatorSettings>
                                     </buttons:SfSegmentedControl>
                                     <!--  Brigtness  -->
@@ -151,24 +159,25 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Brightness"
-                                        TextColor="{StaticResource SettingTextColor}" />
+                                        TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
-                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
+                                        BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
-                                        <Grid ColumnDefinitions="40,*,40">
+                                        <Grid
+                                            ColumnDefinitions="40,*,40">
                                             <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="☾"
-                                                TextColor="{StaticResource SettingTextColor}" />
+                                                TextColor="{DynamicResource SettingTextColor}" />
                                             <range:SfRangeSlider
                                                 x:Name="Brightness"
                                                 Grid.Column="1"
                                                 HeightRequest="30"
-                                                KnobColor="{StaticResource SettingSliderBgColor}"
+                                                KnobColor="{DynamicResource SettingSliderBgColor}"
                                                 Maximum="{OnPlatform iOS=100,
                                                                      Android=255}"
                                                 Minimum="0"
@@ -180,7 +189,7 @@
                                                 StepFrequency="1"
                                                 TickPlacement="None"
                                                 TrackColor="Gray"
-                                                TrackSelectionColor="{StaticResource SettingSliderBgColor}"
+                                                TrackSelectionColor="{DynamicResource SettingSliderBgColor}"
                                                 TrackSelectionThickness="3"
                                                 ValueChangeMode="Default"
                                                 ValueChanging="Brightness_ValueChanging" />
@@ -190,7 +199,7 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="🔆"
-                                                TextColor="{StaticResource SettingTextColor}" />
+                                                TextColor="{DynamicResource SettingTextColor}" />
                                         </Grid>
 
                                     </Frame>
@@ -201,93 +210,139 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Color"
-                                        TextColor="{StaticResource SettingTextColor}" />
-                                    <Grid ColumnDefinitions="*,*,*,*,*">
+                                        TextColor="{DynamicResource SettingTextColor}" />
+                                    <Grid
+                                        ColumnDefinitions="*,*,*,*,*">
                                         <Grid.Resources>
                                             <ResourceDictionary>
-                                                <Style TargetType="Label">
-                                                    <Setter Property="FontSize" Value="50" />
-                                                    <Setter Property="HorizontalOptions" Value="Center" />
-                                                    <Setter Property="FontFamily" Value="AC" />
-                                                    <Setter Property="Text" Value="{StaticResource IconCircle}" />
+                                                <Style
+                                                    TargetType="Label">
+                                                    <Setter
+                                                        Property="FontSize"
+                                                        Value="50" />
+                                                    <Setter
+                                                        Property="HorizontalOptions"
+                                                        Value="Center" />
+                                                    <Setter
+                                                        Property="FontFamily"
+                                                        Value="AC" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircle}" />
                                                 </Style>
                                             </ResourceDictionary>
                                         </Grid.Resources>
-                                        <Label Grid.Column="0" TextColor="{StaticResource SettingTextColor}">
+                                        <Label
+                                            Grid.Column="0"
+                                            TextColor="{StaticResource WhiteTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="0" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="0" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="White">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Grid.Column="1" TextColor="{StaticResource YellowTextColor}">
+                                        <Label
+                                            Grid.Column="1"
+                                            TextColor="{StaticResource YellowTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="1" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="1" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="YellowLight">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Grid.Column="2" TextColor="{StaticResource GreenTextColor}">
+                                        <Label
+                                            Grid.Column="2"
+                                            TextColor="{StaticResource GreenTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="2" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="2" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="GreenLight">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Grid.Column="3" TextColor="{StaticResource GrayTextColor}">
+                                        <Label
+                                            Grid.Column="3"
+                                            TextColor="{StaticResource GrayTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="3" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="3" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="GrayLight">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Grid.Column="4" TextColor="{StaticResource OrangeTextColor}">
+                                        <Label
+                                            Grid.Column="4"
+                                            TextColor="{StaticResource OrangeTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="4" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="4" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="OrangeLight">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Grid.Column="5" TextColor="{StaticResource BlackTextColor}">
+                                        <Label
+                                            Grid.Column="5"
+                                            TextColor="{StaticResource BlackTextColor}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ChoiceColorCommand}" CommandParameter="5" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding ChoiceColorCommand}"
+                                                    CommandParameter="5" />
                                             </Label.GestureRecognizers>
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding SelectTextColor}"
                                                     TargetType="Label"
                                                     Value="Black">
-                                                    <Setter Property="Text" Value="{StaticResource IconCircleCheck}" />
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="{StaticResource IconCircleCheck}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
@@ -299,24 +354,25 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Text size"
-                                        TextColor="{StaticResource SettingTextColor}" />
+                                        TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
-                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
+                                        BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
-                                        <Grid ColumnDefinitions="40,*,40">
+                                        <Grid
+                                            ColumnDefinitions="40,*,40">
                                             <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="A-"
-                                                TextColor="{StaticResource SettingTextColor}" />
+                                                TextColor="{DynamicResource SettingTextColor}" />
                                             <range:SfRangeSlider
                                                 x:Name="TextSize"
                                                 Grid.Column="1"
                                                 HeightRequest="30"
-                                                KnobColor="{StaticResource SettingSliderBgColor}"
+                                                KnobColor="{DynamicResource SettingSliderBgColor}"
                                                 Maximum="5"
                                                 Minimum="0"
                                                 Orientation="Horizontal"
@@ -328,7 +384,7 @@
                                                 TickPlacement="Inline"
                                                 ToolTipPlacement="None"
                                                 TrackColor="Gray"
-                                                TrackSelectionColor="{StaticResource SettingSliderBgColor}"
+                                                TrackSelectionColor="{DynamicResource SettingSliderBgColor}"
                                                 TrackSelectionThickness="3"
                                                 ValueChangeMode="OnThumb"
                                                 ValueChanging="TextSize_ValueChanging" />
@@ -338,7 +394,7 @@
                                                 FontSize="30"
                                                 HorizontalOptions="End"
                                                 Text="A+"
-                                                TextColor="{StaticResource SettingTextColor}" />
+                                                TextColor="{DynamicResource SettingTextColor}" />
                                         </Grid>
 
                                     </Frame>
@@ -348,31 +404,35 @@
                                         FontAttributes="Bold"
                                         FontSize="20"
                                         Text="Reading fonts"
-                                        TextColor="{StaticResource SettingTextColor}" />
+                                        TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
                                         Margin="0,0,0,40"
-                                        BackgroundColor="{StaticResource SettingBrightnessBgColor}"
+                                        BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
                                         CornerRadius="30">
-                                        <Grid ColumnDefinitions="*,40" RowDefinitions="40,40,40">
+                                        <Grid
+                                            ColumnDefinitions="*,40"
+                                            RowDefinitions="40,40,40">
                                             <!--  Row  1  -->
                                             <Label
                                                 Grid.Row="0"
                                                 Grid.Column="0"
                                                 FontFamily="AR"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="Arial"
                                                 VerticalOptions="Center">
                                                 <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding SelectFontCommand}" CommandParameter="AR" />
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding SelectFontCommand}"
+                                                        CommandParameter="AR" />
                                                 </Label.GestureRecognizers>
                                             </Label>
                                             <Label
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
@@ -381,7 +441,9 @@
                                                         Binding="{Binding SelectFont}"
                                                         TargetType="Label"
                                                         Value="AR">
-                                                        <Setter Property="Text" Value="{StaticResource IconCheck}" />
+                                                        <Setter
+                                                            Property="Text"
+                                                            Value="{StaticResource IconCheck}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
                                             </Label>
@@ -390,13 +452,15 @@
                                                 Grid.Row="1"
                                                 Grid.Column="0"
                                                 FontFamily="RR"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="Roboto"
                                                 VerticalOptions="Center">
                                                 <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding SelectFontCommand}" CommandParameter="RR" />
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding SelectFontCommand}"
+                                                        CommandParameter="RR" />
                                                 </Label.GestureRecognizers>
 
                                             </Label>
@@ -404,7 +468,7 @@
                                                 Grid.Row="1"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
@@ -413,7 +477,9 @@
                                                         Binding="{Binding SelectFont}"
                                                         TargetType="Label"
                                                         Value="RR">
-                                                        <Setter Property="Text" Value="{StaticResource IconCheck}" />
+                                                        <Setter
+                                                            Property="Text"
+                                                            Value="{StaticResource IconCheck}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
                                             </Label>
@@ -422,13 +488,15 @@
                                                 Grid.Row="2"
                                                 Grid.Column="0"
                                                 FontFamily="VT"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="VnTime"
                                                 VerticalOptions="Center">
                                                 <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding SelectFontCommand}" CommandParameter="VT" />
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding SelectFontCommand}"
+                                                        CommandParameter="VT" />
                                                 </Label.GestureRecognizers>
 
                                             </Label>
@@ -436,7 +504,7 @@
                                                 Grid.Row="2"
                                                 Grid.Column="1"
                                                 FontFamily="AC"
-                                                TextColor="{StaticResource SettingTextColor}"
+                                                TextColor="{DynamicResource SettingTextColor}"
                                                 FontSize="{StaticResource TextNormalSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
@@ -445,7 +513,9 @@
                                                         Binding="{Binding SelectFont}"
                                                         TargetType="Label"
                                                         Value="VT">
-                                                        <Setter Property="Text" Value="{StaticResource IconCheck}" />
+                                                        <Setter
+                                                            Property="Text"
+                                                            Value="{StaticResource IconCheck}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
                                             </Label>

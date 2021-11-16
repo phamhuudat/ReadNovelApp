@@ -7,35 +7,40 @@
     xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
     <NavigationPage.TitleView>
         <ContentView>
-            <Grid ColumnDefinitions="*,40">
+            <Grid
+                ColumnDefinitions="*,40">
                 <Label
                     Grid.Column="0"
                     FontAttributes="Bold"
                     FontSize="{StaticResource TextTagSize}"
                     HorizontalOptions="Center"
                     Text="Contents"
-                    TextColor="{StaticResource WhiteColor}"
+                    TextColor="{StaticResource TableContentTextColor}"
                     VerticalOptions="Center" />
-                <forms:CachedImage
-                    Grid.Column="1"
-                    Aspect="AspectFit"
-                    HeightRequest="20"
-                    HorizontalOptions="Start"
-                    Source="resource://NovelApp.Resources.icons.ic_sort_up.png"
+
+                <Label
+                    TextColor="{StaticResource TableContentTextColor}"
+                    FontSize="{StaticResource TextTagSize}"
                     VerticalOptions="Center"
-                    WidthRequest="20">
-                    <forms:CachedImage.Triggers>
+                    HorizontalOptions="Start"
+                    FontFamily="AC"
+                    Text="{StaticResource IconArrowDownShortWide }"
+                    Grid.Column="1">
+                    <Label.Triggers>
                         <DataTrigger
                             Binding="{Binding IsSortDown}"
-                            TargetType="forms:CachedImage"
+                            TargetType="Label"
                             Value="true">
-                            <Setter Property="Source" Value="resource://NovelApp.Resources.icons.ic_sort_down.png" />
+                            <Setter
+                                Property="Text"
+                                Value="{StaticResource IconArrowDownWideShort }" />
                         </DataTrigger>
-                    </forms:CachedImage.Triggers>
-                    <forms:CachedImage.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SortCommand}" />
-                    </forms:CachedImage.GestureRecognizers>
-                </forms:CachedImage>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding SortCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
         </ContentView>
     </NavigationPage.TitleView>
@@ -43,12 +48,13 @@
     <ContentPage.Content>
         <StackLayout
             Padding="15,25,15,0"
-            BackgroundColor="{StaticResource TableContentThemeBgColor}">
+            BackgroundColor="{DynamicResource TableContentThemeBgColor}">
             <Frame
                 Padding="12,13,12,13"
-                BackgroundColor="{StaticResource TableContentSearchBarBgColor}"
+                BackgroundColor="{DynamicResource TableContentSearchBarBgColor}"
                 CornerRadius="8">
-                <StackLayout Orientation="Horizontal">
+                <StackLayout
+                    Orientation="Horizontal">
                     <Label
                         FontAttributes="Bold"
                         FontSize="{StaticResource TextSmallSize}"
@@ -58,7 +64,7 @@
                         HorizontalOptions="EndAndExpand"
                         FontSize="{StaticResource TextTagSize}"
                         FontFamily="AC"
-                        TextColor="{StaticResource TableContentIconColor}"
+                        TextColor="{DynamicResource TableContentIconColor}"
                         Text="{StaticResource IconCircleQuestion}" />
                 </StackLayout>
 
@@ -80,20 +86,21 @@
                 <xforms:SfListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid ColumnDefinitions="25,*">
+                            <Grid
+                                ColumnDefinitions="25,*">
                                 <Label
                                     Grid.Column="0"
                                     FontAttributes="Bold"
                                     FontSize="{StaticResource TextNormalSize}"
                                     Text="{Binding No}"
-                                    TextColor="{StaticResource TableContentTextColor}"
+                                    TextColor="{DynamicResource TableContentTextColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
                                     FontSize="{StaticResource TextNormalSize}"
                                     Text="{Binding Name}"
-                                    TextColor="{StaticResource TableContentTextColor}"
+                                    TextColor="{DynamicResource TableContentTextColor}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
@@ -101,14 +108,14 @@
                                     FontSize="{StaticResource BookDetailTextSmallerSize}"
                                     HorizontalOptions="Start"
                                     Text="{Binding UpdTime, StringFormat='Updated {0}'}"
-                                    TextColor="{StaticResource TableContentTextColor}"
+                                    TextColor="{DynamicResource TableContentTextColor}"
                                     VerticalOptions="End" />
                                 <Label
                                     Grid.Column="1"
                                     HorizontalOptions="EndAndExpand"
                                     VerticalOptions="Center"
                                     FontSize="{StaticResource TextNormalSize}"
-                                    TextColor="{StaticResource TableContentTextColor}"
+                                    TextColor="{DynamicResource TableContentTextColor}"
                                     FontFamily="AC">
                                     <Label.Triggers>
                                         <DataTrigger

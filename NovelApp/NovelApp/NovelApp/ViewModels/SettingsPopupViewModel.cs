@@ -118,10 +118,10 @@ namespace NovelApp.ViewModels
             SelectTextColor = (ReadModelColor)int.Parse(textColor.ToString());
             if(SelectTextColor == ReadModelColor.White)
             {
-                DependencyService.Get<IAppTheme>().SetAppTheme(Theme.Light);
+                AppThemeHelper.SetAppTheme(Theme.Light);
             }
             else if(SelectTextColor == ReadModelColor.Black)
-                DependencyService.Get<IAppTheme>().SetAppTheme(Theme.Dark);
+                AppThemeHelper.SetAppTheme(Theme.Dark);
             ChangeColorReadMode(SelectTextColor);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)

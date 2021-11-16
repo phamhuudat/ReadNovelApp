@@ -8,7 +8,7 @@
     xmlns:helpers="clr-namespace:NovelApp.Helpers"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
-    BackgroundColor="{StaticResource HomeThemeBgColor}"
+    BackgroundColor="{DynamicResource HomeThemeBgColor}"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid
@@ -24,10 +24,10 @@
                 CornerRadius="10"
                 HorizontalOptions="FillAndExpand">
                 <SearchBar
-                    BackgroundColor="{StaticResource HomeSearchBarBgColor}"
+                    BackgroundColor="{DynamicResource HomeSearchBarBgColor}"
                     CancelButtonColor="Gray"
                     HorizontalOptions="Fill"
-                    TextColor="{StaticResource HomeTextTitleBookColor}"
+                    TextColor="{DynamicResource HomeTextTitleBookColor}"
                     x:Name="Search"
                     SearchCommand="{Binding SearchCommand}"
                     SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"/>
@@ -39,7 +39,7 @@
                 FontSize="20"
                 HorizontalOptions="End"
                 Text="{helpers:Translate CANCEL}"
-                TextColor="{StaticResource HomeSearchBarColor}"
+                TextColor="{DynamicResource HomeSearchBarColor}"
                 VerticalOptions="Center" />
             <!--  Tab Book  -->
             <tabView:SfTabView
@@ -51,11 +51,11 @@
                     <tabView:SelectionIndicatorSettings
                         Position="Bottom"
                         StrokeThickness="4"
-                        Color="{StaticResource HomeSelectionIndicatorColor}" />
+                        Color="{DynamicResource HomeSelectionIndicatorColor}" />
                 </tabView:SfTabView.SelectionIndicatorSettings>
                 <tabView:SfTabItem
                     Title="Novel"
-                    SelectionColor="{StaticResource HomeSelectionIndicatorColor}"
+                    SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
                     TitleFontSize="20">
@@ -76,7 +76,7 @@
                                         <Span
                                             FontSize="{StaticResource TextTagSize}"
                                             Text="Novel"
-                                            TextColor="{StaticResource HomeTextTitleBookColor}" />
+                                            TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                         <Span
                                             FontSize="{StaticResource TextNormalSize}"
                                             Text=" 174"
@@ -108,7 +108,7 @@
                                     FontSize="{StaticResource TextNormalSize}"
                                     HorizontalOptions="End"
                                     Text="Popular"
-                                    TextColor="{StaticResource HomeBlueColor}" />
+                                    TextColor="{DynamicResource HomeBlueColor}" />
                                 <forms:SvgCachedImage
                                     Aspect="Fill"
                                     HeightRequest="15"
@@ -150,7 +150,7 @@
                                                     <Label
                                                         FontSize="{StaticResource TextTagSize}"
                                                         Text="{Binding Name}"
-                                                        TextColor="{StaticResource HomeTextTitleBookColor}" />
+                                                        TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                                     <Label
                                                         FontSize="{StaticResource TextSmallSize}"
                                                         Text="{Binding Author}"
@@ -168,7 +168,7 @@
                                                             <Label
                                                                 Margin="0,0,20,0"
                                                                 Text="{Binding Views, StringFormat='{0} Chs'}"
-                                                                TextColor="{StaticResource HomeTextTitleBookColor}" />
+                                                                TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                                             <StackLayout.Triggers>
                                                                 <DataTrigger
                                                                     TargetType="StackLayout"
@@ -185,12 +185,12 @@
                                                             Orientation="Horizontal">
                                                             <Label
                                                                 FontSize="{StaticResource BookDetailTextSmallerSize}"
-                                                                TextColor="{StaticResource HomeBlueColor}"
+                                                                TextColor="{DynamicResource HomeBlueColor}"
                                                                 Text="{StaticResource IconCirclePlus}"
                                                                 FontFamily="AC"/>
                                                             <Label
                                                                 Text="ADD"
-                                                                TextColor="{StaticResource HomeBlueColor}" />
+                                                                TextColor="{DynamicResource HomeBlueColor}" />
                                                         </StackLayout>
                                                     </Grid>
                                                 </StackLayout>
@@ -206,7 +206,7 @@
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
                     Title="Fan-fic"
-                    SelectionColor="{StaticResource HomeSelectionIndicatorColor}"
+                    SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
                     TitleFontSize="20">
@@ -216,7 +216,7 @@
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
                     Title="Comic"
-                    SelectionColor="{StaticResource HomeSelectionIndicatorColor}"
+                    SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
                     TitleFontSize="20">
@@ -226,7 +226,7 @@
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
                     Title="eBook"
-                    SelectionColor="{StaticResource HomeSelectionIndicatorColor}"
+                    SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
                     TitleFontSize="20">

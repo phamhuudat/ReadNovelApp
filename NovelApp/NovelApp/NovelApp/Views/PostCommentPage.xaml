@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:xforms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
     xmlns:controls="clr-namespace:NovelApp.Controls"
-    BackgroundColor="{StaticResource PostCommentThemeBgColor}">
+    BackgroundColor="{DynamicResource PostCommentThemeBgColor}">
     <NavigationPage.TitleView>
         <ContentView>
             <Grid
@@ -20,12 +20,12 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontSize="{StaticResource TextTagSize}"
-                    TextColor="{StaticResource PostCommentTextColor}" />
+                    TextColor="{DynamicResource PostCommentTextColor}" />
                 <Button
                     Text="Post"
                     TextColor="{StaticResource GrayColor}"
                     Command="{Binding PostCmtCommand}"
-                    BackgroundColor="{StaticResource PostCommentStarBgColor}"
+                    BackgroundColor="{DynamicResource PostCommentStarBgColor}"
                     HeightRequest="50"
                     Grid.Column="1"
                     Grid.Row="1"
@@ -53,7 +53,7 @@
             <!--star-->
             <Frame
                 CornerRadius="20"
-                BackgroundColor="{StaticResource PostCommentStarBgColor}">
+                BackgroundColor="{DynamicResource PostCommentStarBgColor}">
                 <Grid
                     ColumnDefinitions="*,*"
                     RowDefinitions="*,1,*">
@@ -62,7 +62,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Text="Novel Quality"
-                        TextColor="{StaticResource PostCommentTextColor}"
+                        TextColor="{DynamicResource PostCommentTextColor}"
                         FontSize="{StaticResource TextSmallSize}" />
                     <xforms:SfRating
                         Grid.Row="0"
@@ -87,7 +87,7 @@
                         Grid.Column="0"
                         Text="Overall"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource PostCommentTextColor}"
+                        TextColor="{DynamicResource PostCommentTextColor}"
                         FontSize="{StaticResource TextSmallSize}" />
                     <Label
                         Grid.Row="2"
@@ -95,14 +95,14 @@
                         Text="{Binding Source={x:Reference rating}, Path=Value}"
                         FontAttributes="Bold"
                         HorizontalOptions="EndAndExpand"
-                        TextColor="{StaticResource PostCommentTextColor}"
+                        TextColor="{DynamicResource PostCommentTextColor}"
                         FontSize="{StaticResource TextSmallSize}" />
                 </Grid>
             </Frame>
             <!--Comment-->
             <Frame
                 CornerRadius="20"
-                BackgroundColor="{StaticResource PostCommentContentBgColor}">
+                BackgroundColor="{DynamicResource PostCommentContentBgColor}">
                 <Grid
                     ColumnDefinitions="*,80"
                     RowDefinitions="200,80">
@@ -113,7 +113,7 @@
                         Grid.Column="0">
                         <Label
                             Text="Reviews"
-                            TextColor="{StaticResource PostCommentTextColor}"
+                            TextColor="{DynamicResource PostCommentTextColor}"
                             FontSize="{StaticResource TextSmallSize}" />
                         <controls:CustomEditor
                             Text="{Binding Comment}"
@@ -121,7 +121,7 @@
                             Placeholder="Review should be more than 50 to 100 characters"
                             PlaceholderColor="{StaticResource GrayColor}"
                             VerticalOptions="FillAndExpand"
-                            TextColor="{StaticResource PostCommentTextColor}"
+                            TextColor="{DynamicResource PostCommentTextColor}"
                              />
                     </StackLayout>
                     <Label

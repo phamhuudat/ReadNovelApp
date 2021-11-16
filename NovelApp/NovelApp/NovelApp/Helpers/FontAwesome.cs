@@ -7,7 +7,6 @@ namespace NovelApp.Helpers
 	public static partial class FontAwesome
 	{
 		public const string Circle = "\u25cf";
-		public const string ArrowDownWideShort = "\uf160";
 		public const string ArrowUpWideShort = "\uf161";
 		public const string AngleRight = "\u203a";
 		public const string AngleDown = "\u2304";
@@ -29,5 +28,8 @@ namespace NovelApp.Helpers
 		public const string CircleQuestion = "\uf059";
 		public const string FileLines = "\uf0f6";
 		public const string ClipboardList = "\uf46d";
+		public const string ArrowDownShortWide = "\uf884";
+		public const string ArrowDownWideShort = "\uf160";
+		public const string CircleArrowLeft = "\uf0a8";
 	}
 }
