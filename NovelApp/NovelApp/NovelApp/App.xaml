@@ -6,10 +6,10 @@
     xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
 
-        <ResourceDictionary
-            Source="Styles/LightTheme.xaml" />
         <!--<ResourceDictionary
-            Source="Styles/DarkTheme.xaml" />-->
+            Source="Styles/LightTheme.xaml" />-->
+        <ResourceDictionary
+            Source="Styles/DarkTheme.xaml" />
         <x:Double x:Key="TextBigSiZe">30</x:Double>
         <x:Double x:Key="TextTagSiZe">22</x:Double>
         <x:Double

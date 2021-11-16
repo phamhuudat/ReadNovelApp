@@ -62,5 +62,15 @@
     <Color
         x:Key="BookDetailExpandColor">#27262c</Color>
     <Color
-        x:Key="BookDetaiPinkColor">#f0578e</Color>
+        x:Key="BookDetaiPinkColor">#6e2d46</Color>
+    <!--Post comment-->
+    <Color
+        x:Key="PostCommentThemeBgColor">#121116</Color>
+    <Color
+        x:Key="PostCommentStarBgColor">#1b1b25</Color>
+    <Color
+        x:Key="PostCommentContentBgColor">#333344</Color>
+    <Color
+        x:Key="PostCommentTextColor">White</Color>
+
 </ResourceDictionary>
