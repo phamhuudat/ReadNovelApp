@@ -105,7 +105,7 @@ namespace NovelApp.Services.Book
                 new RequestParameter(name:"novelid",value:novelId),
                 new RequestParameter(name:"no",value:no),
                 new RequestParameter(name:"email",value:email)};
-            var result = await _requestProvider.Post<ResponsePost>("book/chapter/unlock", parameters);
+            var result = await _requestProvider.Get<ResponsePost>("book/chapter/unlock", parameters);
             if (result != null)
                 return result.Data;
             return null;

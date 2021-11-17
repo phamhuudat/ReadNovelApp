@@ -44,14 +44,6 @@ namespace NovelApp.Models.BookGwModels
                 return 0;
             }
         }
-        public int UpdatedTimeNumber
-        {
-            get
-            {
-                var deltaTime = DateTime.Now - UpdTime;
-                return deltaTime.Hours;
-            }
-        }
         public string TagString
         {
             get

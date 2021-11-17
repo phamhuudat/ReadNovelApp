@@ -87,7 +87,7 @@ namespace NovelApp.ViewModels
         private async void LoadNovel()
         {
             var list = await _bookService.GetNovelList(0);
-            if (list != null && list.Any())
+            if (list == null || !list.Any())
             {
                 list = new List<Novel>();
             }
