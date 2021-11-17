@@ -42,7 +42,6 @@ namespace NovelApp.ViewModels
         public ICommand PrevContentCommand { get; set; }
         public ICommand NextContentCommand { get; set; }
 
-        public PageType PageTypeShow { get => pageTypeShow; set => SetProperty(ref pageTypeShow, value); }
         private TextSize _textSize;
         public Chapter ContentChapter { get => contentChapter; set => SetProperty(ref contentChapter, value); }
         public double TextSizeChapter { get => _textSizeChange; set => SetProperty(ref _textSizeChange, value); }
@@ -83,7 +82,6 @@ namespace NovelApp.ViewModels
         private string contentChapterTap;
         private ReadModelColor selectBgColor;
         private string textFontFamily;
-        private PageType pageTypeShow;
 
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
@@ -186,7 +184,7 @@ namespace NovelApp.ViewModels
         /// </summary>
         /// <param name="textSize"></param>
         /// <returns></returns>
-        private void SplitPage(TextSize textSize = TextSize.Smallest)
+        private void SplitPage(TextSize textSize)
         {
             var sizeDic = TextSizeHelper.TextSizeMode[textSize];
             int smallSizeChar = sizeDic[CharSize.Small];
@@ -202,25 +200,26 @@ namespace NovelApp.ViewModels
             try
             {
                 var text = ContentChapter.Text;
-                var rowheight = ((int)width - 60);
-                var columnHeight = ((int)height - 100);
-                var maxRowInPage = columnHeight / normlaSizeChar;
+                var WidthPage = ((int)width - 40);
+                var HeightPage = ((int)height - 80);
+                var maxRowInPage = HeightPage / (normlaSizeChar * 2);
+                var maxColInPage = WidthPage / (normlaSizeChar * 2);
                 //dieenj tich hien thi content
-                var counttext = rowheight * columnHeight;
+                var counttext = WidthPage * HeightPage;
                 var list = new List<PageChapter>();
                 var rowLine = text.Split('\n');
                 var row = rowLine.Length;
                 //text hiển thị trong một page
                 string textPage = "";
                 //row hiển thị trong một page
-                int rowInPage = 0;
+                int rowInPaging = 0;
                 //số pixel trong một page
                 int countPixelPage = 0;
                 //Số trang
                 int indexPage = 0;
                 for (int i = 0; i < row; i++)
                 {
-                    rowInPage++;
+                    rowInPaging++;
                     var texline = rowLine[i];
                     var listChar = texline.ToCharArray();
                     int countminsize = 0;
@@ -231,14 +230,15 @@ namespace NovelApp.ViewModels
                             countminsize++;
                         }
                     }
-                    countPixelPage += countminsize * smallSizeChar + (texline.Length - countminsize) * normlaSizeChar;
+                    var fixelLine = countminsize * smallSizeChar + (texline.Length - countminsize) * normlaSizeChar;
+                    countPixelPage += fixelLine;
                     textPage += texline;
                     if (countPixelPage > counttext)
                     {
                         string deltatext = "";
-                        var deltaPixcel = textPage.Length - counttext;
+                        var deltaPixcel = countPixelPage - counttext;
                         int comparePixcel = 0;
-                        for (int j = texline.Length; j >= 0; j--)
+                        for (int j = texline.Length - 1; j >= 0; j--)
                         {
                             char t = texline[j];
                             if (_arrayCharFilter.Contains(t))
@@ -261,17 +261,21 @@ namespace NovelApp.ViewModels
                         list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
                         textPage = deltatext;
                         countPixelPage = 0;
-                        rowInPage = 0;
+                        rowInPaging = 0;
 
                     }
                     else
                     {
                         textPage += "\n";
+                        if (fixelLine >= WidthPage)
+                        {
+                            rowInPaging++;
+                        }
                         var k = i + 1;
-                        if (k == row || rowInPage == maxRowInPage)
+                        if (k == row || rowInPaging == maxRowInPage)
                         {
                             countPixelPage = 0;
-                            rowInPage = 0;
+                            rowInPaging = 0;
                             list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
                             textPage = "";
                         }
@@ -280,15 +284,7 @@ namespace NovelApp.ViewModels
 
                 }
                 CountPage = list.Count;
-
-                list = list.OrderByDescending(x => x.IndexPage).ToList();
                 CarouselItems = new ObservableCollection<PageChapter>(list);
-                if (CountPage == 1)
-                    PageTypeShow = PageType.OnePage;
-                else if (CountPage == 2)
-                    PageTypeShow = PageType.TwoPages;
-                else
-                    PageTypeShow = PageType.ThreePages;
             }
             catch (Exception e)
             {
