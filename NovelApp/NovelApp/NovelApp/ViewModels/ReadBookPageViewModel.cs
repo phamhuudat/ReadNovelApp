@@ -10,7 +10,6 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -160,7 +159,7 @@ namespace NovelApp.ViewModels
         {
             RegisterMessageSettings();
             _isNavigationSettings = true;
-            await NavigationService.NavigateAsync($"{nameof(SettingsPopup)}?{AppConstants.NavigationParameter.NoChapter}={_novelId}&{AppConstants.NavigationParameter.NoChapter}={_no}");
+            await NavigationService.NavigateAsync($"{nameof(SettingsPopup)}?{AppConstants.NavigationParameter.NovelId}={_novelId}&{AppConstants.NavigationParameter.NoChapter}={_no}");
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {

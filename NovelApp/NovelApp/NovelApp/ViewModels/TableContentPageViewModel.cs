@@ -90,6 +90,7 @@ namespace NovelApp.ViewModels
             var list = await _bookService.GetTBC(_novelId);
             if (list != null && list.Chapters.Any())
             {
+                IsSortDown = false;
                 ListChapter = list.Chapters;
                 CountChapter = ListChapter.Count;
             }

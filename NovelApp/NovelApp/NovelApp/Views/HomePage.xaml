@@ -6,8 +6,10 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     xmlns:helpers="clr-namespace:NovelApp.Helpers"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    ios:Page.UseSafeArea="true"
     BackgroundColor="{DynamicResource HomeThemeBgColor}"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
@@ -19,19 +21,25 @@
             <Frame
                 Grid.Row="0"
                 Grid.Column="0"
+                Grid.ColumnSpan="{OnPlatform Android=1,
+                                             iOS=2}"
                 Padding="0"
                 BorderColor="gray"
                 CornerRadius="6"
                 HorizontalOptions="FillAndExpand">
                 <SearchBar
+                    x:Name="Search"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="{OnPlatform Android=1,
+                                                 iOS=2}"
                     BackgroundColor="{DynamicResource HomeSearchBarBgColor}"
                     CancelButtonColor="Gray"
-                    HorizontalOptions="Fill"
-                    TextColor="{DynamicResource HomeTextTitleBookColor}"
-                    x:Name="Search"
                     FontSize="{StaticResource TextNormalSize}"
+                    HorizontalOptions="FillAndExpand"
                     SearchCommand="{Binding SearchCommand}"
-                    SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"/>
+                    SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"
+                    TextColor="{DynamicResource HomeTextTitleBookColor}" />
             </Frame>
             <Label
                 Grid.Row="0"
@@ -39,6 +47,8 @@
                 FontAttributes="Bold"
                 FontSize="{StaticResource TextNormalSize}"
                 HorizontalOptions="End"
+                IsVisible="{OnPlatform Android=true,
+                                       iOS=false}"
                 Text="{helpers:Translate CANCEL}"
                 TextColor="{DynamicResource HomeSearchBarColor}"
                 VerticalOptions="Center" />
@@ -64,7 +74,7 @@
                         <Grid
                             x:Name="NovelGrid"
                             Padding="0,20,0,0"
-                            ColumnDefinitions="3*,*,*"
+                            ColumnDefinitions="2*,*,*"
                             RowDefinitions="Auto,*"
                             RowSpacing="20">
                             <!--  Number Novel  -->
@@ -119,23 +129,23 @@
                             </StackLayout>
                             <!--  Listbook  -->
                             <sfListView:SfListView
+                                x:Name="listView"
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 ItemSize="85"
                                 ItemSpacing="0,0,0,20"
-                                x:Name="listView"
+                                ItemsSource="{Binding ListNovel}"
+                                LoadMoreCommand="{Binding LoadMoreCommand}"
+                                LoadMoreCommandParameter="{Binding Source={x:Reference listView}}"
                                 LoadMoreOption="AutoOnScroll"
                                 SelectionBackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding ItemTappedCommand}"
-                                SelectionChangedCommandParameter="{x:Reference listView}"
-                                LoadMoreCommandParameter="{Binding Source={x:Reference listView}}"
-                                LoadMoreCommand="{Binding LoadMoreCommand}"
-                                ItemsSource="{Binding ListNovel}">
+                                SelectionChangedCommandParameter="{x:Reference listView}">
                                 <sfListView:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid  ColumnDefinitions="60,*">
+                                            <Grid ColumnDefinitions="60,*">
                                                 <Frame Padding="0" CornerRadius="6">
                                                     <ffimageloading:CachedImage
                                                         Grid.Column="0"
@@ -146,7 +156,7 @@
                                                 <StackLayout
                                                     Grid.Column="1"
                                                     Orientation="Vertical"
-                                                    Spacing="10"
+                                                    Spacing="5"
                                                     VerticalOptions="Center">
                                                     <Label
                                                         FontSize="{StaticResource TextNormalSize}"
@@ -156,12 +166,11 @@
                                                         FontSize="{StaticResource TextSmallSize}"
                                                         Text="{Binding Author}"
                                                         TextColor="{StaticResource GrayColor}" />
-                                                    <Grid
-                                                        ColumnDefinitions="Auto,100">
+                                                    <Grid ColumnDefinitions="Auto,100">
                                                         <StackLayout
                                                             Grid.Column="0"
-                                                            WidthRequest="100"
-                                                            Orientation="Horizontal">
+                                                            Orientation="Horizontal"
+                                                            WidthRequest="100">
                                                             <ffimageloading:CachedImage
                                                                 Aspect="AspectFit"
                                                                 Scale="1.4"
@@ -173,24 +182,20 @@
                                                                 TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                                             <StackLayout.Triggers>
                                                                 <DataTrigger
-                                                                    TargetType="StackLayout"
                                                                     Binding="{Binding Views}"
+                                                                    TargetType="StackLayout"
                                                                     Value="0">
-                                                                    <Setter
-                                                                        Property="IsVisible"
-                                                                        Value="False" />
+                                                                    <Setter Property="IsVisible" Value="False" />
                                                                 </DataTrigger>
                                                             </StackLayout.Triggers>
                                                         </StackLayout>
-                                                        <StackLayout
-                                                            Grid.Column="1"
-                                                            Orientation="Horizontal">
+                                                        <StackLayout Grid.Column="1" Orientation="Horizontal">
                                                             <Label
-                                                                VerticalOptions="Center"
+                                                                FontFamily="AC"
                                                                 FontSize="{StaticResource TextSmallSize}"
-                                                                TextColor="{DynamicResource HomeBlueColor}"
                                                                 Text="{StaticResource IconCirclePlus}"
-                                                                FontFamily="AC"/>
+                                                                TextColor="{DynamicResource HomeBlueColor}"
+                                                                VerticalOptions="Center" />
                                                             <Label
                                                                 FontSize="{StaticResource TextSmallSize}"
                                                                 Text="ADD"

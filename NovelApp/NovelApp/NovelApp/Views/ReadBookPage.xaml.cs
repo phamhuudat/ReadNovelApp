@@ -17,15 +17,25 @@ namespace NovelApp.Views
         {
             InitializeComponent();
         }
-        private void book_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
-        {
-            // handle event action.
-        }
         protected override bool OnBackButtonPressed()
         {
             var viewmdel = BindingContext as ReadBookPageViewModel;
             viewmdel.GoBack();
             return false;
+        }
+        int topItem;
+        void book_Swiped(System.Object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs e)
+        {
+            if(e.Direction == MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left)
+            {
+                topItem++;
+            }
+            else
+            {
+                topItem--;
+                book.TopItem = topItem < 0 ? 0 : topItem ;
+            }
+
         }
     }
 }

@@ -48,7 +48,7 @@ namespace NovelApp.Views
 
         private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
-            await ViewScroll.ScrollToAsync(0, CommentLs.Y, true);
+            await ViewScroll.ScrollToAsync(0, CommentLs.Y+20, true);
         }
     }
 }

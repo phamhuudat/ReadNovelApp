@@ -32,5 +32,6 @@ namespace NovelApp.Helpers
 		public const string ArrowDownWideShort = "\uf160";
 		public const string CircleArrowLeft = "\uf0a8";
 		public const string ArrowLeft = "\u2190";
+		public const string ThumbsUp = "\uf087";
 	}
 }

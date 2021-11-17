@@ -3,26 +3,28 @@
     x:Class="NovelApp.Views.TableContentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    NavigationPage.HasNavigationBar="False"
-    xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    ios:Page.UseSafeArea="true"
+    BackgroundColor="{DynamicResource TableContentThemeBgColor}"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid
             BackgroundColor="{DynamicResource TableContentThemeBgColor}"
-            RowDefinitions="40,*"
-            ColumnDefinitions="*,40">
+            ColumnDefinitions="*,40"
+            RowDefinitions="40,*">
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
-                FontFamily="AC"
                 Margin="10,0,0,0"
-                VerticalOptions="Center"
-                HorizontalOptions="Start"
+                FontFamily="AC"
                 FontSize="{StaticResource TextNormalSize}"
-                TextColor="{StaticResource BookDetailTextColor}"
-                Text="{StaticResource IconArrowLeft}">
+                HorizontalOptions="Start"
+                Text="{StaticResource IconArrowLeft}"
+                TextColor="{DynamicResource BookDetailTextColor}"
+                VerticalOptions="Center">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding GobackCommand}" />
+                    <TapGestureRecognizer Command="{Binding GobackCommand}" />
                 </Label.GestureRecognizers>
             </Label>
             <Label
@@ -33,39 +35,36 @@
                 FontSize="{StaticResource TextTagSize}"
                 HorizontalOptions="Center"
                 Text="Contents"
-                TextColor="{StaticResource TableContentTextColor}"
+                TextColor="{DynamicResource TableContentTextColor}"
                 VerticalOptions="Center" />
             <Label
-                TextColor="{StaticResource TableContentTextColor}"
-                FontSize="{StaticResource TextTagSize}"
-                VerticalOptions="Center"
-                HorizontalOptions="Start"
+                Grid.Column="1"
                 FontFamily="AC"
-                Text="{StaticResource IconArrowDownShortWide }"
-                Grid.Column="1">
+                FontSize="{StaticResource TextTagSize}"
+                HorizontalOptions="Start"
+                Text="{StaticResource IconArrowDownShortWide}"
+                TextColor="{DynamicResource TableContentTextColor}"
+                VerticalOptions="Center">
                 <Label.Triggers>
                     <DataTrigger
                         Binding="{Binding IsSortDown}"
                         TargetType="Label"
                         Value="true">
-                        <Setter
-                            Property="Text"
-                            Value="{StaticResource IconArrowDownWideShort }" />
+                        <Setter Property="Text" Value="{StaticResource IconArrowDownWideShort}" />
                     </DataTrigger>
                 </Label.Triggers>
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding SortCommand}" />
+                    <TapGestureRecognizer Command="{Binding SortCommand}" />
                 </Label.GestureRecognizers>
             </Label>
-            <BoxView HeightRequest="1"
-                     VerticalOptions="End"
-                     HorizontalOptions="Fill"
-                     BackgroundColor="{StaticResource GrayColor}"
-                     Grid.Row="0"
-                     Grid.Column="0"
-                     Grid.ColumnSpan="2"
-                     />
+            <BoxView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="{StaticResource GrayColor}"
+                HeightRequest="1"
+                HorizontalOptions="Fill"
+                VerticalOptions="End" />
 
             <StackLayout
                 Grid.Row="1"
@@ -76,19 +75,18 @@
                     Padding="10,7,10,7"
                     BackgroundColor="{DynamicResource TableContentSearchBarBgColor}"
                     CornerRadius="5">
-                    <StackLayout
-                        Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal">
                         <Label
                             FontAttributes="Bold"
                             FontSize="{StaticResource TextSmallSize}"
                             Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
                             TextColor="{StaticResource GrayColor}" />
                         <Label
-                            HorizontalOptions="EndAndExpand"
-                            FontSize="{StaticResource TextTagSize}"
                             FontFamily="AC"
-                            TextColor="{DynamicResource TableContentIconColor}"
-                            Text="{StaticResource IconCircleQuestion}" />
+                            FontSize="{StaticResource TextTagSize}"
+                            HorizontalOptions="EndAndExpand"
+                            Text="{StaticResource IconCircleQuestion}"
+                            TextColor="{DynamicResource TableContentIconColor}" />
                     </StackLayout>
 
                 </Frame>
@@ -98,18 +96,17 @@
                     Text="VOLUME 1"
                     TextColor="{StaticResource GrayColor}" />
                 <xforms:SfListView
+                    x:Name="listView"
                     ItemSize="50"
                     ItemSpacing="0,0,10,10"
-                    x:Name="listView"
+                    ItemsSource="{Binding ListChapter}"
                     SelectionChangedCommand="{Binding ItemTappedCommand}"
                     SelectionChangedCommandParameter="{x:Reference listView}"
-                    ItemsSource="{Binding ListChapter}"
                     SelectionMode="Single">
                     <xforms:SfListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid
-                                    ColumnDefinitions="25,*">
+                                <Grid ColumnDefinitions="25,*">
                                     <Label
                                         Grid.Column="0"
                                         FontSize="{StaticResource TextNormalSize}"
@@ -131,19 +128,17 @@
                                         VerticalOptions="End" />
                                     <Label
                                         Grid.Column="1"
-                                        HorizontalOptions="EndAndExpand"
-                                        VerticalOptions="Center"
+                                        FontFamily="AC"
                                         FontSize="{StaticResource TextNormalSize}"
+                                        HorizontalOptions="EndAndExpand"
                                         TextColor="{DynamicResource TableContentTextColor}"
-                                        FontFamily="AC">
+                                        VerticalOptions="Center">
                                         <Label.Triggers>
                                             <DataTrigger
                                                 Binding="{Binding Type}"
                                                 TargetType="Label"
                                                 Value="1">
-                                                <Setter
-                                                    Property="Text"
-                                                    Value="{StaticResource IconLock}" />
+                                                <Setter Property="Text" Value="{StaticResource IconLock}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>

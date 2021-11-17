@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FFImageLoading.Svg.Forms;
 using Foundation;
+using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfRotator.XForms.iOS;
+using Syncfusion.XForms.iOS.EffectsView;
 using UIKit;
 
 namespace NovelApp.iOS
@@ -29,8 +31,11 @@ namespace NovelApp.iOS
             Syncfusion.XForms.iOS.Buttons.SfChipGroupRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
             Syncfusion.XForms.iOS.Cards.SfCardViewRenderer.Init();
-            Syncfusion.SfCarousel.XForms.iOS.SfCarouselRenderer.Init();
+            SfListViewRenderer.Init();
+            SfEffectsViewRenderer.Init();
             new SfRotatorRenderer();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }
