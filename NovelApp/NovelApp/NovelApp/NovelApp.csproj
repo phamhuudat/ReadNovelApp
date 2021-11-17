@@ -29,6 +29,7 @@
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.48" />
+    <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +117,7 @@
     <None Remove="Syncfusion.Xamarin.SfRangeSlider" />
     <None Remove="Syncfusion.Xamarin.SfPopupLayout" />
     <None Remove="Services\CacheService\" />
+    <None Remove="MLToolkit.Forms.SwipeCardView" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />

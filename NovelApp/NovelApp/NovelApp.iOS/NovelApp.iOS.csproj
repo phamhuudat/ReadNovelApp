@@ -173,6 +173,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
       <Version>19.3.0.48</Version>
     </PackageReference>
+    <PackageReference Include="MLToolkit.Forms.SwipeCardView">
+      <Version>2.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
