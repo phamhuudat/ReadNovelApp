@@ -6,8 +6,8 @@
     xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
 
-        <!--<ResourceDictionary
-            Source="Styles/LightTheme.xaml" />-->
+        <ResourceDictionary
+            Source="Styles/LightTheme.xaml" />
         <!--<ResourceDictionary
             Source="Styles/DarkTheme.xaml" />-->
        

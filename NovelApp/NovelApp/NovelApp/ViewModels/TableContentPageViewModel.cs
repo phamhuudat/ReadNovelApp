@@ -23,12 +23,17 @@ namespace NovelApp.ViewModels
         public int CountChapter { get => countChapter; set => SetProperty(ref countChapter, value); }
         public ICommand SortCommand { get; set; }
         public ICommand ItemTappedCommand { get; set; }
+        public ICommand GobackCommand { get; set; }
         public bool IsSortDown { get => isSortDown; set => SetProperty(ref isSortDown, value); }
         public TableContentPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
         {
             _bookService = bookService;
             SortCommand = new DelegateCommand(Sort);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
+            GobackCommand = new DelegateCommand(async () =>
+            {
+                await NavigationService.GoBackAsync();
+            });
         }
         private async void ItemTapped(object obj)
         {

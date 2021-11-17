@@ -119,9 +119,13 @@ namespace NovelApp.ViewModels
             if(SelectTextColor == ReadModelColor.White)
             {
                 AppThemeHelper.SetAppTheme(Theme.Light);
+                _cacheService.SaveCache(AppConstants.CacheParameter.ThemeMode, "0");
             }
             else if(SelectTextColor == ReadModelColor.Black)
+            {
                 AppThemeHelper.SetAppTheme(Theme.Dark);
+                _cacheService.SaveCache(AppConstants.CacheParameter.ThemeMode, "1");
+            }
             ChangeColorReadMode(SelectTextColor);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)

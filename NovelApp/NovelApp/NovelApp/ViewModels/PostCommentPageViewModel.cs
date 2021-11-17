@@ -38,11 +38,16 @@ namespace NovelApp.ViewModels
         private int _novelId;
         private IBookService _bookService;
         private IPageDialogService _dialogService;
+        public ICommand GobackCommand { get; set; }
         public PostCommentPageViewModel(INavigationService navigationService, IBookService bookService, IPageDialogService dialogService) : base(navigationService)
         {
             _bookService = bookService;
             _dialogService = dialogService;
             PostCmtCommand = new DelegateCommand(PostComment);
+            GobackCommand = new DelegateCommand(async () =>
+            {
+                await NavigationService.GoBackAsync();
+            });
         }
         private async void PostComment()
         {

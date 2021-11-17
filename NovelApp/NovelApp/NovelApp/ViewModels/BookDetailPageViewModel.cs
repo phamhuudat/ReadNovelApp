@@ -26,6 +26,7 @@ namespace NovelApp.ViewModels
         public ICommand SearchChapterCommand { get; set; }
         public ICommand NavigationCmtCommand { get; set; }
         public ICommand NavigationReadCommand { get; set; }
+        public ICommand GobackCommand { get; set; }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
         public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
@@ -38,6 +39,10 @@ namespace NovelApp.ViewModels
             SearchChapterCommand = new DelegateCommand(NavigationSearchChapter);
             NavigationCmtCommand = new DelegateCommand(NavigationCommentPage);
             NavigationReadCommand = new DelegateCommand(NavigationReadNow);
+            GobackCommand = new DelegateCommand(async() =>
+            {
+                await NavigationService.GoBackAsync();
+            });
         }
         private async void NavigationReadNow()
         {
