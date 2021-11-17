@@ -12,16 +12,16 @@
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid
-            Margin="20,10,20,0"
-            ColumnDefinitions="*,100"
-            RowDefinitions="55,*">
+            Margin="20,0,20,0"
+            ColumnDefinitions="*,80"
+            RowDefinitions="40,*">
             <!--  header  -->
             <Frame
                 Grid.Row="0"
                 Grid.Column="0"
                 Padding="0"
                 BorderColor="gray"
-                CornerRadius="10"
+                CornerRadius="6"
                 HorizontalOptions="FillAndExpand">
                 <SearchBar
                     BackgroundColor="{DynamicResource HomeSearchBarBgColor}"
@@ -29,6 +29,7 @@
                     HorizontalOptions="Fill"
                     TextColor="{DynamicResource HomeTextTitleBookColor}"
                     x:Name="Search"
+                    FontSize="{StaticResource TextNormalSize}"
                     SearchCommand="{Binding SearchCommand}"
                     SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"/>
             </Frame>
@@ -36,7 +37,7 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 FontAttributes="Bold"
-                FontSize="20"
+                FontSize="{StaticResource TextNormalSize}"
                 HorizontalOptions="End"
                 Text="{helpers:Translate CANCEL}"
                 TextColor="{DynamicResource HomeSearchBarColor}"
@@ -46,11 +47,11 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                TabHeight="70">
+                TabHeight="50">
                 <tabView:SfTabView.SelectionIndicatorSettings>
                     <tabView:SelectionIndicatorSettings
                         Position="Bottom"
-                        StrokeThickness="4"
+                        StrokeThickness="2"
                         Color="{DynamicResource HomeSelectionIndicatorColor}" />
                 </tabView:SfTabView.SelectionIndicatorSettings>
                 <tabView:SfTabItem
@@ -58,14 +59,14 @@
                     SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
-                    TitleFontSize="20">
+                    TitleFontSize="{StaticResource TextSmallSize}">
                     <tabView:SfTabItem.Content>
                         <Grid
                             x:Name="NovelGrid"
                             Padding="0,20,0,0"
                             ColumnDefinitions="3*,*,*"
                             RowDefinitions="Auto,*"
-                            RowSpacing="25">
+                            RowSpacing="20">
                             <!--  Number Novel  -->
                             <Label
                                 Grid.Row="0"
@@ -74,7 +75,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span
-                                            FontSize="{StaticResource TextTagSize}"
+                                            FontSize="{StaticResource TextNormalSize}"
                                             Text="Novel"
                                             TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                         <Span
@@ -121,8 +122,8 @@
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
-                                ItemSize="112"
-                                ItemSpacing="0,0,0,30"
+                                ItemSize="85"
+                                ItemSpacing="0,0,0,20"
                                 x:Name="listView"
                                 LoadMoreOption="AutoOnScroll"
                                 SelectionBackgroundColor="Transparent"
@@ -134,7 +135,7 @@
                                 <sfListView:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid  ColumnDefinitions="85,*">
+                                            <Grid  ColumnDefinitions="60,*">
                                                 <Frame Padding="0" CornerRadius="6">
                                                     <ffimageloading:CachedImage
                                                         Grid.Column="0"
@@ -148,7 +149,7 @@
                                                     Spacing="10"
                                                     VerticalOptions="Center">
                                                     <Label
-                                                        FontSize="{StaticResource TextTagSize}"
+                                                        FontSize="{StaticResource TextNormalSize}"
                                                         Text="{Binding Name}"
                                                         TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                                     <Label
@@ -167,6 +168,7 @@
                                                                 Source="resource://NovelApp.Resources.icons.ic_views.png" />
                                                             <Label
                                                                 Margin="0,0,20,0"
+                                                                FontSize="{StaticResource TextSmallSize}"
                                                                 Text="{Binding Views, StringFormat='{0} Chs'}"
                                                                 TextColor="{DynamicResource HomeTextTitleBookColor}" />
                                                             <StackLayout.Triggers>
@@ -184,11 +186,13 @@
                                                             Grid.Column="1"
                                                             Orientation="Horizontal">
                                                             <Label
-                                                                FontSize="{StaticResource BookDetailTextSmallerSize}"
+                                                                VerticalOptions="Center"
+                                                                FontSize="{StaticResource TextSmallSize}"
                                                                 TextColor="{DynamicResource HomeBlueColor}"
                                                                 Text="{StaticResource IconCirclePlus}"
                                                                 FontFamily="AC"/>
                                                             <Label
+                                                                FontSize="{StaticResource TextSmallSize}"
                                                                 Text="ADD"
                                                                 TextColor="{DynamicResource HomeBlueColor}" />
                                                         </StackLayout>
@@ -209,7 +213,7 @@
                     SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
-                    TitleFontSize="20">
+                    TitleFontSize="{StaticResource TextSmallSize}">
                     <tabView:SfTabItem.Content>
                         <Grid x:Name="FavoritesGrid" BackgroundColor="Green" />
                     </tabView:SfTabItem.Content>
@@ -219,7 +223,7 @@
                     SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
-                    TitleFontSize="20">
+                    TitleFontSize="{StaticResource TextSmallSize}">
                     <tabView:SfTabItem.Content>
                         <Grid x:Name="ContactsGrid" BackgroundColor="Blue" />
                     </tabView:SfTabItem.Content>
@@ -229,7 +233,7 @@
                     SelectionColor="{DynamicResource HomeSelectionIndicatorColor}"
                     TitleFontAttributes="Bold"
                     TitleFontColor="{StaticResource GrayColor}"
-                    TitleFontSize="20">
+                    TitleFontSize="{StaticResource TextSmallSize}">
                     <tabView:SfTabItem.Content>
                         <Grid x:Name="EbookGrid" BackgroundColor="Yellow" />
                     </tabView:SfTabItem.Content>

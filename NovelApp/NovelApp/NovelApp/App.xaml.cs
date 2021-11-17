@@ -23,9 +23,9 @@ namespace NovelApp
             containerRegistry.RegisterPopupNavigationService();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
-            containerRegistry.RegisterForNavigation<HomePage,HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<BookDetailPage>();
-            containerRegistry.RegisterForNavigation<TableContentPage,TableContentPageViewModel>();
+            containerRegistry.RegisterForNavigation<TableContentPage, TableContentPageViewModel>();
             containerRegistry.RegisterForNavigation<PostCommentPage, PostCommentPageViewModel>();
             containerRegistry.RegisterForNavigation<ReadBookPage, ReadBookPageViewModel>();
             containerRegistry.RegisterForNavigation<SettingsPopup, SettingsPopupViewModel>();
@@ -40,8 +40,9 @@ namespace NovelApp
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTMwNTY3QDMxMzkyZTMzMmUzMEx2R2dSSFRkdVRDMGFrU1h3d1d3L04ycEJhS2IwdThOY2hIQnNkemwyRXc9");
             App.Current.UserAppTheme = OSAppTheme.Dark;
+            Helpers.AppThemeHelper.SetAppTheme(Theme.Dark);
             await NavigationService.NavigateAsync("NavigationPage/HomePage");
-           
+
         }
         public App()
         {

@@ -28,19 +28,20 @@
         </Grid.Resources>
         <Frame
             Grid.Row="1"
+            Padding="20,15,20,0"
             Margin="0,0,0,-30"
             BackgroundColor="{DynamicResource SettingThemeBgColor}"
-            CornerRadius="30">
+            CornerRadius="20">
             <Grid
                 ColumnDefinitions="*,80,*"
-                RowDefinitions="20,*">
+                RowDefinitions="16,*">
                 <!--  Goback popup  -->
                 <Frame
                     Grid.Row="0"
                     Grid.Column="1"
-                    Padding="20,5,20,5"
+                    Padding="15,0,15,0"
                     BackgroundColor="{DynamicResource SettingGobackBgColor}"
-                    CornerRadius="6">
+                    CornerRadius="10">
                     <ffimageloading:SvgCachedImage
                         HeightRequest="15"
                         Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
@@ -54,7 +55,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    TabHeight="60">
+                    TabHeight="40">
                     <tabView:SfTabView.SelectionIndicatorSettings>
                         <tabView:SelectionIndicatorSettings
                             Position="Bottom"
@@ -66,7 +67,7 @@
                         SelectionColor="{DynamicResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
-                        TitleFontSize="25">
+                        TitleFontSize="{StaticResource TextTagSize}">
                         <tabView:SfTabItem.Content>
                             <Grid
                                 ColumnDefinitions="20,*"
@@ -121,15 +122,15 @@
                         SelectionColor="{DynamicResource SettingTextColor}"
                         TitleFontAttributes="Bold"
                         TitleFontColor="Gray"
-                        TitleFontSize="25">
+                        TitleFontSize="{StaticResource TextTagSize}">
                         <tabView:SfTabItem.Content>
                             <ScrollView>
-                                <StackLayout>
+                                <StackLayout Spacing="10">
                                     <!--  Reading mode  -->
                                     <Label
                                         Margin="0,20,0,0"
                                         FontAttributes="Bold"
-                                        FontSize="20"
+                                        FontSize="{StaticResource TextNormalSize}"
                                         Text="Reading mode"
                                         TextColor="{DynamicResource SettingTextColor}" />
                                     <buttons:SfSegmentedControl
@@ -137,14 +138,16 @@
                                         BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
                                         BorderColor="Transparent"
                                         CornerRadius="30"
+                                        SegmentPadding="1"
                                         DisplayMode="ImageWithText"
                                         FontColor="{StaticResource  GrayColor}"
                                         FontIconFontColor="{DynamicResource SettingTextColor}"
                                         FontIconFontFamily="AC"
-                                        FontIconFontSize="25"
+                                        FontIconFontSize="{StaticResource TextNormalSize}"
                                         ItemsSource="{Binding ImageTextCollection}"
                                         SegmentHeight="60"
                                         SelectedIndex="{Binding IndexReadMode, Mode=TwoWay}"
+                                        FontSize="{StaticResource TextSmallSize}"
                                         SelectionTextColor="{DynamicResource SettingSliderBgColor}"
                                         VisibleSegmentsCount="3">
                                         <buttons:SfSegmentedControl.SelectionIndicatorSettings>
@@ -157,20 +160,20 @@
                                     <Label
                                         Margin="0,20,0,0"
                                         FontAttributes="Bold"
-                                        FontSize="20"
+                                        FontSize="{StaticResource TextNormalSize}"
                                         Text="Brightness"
                                         TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
                                         BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
-                                        CornerRadius="30">
+                                        CornerRadius="35">
                                         <Grid
                                             ColumnDefinitions="40,*,40">
                                             <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
-                                                FontSize="30"
-                                                HorizontalOptions="End"
+                                                FontSize="{StaticResource TextTagSize}"
+                                                HorizontalOptions="Center"
                                                 Text="☾"
                                                 TextColor="{DynamicResource SettingTextColor}" />
                                             <range:SfRangeSlider
@@ -196,8 +199,8 @@
                                             <Label
                                                 Grid.Column="2"
                                                 FontAttributes="Bold"
-                                                FontSize="30"
-                                                HorizontalOptions="End"
+                                                FontSize="{StaticResource TextTagSize}"
+                                                HorizontalOptions="Center"
                                                 Text="🔆"
                                                 TextColor="{DynamicResource SettingTextColor}" />
                                         </Grid>
@@ -206,9 +209,9 @@
 
                                     <!--  Color  -->
                                     <Label
-                                        Margin="0,20,0,0"
+                                        Margin="0,15,0,0"
                                         FontAttributes="Bold"
-                                        FontSize="20"
+                                        FontSize="{StaticResource TextNormalSize}"
                                         Text="Color"
                                         TextColor="{DynamicResource SettingTextColor}" />
                                     <Grid
@@ -352,19 +355,19 @@
                                     <Label
                                         Margin="0,20,0,0"
                                         FontAttributes="Bold"
-                                        FontSize="20"
+                                        FontSize="{StaticResource TextNormalSize}"
                                         Text="Text size"
                                         TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
                                         Padding="10"
                                         BackgroundColor="{DynamicResource SettingBrightnessBgColor}"
-                                        CornerRadius="30">
+                                        CornerRadius="35">
                                         <Grid
                                             ColumnDefinitions="40,*,40">
                                             <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
-                                                FontSize="30"
+                                                FontSize="{StaticResource TextTagSize}"
                                                 HorizontalOptions="End"
                                                 Text="A-"
                                                 TextColor="{DynamicResource SettingTextColor}" />
@@ -391,7 +394,7 @@
                                             <Label
                                                 Grid.Column="2"
                                                 FontAttributes="Bold"
-                                                FontSize="30"
+                                                FontSize="{StaticResource TextTagSize}"
                                                 HorizontalOptions="End"
                                                 Text="A+"
                                                 TextColor="{DynamicResource SettingTextColor}" />
@@ -402,7 +405,7 @@
                                     <Label
                                         Margin="0,20,0,0"
                                         FontAttributes="Bold"
-                                        FontSize="20"
+                                        FontSize="{StaticResource TextNormalSize}"
                                         Text="Reading fonts"
                                         TextColor="{DynamicResource SettingTextColor}" />
                                     <Frame
@@ -433,7 +436,7 @@
                                                 Grid.Column="1"
                                                 FontFamily="AC"
                                                 TextColor="{DynamicResource SettingTextColor}"
-                                                FontSize="{StaticResource TextNormalSize}"
+                                                FontSize="{StaticResource TextSmallSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
                                                 <Label.Triggers>
@@ -453,7 +456,7 @@
                                                 Grid.Column="0"
                                                 FontFamily="RR"
                                                 TextColor="{DynamicResource SettingTextColor}"
-                                                FontSize="{StaticResource TextNormalSize}"
+                                                FontSize="{StaticResource TextSmallSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="Roboto"
                                                 VerticalOptions="Center">
@@ -469,7 +472,7 @@
                                                 Grid.Column="1"
                                                 FontFamily="AC"
                                                 TextColor="{DynamicResource SettingTextColor}"
-                                                FontSize="{StaticResource TextNormalSize}"
+                                                FontSize="{StaticResource TextSmallSize}"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
                                                 <Label.Triggers>
@@ -489,7 +492,7 @@
                                                 Grid.Column="0"
                                                 FontFamily="VT"
                                                 TextColor="{DynamicResource SettingTextColor}"
-                                                FontSize="{StaticResource TextNormalSize}"
+                                                FontSize="{StaticResource TextSmallSize}"
                                                 HorizontalOptions="Fill"
                                                 Text="VnTime"
                                                 VerticalOptions="Center">

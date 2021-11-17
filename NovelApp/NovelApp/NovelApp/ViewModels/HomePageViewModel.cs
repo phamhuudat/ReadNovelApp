@@ -20,7 +20,7 @@ namespace NovelApp.ViewModels
         private ObservableCollection<Novel> listNovel;
         public ICommand LoadMoreCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-        public ICommand ItemTappedCommand {get;set;}
+        public ICommand ItemTappedCommand { get; set; }
         private string _nameNovel;
         public HomePageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
         {
@@ -37,12 +37,21 @@ namespace NovelApp.ViewModels
             listView.SelectedItem = null;
             await NavigationService.NavigateAsync($"{nameof(BookDetailPage)}?ID={item.ID}");
         }
-        private async void SearchNovel(string name)
+
+        private async void SearchNovel(string name="")
         {
             _nameNovel = name;
-            var list = await _bookService.SearchNovelList(name, 0);
-            if (list != null && list.Any())
-                ListNovel = new ObservableCollection<Novel>(list);
+            if (string.IsNullOrEmpty(name))
+            {
+                LoadNovel();
+            }
+            else
+            {
+                var list = await _bookService.SearchNovelList(name, 0);
+                if (list != null && list.Any())
+                    ListNovel = new ObservableCollection<Novel>(list);
+            }
+
         }
         private async void LoadMore(object obj)
         {
@@ -69,12 +78,20 @@ namespace NovelApp.ViewModels
             }
             listView.IsBusy = false;
         }
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            SearchNovel(_nameNovel);
+        }
+
+        private async void LoadNovel()
+        {
             var list = await _bookService.GetNovelList(0);
             if (list != null && list.Any())
-                ListNovel = new ObservableCollection<Novel>(list);
+            {
+                list = new List<Novel>();
+            }
+            ListNovel = new ObservableCollection<Novel>(list);
         }
     }
 }

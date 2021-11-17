@@ -25,6 +25,7 @@
                     Text="Post"
                     TextColor="{StaticResource GrayColor}"
                     Command="{Binding PostCmtCommand}"
+                    FontSize="{StaticResource TextNormalSize}"
                     BackgroundColor="{DynamicResource PostCommentStarBgColor}"
                     HeightRequest="50"
                     Grid.Column="1"
@@ -118,6 +119,7 @@
                         <controls:CustomEditor
                             Text="{Binding Comment}"
                             x:Name="Comment"
+                            FontSize="{StaticResource TextSmallSize}"
                             Placeholder="Review should be more than 50 to 100 characters"
                             PlaceholderColor="{StaticResource GrayColor}"
                             VerticalOptions="FillAndExpand"
@@ -131,7 +133,7 @@
                         HorizontalOptions="EndAndExpand"
                         VerticalOptions="EndAndExpand"
                         TextColor="{StaticResource GrayColor}"
-                        FontSize="{StaticResource TextBigSize}" />
+                        FontSize="{StaticResource TextNormalSize}" />
 
                 </Grid>
             </Frame>

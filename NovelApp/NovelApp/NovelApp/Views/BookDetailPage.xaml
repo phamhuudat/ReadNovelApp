@@ -8,32 +8,100 @@
     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:xforms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    NavigationPage.HasNavigationBar="False"
     BackgroundColor="{StaticResource Background_brown}">
     <ContentPage.Content>
         <Grid
             ColumnDefinitions="*,*,*"
             ColumnSpacing="0"
-            RowDefinitions="*,60,85"
+            RowDefinitions="40,*,60,65"
             RowSpacing="0">
             <forms:CachedImage
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Aspect="AspectFill"
                 Opacity=".1"
                 Source="{Binding Novel.PathImage}" />
-            <ScrollView
+           
+            <Grid Grid.Column="0"
+                  Grid.ColumnSpan="3"
+                  ColumnDefinitions="Auto,Auto,Auto"
+                  Grid.Row="0">
+                <!--Info-->
+                <StackLayout Grid.Column ="0"
+                             Spacing="0"
+                    Margin="60,0,0,0"
+                    VerticalOptions="Fill"  >
+                    <Label Text="Info"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Center"
+                           FontSize="{StaticResource TextNormalSize}"
+                           TextColor="{StaticResource BookDetailTextColor}" />
+                    <BoxView HeightRequest="4"
+                             VerticalOptions="End"
+                             BackgroundColor="{StaticResource BookDetailTextColor}"/>
+                </StackLayout>
+                <!--Reviews-->
+                <StackLayout
+                    Grid.Column="1"
+                    Spacing="0"
+                    VerticalOptions="Fill">
+                    <Label
+                        Text="Reviews"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="Center"
+                        FontSize="{StaticResource TextNormalSize}"
+                        TextColor="{StaticResource BookDetailTextColor}" />
+                    <BoxView
+                        HeightRequest="4"
+                        VerticalOptions="End"
+                        BackgroundColor="{StaticResource BookDetailTextColor}" />
+                </StackLayout>
+                <!--Recomment-->
+                <StackLayout
+                    Grid.Column="2"
+                    Spacing="0"
+                    VerticalOptions="Fill">
+                    <Label
+                        Text="Recommended"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="Center"
+                        FontSize="{StaticResource TextNormalSize}"
+                        TextColor="{StaticResource BookDetailTextColor}" />
+                    <BoxView
+                        HeightRequest="4"
+                        VerticalOptions="End"
+                        BackgroundColor="{StaticResource BookDetailTextColor}" />
+                </StackLayout>
+            </Grid>
+            <Label
                 Grid.Row="0"
+                Grid.Column="0"
+                FontFamily="AC"
+                Margin="10,0,0,0"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                FontSize="{StaticResource TextNormalSize}"
+                TextColor="{StaticResource BookDetailTextColor}"
+                Text="{StaticResource IconArrowLeft}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding GobackCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <ScrollView
+                Grid.Row="1"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3">
                 <StackLayout>
                     <Grid
                         Margin="20,0,20,0"
-                        ColumnDefinitions="130,*"
+                        ColumnDefinitions="95,*"
                         ColumnSpacing="20"
-                        RowDefinitions="180,*">
+                        RowDefinitions="125,*">
                         <Frame Padding="0" CornerRadius="6">
                             <forms:CachedImage Aspect="AspectFill" Source="{Binding Novel.PathImage}" />
                         </Frame>
@@ -43,20 +111,22 @@
                             Spacing="7">
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="30"
+                                FontSize="{StaticResource TextTagSize}"
                                 Text="{Binding Novel.Name}"
                                 TextColor="{StaticResource WhiteColor}" />
                             <Label
-                                FontSize="18"
+                                FontSize="{StaticResource TextNormalSize}"
                                 Text="{Binding Novel.Author}"
                                 TextColor="{StaticResource WhiteColor}" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     Text="{Binding Novel.Genre}"
                                     TextColor="{StaticResource WhiteColor}" />
                                 <Label
+                                    FontSize="{StaticResource TextSmallSize}"
                                     FontFamily="AC"
+                                    Scale=".8"
                                     VerticalOptions="Center"
                                     TextColor="{StaticResource GrayColor}"
                                     Text="{StaticResource IconChevronRight}" />
@@ -65,18 +135,19 @@
                         </StackLayout>
                     </Grid>
                     <Frame
-                        Margin="0,30,0,-10"
+                        Margin="0,25,0,-10"
                         Padding="20"
                         BackgroundColor="{DynamicResource BookDetailThemeBgColor}"
-                        CornerRadius="20"
+                        CornerRadius="15"
                         HorizontalOptions="Fill"
                         VerticalOptions="FillAndExpand">
                         <StackLayout Spacing="20">
                             <!--  View Golden stick and View and Honors  -->
                             <Frame
                                 BackgroundColor="{DynamicResource BookDetailStickBgColor}"
-                                CornerRadius="20"
-                                HeightRequest="85">
+                                CornerRadius="15"
+                                Padding="10"
+                                HeightRequest="70">
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,*">
                                     <!--  Golden stick  -->
                                     <StackLayout
@@ -90,6 +161,7 @@
                                             TextColor="{StaticResource GrayColor}" />
                                         <Label FontFamily="AC"
                                             VerticalOptions="Center"
+                                            FontSize="{StaticResource TextSmallSize}"
                                             TextColor="{StaticResource GrayColor}"
                                             Text="{StaticResource IconChevronRight}"/>
                                     </StackLayout>
@@ -98,7 +170,7 @@
                                         Grid.Row="1"
                                         Grid.Column="0"
                                         FontAttributes="Bold"
-                                        FontSize="30"
+                                        FontSize="{StaticResource TextTagSize}"
                                         HorizontalOptions="Center"
                                         Text="1.7K"
                                         TextColor="{DynamicResource BookDetailTextColor}"
@@ -107,7 +179,7 @@
                                     <Label
                                         Grid.Row="0"
                                         Grid.Column="1"
-                                        FontSize="18"
+                                        FontSize="{StaticResource TextSmallSize}"
                                         HorizontalOptions="Center"
                                         Text="Views"
                                         TextColor="{StaticResource GrayColor}" />
@@ -115,7 +187,7 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         FontAttributes="Bold"
-                                        FontSize="30"
+                                        FontSize="{StaticResource TextTagSize}"
                                         HorizontalOptions="Center"
                                         Text="{Binding Novel.Views}"
                                         TextColor="{DynamicResource BookDetailTextColor}"
@@ -132,6 +204,7 @@
                                             TextColor="{StaticResource GrayColor}" />
                                         <Label
                                             FontFamily="AC"
+                                            FontSize="{StaticResource TextSmallSize}"
                                             VerticalOptions="Center"
                                             TextColor="{StaticResource GrayColor}"
                                             Text="{StaticResource IconChevronRight}" />
@@ -150,7 +223,7 @@
                             </Frame>
                             <!--  Description  -->
                             <Label
-                                FontSize="22"
+                                FontSize="{StaticResource TextNormalSize}"
                                 Text="Synopsis"
                                 TextColor="{DynamicResource BookDetailTextColor}" />
                             <Grid ColumnDefinitions="*,30" RowDefinitions="*,20">
@@ -203,7 +276,7 @@
                                 HeightRequest=".5"
                                 HorizontalOptions="FillAndExpand" />
                             <Label
-                                FontSize="22"
+                                FontSize="{StaticResource TextNormalSize}"
                                 Text="Contents"
                                 TextColor="{DynamicResource BookDetailTextColor}" />
                             <StackLayout Orientation="Horizontal">
@@ -219,6 +292,7 @@
                                 <Label
                                     FontFamily="AC"
                                     VerticalOptions="Center"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     TextColor="{StaticResource GrayColor}"
                                     Text="{StaticResource IconChevronRight}" />
                                 <StackLayout.GestureRecognizers>
@@ -232,7 +306,7 @@
                                 HorizontalOptions="FillAndExpand" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontSize="22"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     Text="Tags"
                                     TextColor="{DynamicResource BookDetailTextColor}" />
                                 <Label
@@ -241,6 +315,7 @@
                                     Text="{Binding Novel.CountTag, StringFormat='{0} tags'}"
                                     TextColor="{StaticResource GrayColor}" />
                                 <Label
+                                    FontSize="{StaticResource TextSmallSize}"
                                     FontFamily="AC"
                                     VerticalOptions="Center"
                                     TextColor="{StaticResource GrayColor}"
@@ -249,14 +324,14 @@
                             <buttons:SfChipGroup
                                 ChipBackgroundColor="{DynamicResource BookDetaiPinkColor}"
                                 ChipTextColor="{StaticResource PinkColor}"
-                                ChipTextSize="16"
+                                ChipTextSize="{StaticResource TextSmallSize}"
                                 ItemsSource="{Binding Novel.ShowTags}"
                                 Type="Action">
                                 <buttons:SfChipGroup.ChipLayout>
                                     <FlexLayout
                                         AlignContent="Start"
-                                        AlignItems="Start"
                                         Direction="Row"
+                                        AlignItems="Center"
                                         HorizontalOptions="Start"
                                         JustifyContent="Start"
                                         VerticalOptions="Center"
@@ -270,7 +345,7 @@
                                 HorizontalOptions="FillAndExpand" />
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontSize="22"
+                                    FontSize="{StaticResource TextNormalSize}"
                                     Text="Reviews"
                                     TextColor="{DynamicResource BookDetailTextColor}" />
                                 <Label
@@ -281,6 +356,7 @@
                                 <Label
                                     FontFamily="AC"
                                     VerticalOptions="Center"
+                                    FontSize="{StaticResource TextSmallSize}"
                                     TextColor="{StaticResource GrayColor}"
                                     Text="{StaticResource IconChevronRight}" />
                             </StackLayout>
@@ -365,7 +441,7 @@
                 </StackLayout>
             </ScrollView>
             <Grid
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="2"
                 ColumnDefinitions="*,60">
                 <Frame
@@ -388,12 +464,12 @@
             <!--  Toolbar  -->
             <!--  Download  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
                 <Label
-                    FontSize="{StaticResource BookDetailTextIconSize}"
+                    FontSize="{StaticResource TextTagSize}"
                     Grid.Row="0"
                     HorizontalOptions="Center"
                     TextColor="{StaticResource GrayColor}"
@@ -402,7 +478,7 @@
                     VerticalOptions="End" />
                 <Label
                     Grid.Row="1"
-                    FontSize="{StaticResource BookDetailTextSmallerSize}"
+                    FontSize="{StaticResource TextSmallSize}"
                     HorizontalOptions="Center"
                     Text="DOWNLOAD"
                     TextColor="Gray" />
@@ -410,13 +486,13 @@
             </Grid>
             <!--  Read Now  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 BackgroundColor="{StaticResource BookDetailBgCheckBtntColor}"
                 RowDefinitions="*,*">
                 <Label
                     Grid.Row="0"
-                    FontSize="{StaticResource BookDetailTextIconSize}"
+                    FontSize="{StaticResource TextTagSize}"
                     HorizontalOptions="Center"
                     TextColor="{StaticResource WhiteColor}"
                     Text="{StaticResource IconBookOpen}"
@@ -424,7 +500,7 @@
                     VerticalOptions="End"/>
                 <Label
                     Grid.Row="1"
-                    FontSize="{StaticResource BookDetailTextSmallerSize}"
+                    FontSize="{StaticResource TextSmallSize}"
                     HorizontalOptions="Center"
                     Text="READ NOW"
                     TextColor="{StaticResource WhiteColor}" />
@@ -435,13 +511,13 @@
             </Grid>
             <!--  Add To  -->
             <Grid
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="2"
                 BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
                 <Label
                     Grid.Row="0"
-                    FontSize="{StaticResource BookDetailTextIconSize}"
+                    FontSize="{StaticResource TextTagSize}"
                     HorizontalOptions="Center"
                     TextColor="{StaticResource GrayColor}"
                     Text="{StaticResource IconCirclePlus}"
@@ -449,7 +525,7 @@
                     VerticalOptions="End" />
                 <Label
                     Grid.Row="1"
-                    FontSize="{StaticResource BookDetailTextSmallerSize}"
+                    FontSize="{StaticResource TextSmallSize}"
                     HorizontalOptions="Center"
                     Text="ADD TO"
                     TextColor="{StaticResource GrayColor}" />

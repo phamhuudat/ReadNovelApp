@@ -3,13 +3,14 @@
     x:Class="NovelApp.Views.TableContentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    NavigationPage.HasNavigationBar="False"
     xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
     <NavigationPage.TitleView>
         <ContentView>
             <Grid
                 ColumnDefinitions="*,40">
                 <Label
+                    Grid.Row="1"
                     Grid.Column="0"
                     FontAttributes="Bold"
                     FontSize="{StaticResource TextTagSize}"
@@ -46,94 +47,95 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-        <StackLayout
-            Padding="15,25,15,0"
-            BackgroundColor="{DynamicResource TableContentThemeBgColor}">
-            <Frame
-                Padding="12,13,12,13"
-                BackgroundColor="{DynamicResource TableContentSearchBarBgColor}"
-                CornerRadius="8">
-                <StackLayout
-                    Orientation="Horizontal">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="{StaticResource TextSmallSize}"
-                        Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
-                        TextColor="{StaticResource GrayColor}" />
-                    <Label
-                        HorizontalOptions="EndAndExpand"
-                        FontSize="{StaticResource TextTagSize}"
-                        FontFamily="AC"
-                        TextColor="{DynamicResource TableContentIconColor}"
-                        Text="{StaticResource IconCircleQuestion}" />
-                </StackLayout>
+        <Grid RowDefinitions="35,*">
+            <StackLayout
+                Grid.Row="1"
+                Padding="10,20,10,0"
+                BackgroundColor="{DynamicResource TableContentThemeBgColor}">
+                <Frame
+                    Padding="10,7,10,7"
+                    BackgroundColor="{DynamicResource TableContentSearchBarBgColor}"
+                    CornerRadius="5">
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="{StaticResource TextSmallSize}"
+                            Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
+                            TextColor="{StaticResource GrayColor}" />
+                        <Label
+                            HorizontalOptions="EndAndExpand"
+                            FontSize="{StaticResource TextTagSize}"
+                            FontFamily="AC"
+                            TextColor="{DynamicResource TableContentIconColor}"
+                            Text="{StaticResource IconCircleQuestion}" />
+                    </StackLayout>
 
-            </Frame>
-            <Label
-                Margin="12,20,0,10"
-                FontAttributes="Bold"
-                FontSize="{StaticResource BookDetailTextSmallerSize}"
-                Text="VOLUME 1"
-                TextColor="{StaticResource GrayColor}" />
-            <xforms:SfListView
-                ItemSize="70"
-                ItemSpacing="12,0,12,10"
-                x:Name="listView"
-                SelectionChangedCommand="{Binding ItemTappedCommand}"
-                SelectionChangedCommandParameter="{x:Reference listView}"
-                ItemsSource="{Binding ListChapter}"
-                SelectionMode="Single">
-                <xforms:SfListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid
-                                ColumnDefinitions="25,*">
-                                <Label
-                                    Grid.Column="0"
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource TextNormalSize}"
-                                    Text="{Binding No}"
-                                    TextColor="{DynamicResource TableContentTextColor}"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Grid.Column="1"
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource TextNormalSize}"
-                                    Text="{Binding Name}"
-                                    TextColor="{DynamicResource TableContentTextColor}"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Grid.Column="1"
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource BookDetailTextSmallerSize}"
-                                    HorizontalOptions="Start"
-                                    Text="{Binding UpdTime, StringFormat='Updated {0}'}"
-                                    TextColor="{DynamicResource TableContentTextColor}"
-                                    VerticalOptions="End" />
-                                <Label
-                                    Grid.Column="1"
-                                    HorizontalOptions="EndAndExpand"
-                                    VerticalOptions="Center"
-                                    FontSize="{StaticResource TextNormalSize}"
-                                    TextColor="{DynamicResource TableContentTextColor}"
-                                    FontFamily="AC">
-                                    <Label.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding Type}"
-                                            TargetType="Label"
-                                            Value="1">
-                                            <Setter
-                                                Property="Text"
-                                                Value="{StaticResource IconLock}" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </xforms:SfListView.ItemTemplate>
+                </Frame>
+                <Label
+                    Margin="12,10,0,10"
+                    FontSize="{StaticResource TextSmallSize}"
+                    Text="VOLUME 1"
+                    TextColor="{StaticResource GrayColor}" />
+                <xforms:SfListView
+                    ItemSize="50"
+                    ItemSpacing="0,0,10,10"
+                    x:Name="listView"
+                    SelectionChangedCommand="{Binding ItemTappedCommand}"
+                    SelectionChangedCommandParameter="{x:Reference listView}"
+                    ItemsSource="{Binding ListChapter}"
+                    SelectionMode="Single">
+                    <xforms:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid
+                                    ColumnDefinitions="25,*">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontSize="{StaticResource TextNormalSize}"
+                                        Text="{Binding No}"
+                                        TextColor="{DynamicResource TableContentTextColor}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="{StaticResource TextNormalSize}"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource TableContentTextColor}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="{StaticResource TextSmallSize}"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding UpdTime, StringFormat='Updated {0}'}"
+                                        TextColor="{DynamicResource TableContentTextColor}"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Column="1"
+                                        HorizontalOptions="EndAndExpand"
+                                        VerticalOptions="Center"
+                                        FontSize="{StaticResource TextNormalSize}"
+                                        TextColor="{DynamicResource TableContentTextColor}"
+                                        FontFamily="AC">
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding Type}"
+                                                TargetType="Label"
+                                                Value="1">
+                                                <Setter
+                                                    Property="Text"
+                                                    Value="{StaticResource IconLock}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </xforms:SfListView.ItemTemplate>
 
-            </xforms:SfListView>
-        </StackLayout>
+                </xforms:SfListView>
+            </StackLayout>
+
+        </Grid>
+       
     </ContentPage.Content>
 </ContentPage>

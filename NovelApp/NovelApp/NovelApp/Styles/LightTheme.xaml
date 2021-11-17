@@ -97,13 +97,13 @@
     <x:Double
         x:Key="TextBigSize">30</x:Double>
     <x:Double
-        x:Key="TextTagSize">22</x:Double>
+        x:Key="TextTagSize">20</x:Double>
     <x:Double
         x:Key="BookDetailTextIconSize">25</x:Double>
     <x:Double
-        x:Key="TextNormalSize">20</x:Double>
+        x:Key="TextNormalSize">15</x:Double>
     <x:Double
-        x:Key="TextSmallSize">18</x:Double>
+        x:Key="TextSmallSize">13</x:Double>
     <x:Double
         x:Key="BookDetailTextSmallerSize">15</x:Double>
 
@@ -142,5 +142,7 @@
         x:Key="IconArrowDownWideShort">&#xf160;</x:String>
     <x:String
         x:Key="IconCircleArrowLeft">&#xf0a8;</x:String>
+    <x:String
+        x:Key="IconArrowLeft">&#x2190;</x:String>
 
 </ResourceDictionary>
