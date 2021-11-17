@@ -52,7 +52,7 @@ namespace NovelApp.Views.Popup
                 return;
             }
             var brightnessService = DependencyService.Get<IBrightnessService>();
-            brightnessService.SetBrightness((float)Brightness.Value);
+            brightnessService.SetBrightness((float)Brightness.Value/225);
         }
     }
 }

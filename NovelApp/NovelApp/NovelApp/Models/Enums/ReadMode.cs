@@ -37,6 +37,7 @@ namespace NovelApp.Models.Enums
     {
         Small,
         Normal,
+        Buff
     }
     public enum TextFont
     {

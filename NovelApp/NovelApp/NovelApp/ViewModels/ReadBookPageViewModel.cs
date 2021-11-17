@@ -10,6 +10,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -202,8 +203,7 @@ namespace NovelApp.ViewModels
                 var text = ContentChapter.Text;
                 var WidthPage = ((int)width - 40);
                 var HeightPage = ((int)height - 80);
-                var maxRowInPage = HeightPage / (normlaSizeChar * 2);
-                var maxColInPage = WidthPage / (normlaSizeChar * 2);
+                var maxRowInPage = HeightPage / (normlaSizeChar);
                 //dieenj tich hien thi content
                 var counttext = WidthPage * HeightPage;
                 var list = new List<PageChapter>();
@@ -219,18 +219,9 @@ namespace NovelApp.ViewModels
                 int indexPage = 0;
                 for (int i = 0; i < row; i++)
                 {
-                    rowInPaging++;
                     var texline = rowLine[i];
-                    var listChar = texline.ToCharArray();
-                    int countminsize = 0;
-                    foreach (var textChar in listChar)
-                    {
-                        if (_arrayCharFilter.Contains(textChar))
-                        {
-                            countminsize++;
-                        }
-                    }
-                    var fixelLine = countminsize * smallSizeChar + (texline.Length - countminsize) * normlaSizeChar;
+
+                    var fixelLine = CalPixelString(texline, smallSizeChar, normlaSizeChar);
                     countPixelPage += fixelLine;
                     textPage += texline;
                     if (countPixelPage > counttext)
@@ -253,25 +244,76 @@ namespace NovelApp.ViewModels
                             }
                             else
                             {
-                                deltatext += texline[j];
+                                deltatext = texline[j] + deltatext;
                             }
 
                         }
-                        textPage.Replace(deltatext, "");
+                        textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
                         list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-                        textPage = deltatext;
+                        rowLine[i] = deltatext;
+                        i--;
+                        textPage = "";
                         countPixelPage = 0;
                         rowInPaging = 0;
 
                     }
                     else
                     {
-                        textPage += "\n";
-                        if (fixelLine >= WidthPage)
+
+                        if (fixelLine > WidthPage)
                         {
+                            var buff = fixelLine / WidthPage;
+                            rowInPaging += (buff + 1);
+                            if (rowInPaging > maxRowInPage)
+                            {
+                                var deltaRow = rowInPaging - maxRowInPage - 1;
+
+                                var deltaPixcel = rowInPage * deltaRow + (fixelLine - (buff * WidthPage));
+                                var comparePixcel = 0;
+                                var deltatext = "";
+                                for (int l = texline.Length - 1; l >= 0; l--)
+                                {
+                                    char t = texline[l];
+                                    if (_arrayCharFilter.Contains(t))
+                                    {
+                                        comparePixcel += smallSizeChar;
+                                    }
+                                    else
+                                        comparePixcel += normlaSizeChar;
+
+                                    if (deltaPixcel < comparePixcel)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        deltatext = texline[l] + deltatext;
+                                    }
+
+                                }
+
+                                textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
+                                list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
+                                //Debug.WriteLine($"{deltatext} {indexPage}\n");
+                                rowLine[i] = deltatext;
+                                i--;
+                                textPage = "";
+                                countPixelPage = 0;
+                                rowInPaging = 0;
+                                continue;
+                            }
+                            else
+                            {
+                                textPage += "\n";
+                            }
+                        }
+                        else
+                        {
+                            textPage += "\n";
                             rowInPaging++;
                         }
                         var k = i + 1;
+
                         if (k == row || rowInPaging == maxRowInPage)
                         {
                             countPixelPage = 0;
@@ -290,6 +332,20 @@ namespace NovelApp.ViewModels
             {
 
             }
+        }
+        private int CalPixelString(string textLine, int smallSizeChar, int normlaSizeChar)
+        {
+            var listChar = textLine.ToCharArray();
+            int countminsize = 0;
+            foreach (var textChar in listChar)
+            {
+                if (_arrayCharFilter.Contains(textChar))
+                {
+                    countminsize++;
+                }
+            }
+            var fixelLine = countminsize * smallSizeChar + (listChar.Length - countminsize) * normlaSizeChar;
+            return fixelLine;
         }
         /// <summary>
         /// Tapping, Scrolling, Paging
