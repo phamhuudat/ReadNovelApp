@@ -23,19 +23,5 @@ namespace NovelApp.Views
             viewmdel.GoBack();
             return false;
         }
-        int topItem;
-        void book_Swiped(System.Object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs e)
-        {
-            if(e.Direction == MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left)
-            {
-                topItem++;
-            }
-            else
-            {
-                topItem--;
-                book.TopItem = topItem < 0 ? 0 : topItem ;
-            }
-
-        }
     }
 }

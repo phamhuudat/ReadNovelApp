@@ -30,7 +30,7 @@ namespace NovelApp.iOS
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipGroupRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
-            Syncfusion.XForms.iOS.Cards.SfCardViewRenderer.Init();
+            Syncfusion.SfRangeSlider.XForms.iOS.SfRangeSliderRenderer.Init();
             SfListViewRenderer.Init();
             SfEffectsViewRenderer.Init();
             new SfRotatorRenderer();

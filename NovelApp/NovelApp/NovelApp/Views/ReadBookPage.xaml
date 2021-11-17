@@ -213,7 +213,6 @@
                 SupportedDraggingDirections="Left,Right"
                 SupportedSwipeDirections="Left,Right"
                 Threshold="100"
-                Sw
                 TopItem="0"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.Triggers>
