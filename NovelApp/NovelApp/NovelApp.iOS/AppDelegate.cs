@@ -36,6 +36,8 @@ namespace NovelApp.iOS
             new SfRotatorRenderer();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             var ignore = typeof(SvgCachedImage);
+            App.DisplayScreenWidth = (double)UIScreen.MainScreen.Bounds.Width;
+            App.DisplayScreenHeight = (double)UIScreen.MainScreen.Bounds.Height;
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }

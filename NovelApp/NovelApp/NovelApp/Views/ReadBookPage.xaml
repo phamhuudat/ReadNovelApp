@@ -202,6 +202,7 @@
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="0"
+                SizeChanged="book_SizeChanged"
                 Grid.ColumnSpan="2"
                 AnimationLength="250"
                 BackCardScale="1"
@@ -233,6 +234,7 @@
                             <Grid
                                 ColumnDefinitions="60,*,60"
                                 HorizontalOptions="Fill"
+                                RowSpacing="0"
                                 RowDefinitions="50,*,20"
                                 VerticalOptions="Fill">
                                 <Grid.Resources>

@@ -36,6 +36,8 @@ namespace NovelApp.ViewModels
         private int countPixelInPage;
         private int _maxLineInPage = 3;
         private Color textColor;
+        public double WidthReadPage { get; set; }
+        public double ViewReadHeight { get; set; }
         public string TextFontFamily { get => textFontFamily; set => SetProperty(ref textFontFamily, value); }
         public Color TextColor { get => textColor; set => SetProperty(ref textColor, value); }
         public ReadModelColor SelectBgColor { get => selectBgColor; set => SetProperty(ref selectBgColor, value); }
@@ -75,7 +77,7 @@ namespace NovelApp.ViewModels
         /// <summary>
         /// danh sach cac kí tự có kích thước nhỏ 
         /// </summary>
-        private char[] _arrayCharFilter = new char[] { 'i', 'f', 'l', 'j', 't', 'r', '.', ',', ':', ';', '?', '!' };
+        private char[] _arrayCharFilter = new char[] { 'i', 'f', 'l', 'j', 't', 'r', '.', ',', ':', ';', '?', '!', '1' };
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
@@ -178,151 +180,75 @@ namespace NovelApp.ViewModels
             ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
             ReadMode(ShowReadMode);
         }
-
-        /// <summary>
-        /// Phân trang hiển thị chế độ Paging, textsize hiển thị
-        /// </summary>
-        /// <param name="textSize"></param>
-        /// <returns></returns>
         private void SplitPage(TextSize textSize)
         {
-            var sizeDic = TextSizeHelper.TextSizeMode[textSize];
-            int smallSizeChar = sizeDic[CharSize.Small];
-            int normlaSizeChar = sizeDic[CharSize.Normal];
-            // Get Metrics
-            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            var density = mainDisplayInfo.Density;
-            // Width (in pixels)
-            var width = mainDisplayInfo.Width / density;
-
-            // Height (in pixels)
-            var height = mainDisplayInfo.Height / density;
             try
             {
-                var text = ContentChapter.Text;
-                var WidthPage = ((int)width - 40);
-                var HeightPage = ((int)height - 80);
-                var maxRowInPage = HeightPage / (normlaSizeChar);
-                //dieenj tich hien thi content
-                var counttext = WidthPage * HeightPage;
                 var list = new List<PageChapter>();
+                var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+                
+                var WidthPage = App.DisplayScreenWidth - 40;
+                var HeightPage = App.DisplayScreenHeight - 100;
+                double charWidth = .5;
+                var fontSize = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
+                double lineHeight = Device.RuntimePlatform == Device.iOS ||
+                                    Device.RuntimePlatform == Device.Android ? 1.3 : 1.4;
+                //số dòng trên một trang
+                int lineCount = (int)(HeightPage / (lineHeight * fontSize));
+                //số kí tự trên một dòng
+                int charsPerLine = (int)(WidthPage / (charWidth * fontSize));
+
+                var text = ContentChapter.Text;
                 var rowLine = text.Split('\n');
                 var row = rowLine.Length;
                 //text hiển thị trong một page
                 string textPage = "";
                 //row hiển thị trong một page
                 int rowInPaging = 0;
-                //số pixel trong một page
-                int countPixelPage = 0;
                 //Số trang
                 int indexPage = 0;
                 for (int i = 0; i < row; i++)
                 {
-                    var texline = rowLine[i];
-
-                    var fixelLine = CalPixelString(texline, smallSizeChar, normlaSizeChar);
-                    countPixelPage += fixelLine;
-                    textPage += texline;
-                    if (countPixelPage > counttext)
+                    var textLine = rowLine[i];
+                    var length = textLine.Length;
+                    var rowInTextLine = length / charsPerLine;
+                    if (length % charsPerLine > 0)
                     {
-                        string deltatext = "";
-                        var deltaPixcel = countPixelPage - counttext;
-                        int comparePixcel = 0;
-                        for (int j = texline.Length - 1; j >= 0; j--)
-                        {
-                            char t = texline[j];
-                            if (_arrayCharFilter.Contains(t))
-                            {
-                                comparePixcel += smallSizeChar;
-                            }
-                            else
-                                comparePixcel += normlaSizeChar;
-                            if (deltaPixcel < comparePixcel)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                deltatext = texline[j] + deltatext;
-                            }
+                        ++rowInTextLine;
+                    }
+                    rowInPaging += rowInTextLine;
 
-                        }
-                        textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
+                    if (rowInPaging == lineCount)
+                    {
+                        textPage += textLine + "\n";
                         list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-                        rowLine[i] = deltatext;
-                        i--;
                         textPage = "";
-                        countPixelPage = 0;
                         rowInPaging = 0;
-
+                    }
+                    else if (rowInPaging < lineCount)
+                    {
+                        textPage += textLine + "\n";
                     }
                     else
                     {
-
-                        if (fixelLine > WidthPage)
+                        var deltaRow = rowInPaging - lineCount;
+                        var deltaRowInText = rowInTextLine - deltaRow;
+                        if (deltaRowInText > 0)
                         {
-                            var buff = fixelLine / WidthPage;
-                            rowInPaging += (buff + 1);
-                            if (rowInPaging > maxRowInPage)
-                            {
-                                var deltaRow = rowInPaging - maxRowInPage - 1;
-
-                                var deltaPixcel = rowInPage * deltaRow + (fixelLine - (buff * WidthPage));
-                                var comparePixcel = 0;
-                                var deltatext = "";
-                                for (int l = texline.Length - 1; l >= 0; l--)
-                                {
-                                    char t = texline[l];
-                                    if (_arrayCharFilter.Contains(t))
-                                    {
-                                        comparePixcel += smallSizeChar;
-                                    }
-                                    else
-                                        comparePixcel += normlaSizeChar;
-
-                                    if (deltaPixcel < comparePixcel)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        deltatext = texline[l] + deltatext;
-                                    }
-
-                                }
-
-                                textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
-                                list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-                                //Debug.WriteLine($"{deltatext} {indexPage}\n");
-                                rowLine[i] = deltatext;
-                                i--;
-                                textPage = "";
-                                countPixelPage = 0;
-                                rowInPaging = 0;
-                                continue;
-                            }
-                            else
-                            {
-                                textPage += "\n";
-                            }
-                        }
-                        else
-                        {
-                            textPage += "\n";
-                            rowInPaging++;
-                        }
-                        var k = i + 1;
-
-                        if (k == row || rowInPaging == maxRowInPage)
-                        {
-                            countPixelPage = 0;
-                            rowInPaging = 0;
+                            var deltaText = textLine.Substring(deltaRowInText * charsPerLine);
+                            textPage += textLine.Substring(0, deltaRowInText * charsPerLine);
                             list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
                             textPage = "";
+                            rowInPaging = 0;
+                            rowLine[i] = deltaText;
+                            --i;
                         }
-
                     }
 
+                }
+                if (!string.IsNullOrEmpty(textPage))
+                {
+                    list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
                 }
                 CountPage = list.Count;
                 CarouselItems = new ObservableCollection<PageChapter>(list);
@@ -332,20 +258,177 @@ namespace NovelApp.ViewModels
 
             }
         }
-        private int CalPixelString(string textLine, int smallSizeChar, int normlaSizeChar)
-        {
-            var listChar = textLine.ToCharArray();
-            int countminsize = 0;
-            foreach (var textChar in listChar)
-            {
-                if (_arrayCharFilter.Contains(textChar))
-                {
-                    countminsize++;
-                }
-            }
-            var fixelLine = countminsize * smallSizeChar + (listChar.Length - countminsize) * normlaSizeChar;
-            return fixelLine;
-        }
+        /// <summary>
+        /// Phân trang hiển thị chế độ Paging, textsize hiển thị
+        /// </summary>
+        /// <param name="textSize"></param>
+        /// <returns></returns>
+        //private void SplitPage(TextSize textSize)
+        //{
+        //    var sizeDic = TextSizeHelper.TextSizeMode[textSize];
+        //    int smallSizeChar;
+        //    int normlaSizeChar;
+        //    //tính số chart in page
+
+        //    // Define two values as multiples of font size.
+
+
+
+        //    // Get Metrics
+
+        //    var density = mainDisplayInfo.Density;
+        //    // Width (in pixels)
+        //    var width = mainDisplayInfo.Width / density;
+
+        //    // Height (in pixels)
+        //    var height = mainDisplayInfo.Height / density;
+        //    try
+        //    {
+
+
+        //        var maxRowInPage = HeightPage / (normlaSizeChar);
+        //        //dieenj tich hien thi content
+        //        var counttext = WidthPage * HeightPage;
+        //        var list = new List<PageChapter>();
+        //        var rowLine = text.Split('\n');
+        //        var row = rowLine.Length;
+        //        //text hiển thị trong một page
+        //        string textPage = "";
+        //        //row hiển thị trong một page
+        //        int rowInPaging = 0;
+        //        //số pixel trong một page
+        //        int countPixelPage = 0;
+        //        //Số trang
+        //        int indexPage = 0;
+        //        for (int i = 0; i < row; i++)
+        //        {
+        //            var texline = rowLine[i];
+
+        //            var fixelLine = CalPixelString(texline, smallSizeChar, normlaSizeChar);
+        //            countPixelPage += fixelLine;
+        //            textPage += texline;
+        //            if (countPixelPage > counttext)
+        //            {
+        //                string deltatext = "";
+        //                var deltaPixcel = countPixelPage - counttext;
+        //                int comparePixcel = 0;
+        //                for (int j = texline.Length - 1; j >= 0; j--)
+        //                {
+        //                    char t = texline[j];
+        //                    if (_arrayCharFilter.Contains(t))
+        //                    {
+        //                        comparePixcel += smallSizeChar;
+        //                    }
+        //                    else
+        //                        comparePixcel += normlaSizeChar;
+        //                    if (deltaPixcel < comparePixcel)
+        //                    {
+        //                        break;
+        //                    }
+        //                    else
+        //                    {
+        //                        deltatext = texline[j] + deltatext;
+        //                    }
+
+        //                }
+        //                textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
+        //                list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
+        //                rowLine[i] = deltatext;
+        //                i--;
+        //                textPage = "";
+        //                countPixelPage = 0;
+        //                rowInPaging = 0;
+
+        //            }
+        //            else
+        //            {
+
+        //                if (fixelLine > WidthPage)
+        //                {
+        //                    var buff = fixelLine / WidthPage;
+        //                    rowInPaging += (buff + 1);
+        //                    if (rowInPaging > maxRowInPage)
+        //                    {
+        //                        var deltaRow = rowInPaging - maxRowInPage - 1;
+
+        //                        var deltaPixcel = rowInPage * deltaRow + (fixelLine - (buff * WidthPage));
+        //                        var comparePixcel = 0;
+        //                        var deltatext = "";
+        //                        for (int l = texline.Length - 1; l >= 0; l--)
+        //                        {
+        //                            char t = texline[l];
+        //                            if (_arrayCharFilter.Contains(t))
+        //                            {
+        //                                comparePixcel += smallSizeChar;
+        //                            }
+        //                            else
+        //                                comparePixcel += normlaSizeChar;
+
+        //                            if (deltaPixcel < comparePixcel)
+        //                            {
+        //                                break;
+        //                            }
+        //                            else
+        //                            {
+        //                                deltatext = texline[l] + deltatext;
+        //                            }
+
+        //                        }
+
+        //                        textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
+        //                        list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
+        //                        //Debug.WriteLine($"{deltatext} {indexPage}\n");
+        //                        rowLine[i] = deltatext;
+        //                        i--;
+        //                        textPage = "";
+        //                        countPixelPage = 0;
+        //                        rowInPaging = 0;
+        //                        continue;
+        //                    }
+        //                    else
+        //                    {
+        //                        textPage += "\n";
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    textPage += "\n";
+        //                    rowInPaging++;
+        //                }
+        //                var k = i + 1;
+
+        //                if (k == row || rowInPaging == maxRowInPage)
+        //                {
+        //                    countPixelPage = 0;
+        //                    rowInPaging = 0;
+        //                    list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
+        //                    textPage = "";
+        //                }
+
+        //            }
+
+        //        }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //    }
+        //}
+        //private int CalPixelString(string textLine, int smallSizeChar, int normlaSizeChar)
+        //{
+        //    var listChar = textLine.ToCharArray();
+        //    int countminsize = 0;
+        //    foreach (var textChar in listChar)
+        //    {
+        //        if (_arrayCharFilter.Contains(textChar))
+        //        {
+        //            countminsize++;
+        //        }
+        //    }
+        //    var fixelLine = countminsize * smallSizeChar + (listChar.Length - countminsize) * normlaSizeChar;
+        //    return fixelLine;
+        //}
         /// <summary>
         /// Tapping, Scrolling, Paging
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using NovelApp.ViewModels;
+﻿using MLToolkit.Forms.SwipeCardView;
+using NovelApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,28 @@ namespace NovelApp.Views
         public ReadBookPage()
         {
             InitializeComponent();
+
         }
+        
         protected override bool OnBackButtonPressed()
         {
             var viewmdel = BindingContext as ReadBookPageViewModel;
             viewmdel.GoBack();
             return false;
+        }
+
+        private void ViewReading_SizeChanged(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void book_SizeChanged(object sender, EventArgs e)
+        {
+            var view = sender as SwipeCardView;
+            var viewmdel = BindingContext as ReadBookPageViewModel;
+            viewmdel.ViewReadHeight = view.Height;
+            viewmdel.WidthReadPage = view.Width;
         }
     }
 }

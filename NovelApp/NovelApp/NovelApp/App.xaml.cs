@@ -18,6 +18,8 @@ namespace NovelApp
 {
     public partial class App
     {
+        public static double DisplayScreenWidth;
+        public static double DisplayScreenHeight;
         public static Theme AppTheme { get; set; }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
