@@ -3,6 +3,7 @@
     x:Class="NovelApp.Views.HomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:NovelApp.Controls"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     xmlns:helpers="clr-namespace:NovelApp.Helpers"
@@ -24,10 +25,13 @@
                 Grid.ColumnSpan="{OnPlatform Android=1,
                                              iOS=2}"
                 Padding="0"
-                BorderColor="gray"
+                BorderColor="{OnPlatform Android=Gray,
+                                         iOS=Transparent}"
                 CornerRadius="6"
+                HasShadow="{OnPlatform Android=true,
+                                       iOS=false}"
                 HorizontalOptions="FillAndExpand">
-                <SearchBar
+                <controls:CustomSearchBar
                     x:Name="Search"
                     Grid.Row="0"
                     Grid.Column="0"

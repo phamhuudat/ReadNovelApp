@@ -34,7 +34,7 @@ namespace NovelApp.ViewModels
         private int _indexNextContentTap = 0;
         private int rowInPage = 0;
         private int countPixelInPage;
-        private int _maxLineInPage = 3;
+        private int _maxLineInPage = 4;
         private Color textColor;
         public double WidthReadPage { get; set; }
         public double ViewReadHeight { get; set; }
@@ -166,6 +166,8 @@ namespace NovelApp.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            if (_isNavigationSettings)
+                UnRegisterMessageSettings();
             if (parameters.ContainsKey(AppConstants.NavigationParameter.GoBack))
                 return;
             if (parameters.ContainsKey(AppConstants.NavigationParameter.NovelId))
@@ -178,6 +180,7 @@ namespace NovelApp.ViewModels
         private async Task GetContentChapter(int novelId, int no)
         {
             ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
+            RaisePropertyChanged(nameof(contentChapterTap));
             ReadMode(ShowReadMode);
         }
         private void SplitPage(TextSize textSize)
@@ -185,11 +188,23 @@ namespace NovelApp.ViewModels
             try
             {
                 var list = new List<PageChapter>();
-                var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-                
+
                 var WidthPage = App.DisplayScreenWidth - 40;
                 var HeightPage = App.DisplayScreenHeight - 100;
                 double charWidth = .5;
+                if (textSize == TextSize.Small )
+                {
+                    charWidth = .4;
+                }
+                else if(textSize == TextSize.Smallest)
+                {
+                    charWidth = .419;
+                }
+                else if (textSize == TextSize.Large)
+                    charWidth = .44;
+                else  if (textSize == TextSize.Largest)
+                    charWidth = .46;
+
                 var fontSize = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
                 double lineHeight = Device.RuntimePlatform == Device.iOS ||
                                     Device.RuntimePlatform == Device.Android ? 1.3 : 1.4;
@@ -259,177 +274,6 @@ namespace NovelApp.ViewModels
             }
         }
         /// <summary>
-        /// Phân trang hiển thị chế độ Paging, textsize hiển thị
-        /// </summary>
-        /// <param name="textSize"></param>
-        /// <returns></returns>
-        //private void SplitPage(TextSize textSize)
-        //{
-        //    var sizeDic = TextSizeHelper.TextSizeMode[textSize];
-        //    int smallSizeChar;
-        //    int normlaSizeChar;
-        //    //tính số chart in page
-
-        //    // Define two values as multiples of font size.
-
-
-
-        //    // Get Metrics
-
-        //    var density = mainDisplayInfo.Density;
-        //    // Width (in pixels)
-        //    var width = mainDisplayInfo.Width / density;
-
-        //    // Height (in pixels)
-        //    var height = mainDisplayInfo.Height / density;
-        //    try
-        //    {
-
-
-        //        var maxRowInPage = HeightPage / (normlaSizeChar);
-        //        //dieenj tich hien thi content
-        //        var counttext = WidthPage * HeightPage;
-        //        var list = new List<PageChapter>();
-        //        var rowLine = text.Split('\n');
-        //        var row = rowLine.Length;
-        //        //text hiển thị trong một page
-        //        string textPage = "";
-        //        //row hiển thị trong một page
-        //        int rowInPaging = 0;
-        //        //số pixel trong một page
-        //        int countPixelPage = 0;
-        //        //Số trang
-        //        int indexPage = 0;
-        //        for (int i = 0; i < row; i++)
-        //        {
-        //            var texline = rowLine[i];
-
-        //            var fixelLine = CalPixelString(texline, smallSizeChar, normlaSizeChar);
-        //            countPixelPage += fixelLine;
-        //            textPage += texline;
-        //            if (countPixelPage > counttext)
-        //            {
-        //                string deltatext = "";
-        //                var deltaPixcel = countPixelPage - counttext;
-        //                int comparePixcel = 0;
-        //                for (int j = texline.Length - 1; j >= 0; j--)
-        //                {
-        //                    char t = texline[j];
-        //                    if (_arrayCharFilter.Contains(t))
-        //                    {
-        //                        comparePixcel += smallSizeChar;
-        //                    }
-        //                    else
-        //                        comparePixcel += normlaSizeChar;
-        //                    if (deltaPixcel < comparePixcel)
-        //                    {
-        //                        break;
-        //                    }
-        //                    else
-        //                    {
-        //                        deltatext = texline[j] + deltatext;
-        //                    }
-
-        //                }
-        //                textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
-        //                list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-        //                rowLine[i] = deltatext;
-        //                i--;
-        //                textPage = "";
-        //                countPixelPage = 0;
-        //                rowInPaging = 0;
-
-        //            }
-        //            else
-        //            {
-
-        //                if (fixelLine > WidthPage)
-        //                {
-        //                    var buff = fixelLine / WidthPage;
-        //                    rowInPaging += (buff + 1);
-        //                    if (rowInPaging > maxRowInPage)
-        //                    {
-        //                        var deltaRow = rowInPaging - maxRowInPage - 1;
-
-        //                        var deltaPixcel = rowInPage * deltaRow + (fixelLine - (buff * WidthPage));
-        //                        var comparePixcel = 0;
-        //                        var deltatext = "";
-        //                        for (int l = texline.Length - 1; l >= 0; l--)
-        //                        {
-        //                            char t = texline[l];
-        //                            if (_arrayCharFilter.Contains(t))
-        //                            {
-        //                                comparePixcel += smallSizeChar;
-        //                            }
-        //                            else
-        //                                comparePixcel += normlaSizeChar;
-
-        //                            if (deltaPixcel < comparePixcel)
-        //                            {
-        //                                break;
-        //                            }
-        //                            else
-        //                            {
-        //                                deltatext = texline[l] + deltatext;
-        //                            }
-
-        //                        }
-
-        //                        textPage = textPage.Remove(textPage.Length - deltatext.Length, deltatext.Length);
-        //                        list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-        //                        //Debug.WriteLine($"{deltatext} {indexPage}\n");
-        //                        rowLine[i] = deltatext;
-        //                        i--;
-        //                        textPage = "";
-        //                        countPixelPage = 0;
-        //                        rowInPaging = 0;
-        //                        continue;
-        //                    }
-        //                    else
-        //                    {
-        //                        textPage += "\n";
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    textPage += "\n";
-        //                    rowInPaging++;
-        //                }
-        //                var k = i + 1;
-
-        //                if (k == row || rowInPaging == maxRowInPage)
-        //                {
-        //                    countPixelPage = 0;
-        //                    rowInPaging = 0;
-        //                    list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-        //                    textPage = "";
-        //                }
-
-        //            }
-
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //}
-        //private int CalPixelString(string textLine, int smallSizeChar, int normlaSizeChar)
-        //{
-        //    var listChar = textLine.ToCharArray();
-        //    int countminsize = 0;
-        //    foreach (var textChar in listChar)
-        //    {
-        //        if (_arrayCharFilter.Contains(textChar))
-        //        {
-        //            countminsize++;
-        //        }
-        //    }
-        //    var fixelLine = countminsize * smallSizeChar + (listChar.Length - countminsize) * normlaSizeChar;
-        //    return fixelLine;
-        //}
-        /// <summary>
         /// Tapping, Scrolling, Paging
         /// </summary>
         private void ReadMode(ReadMode readMode)
@@ -439,6 +283,7 @@ namespace NovelApp.ViewModels
                 SplitPage(_textSize);
             else if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
+                TextSizeReadMode(TextSize.Small);
                 SetTapReadMode();
             }
         }
@@ -447,26 +292,38 @@ namespace NovelApp.ViewModels
         /// </summary>
         private void SetTapReadMode()
         {
-            //tinhs do rong view hien thi
-            // Get Metrics
-            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            var density = mainDisplayInfo.Density;
-            // Width (in pixels)
-            var width = (mainDisplayInfo.Width / density) / (2 / 3);
+            var width = ((App.DisplayScreenWidth - 40) *2)/3 ;
 
             // Height (in pixels)
-            var height = (mainDisplayInfo.Height / density) / (2 / 3);
+            var height = ((App.DisplayScreenHeight-50) *2)/ 3;
             //Diện thích hiển thị content
-            _areaTextTap = width * height;
+            double charWidth = .4;
 
+
+            var fontSize = TextSizeHelper.TextSizeMode[TextSize.Small][CharSize.Normal];
+            double lineHeight = Device.RuntimePlatform == Device.iOS ||
+                                Device.RuntimePlatform == Device.Android ? 1.3 : 1.4;
+            //số dòng trên một trang
+            lineCount = (int)(height / (lineHeight * fontSize));
+            //số kí tự trên một dòng
+            charsPerLine = (int)(width / (charWidth * fontSize));
             _rowTextTap = ContentChapter.Text.Split('\n');
             _rowLine = _rowTextTap.Count();
             ContentChapterTap = _rowTextTap[0];
+            var length = ContentChapterTap.Length;
+            var rowInTextLine = length / charsPerLine;
+            if (length % charsPerLine > 0)
+            {
+                ++rowInTextLine;
+            }
+            countLineInPage = rowInTextLine;
             _indexNextContentTap++;
             rowInPage++;
 
         }
-
+        private int countLineInPage = 0;
+        private int charsPerLine;
+        private int lineCount;
         /// <summary>
         /// Xử lý back content
         /// </summary>
@@ -497,52 +354,33 @@ namespace NovelApp.ViewModels
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
                 return;
             }
-            var sizeDic = TextSizeHelper.TextSizeMode[TextSize.Normal];
-            int smallSizeChar = sizeDic[CharSize.Small];
-            int normlaSizeChar = sizeDic[CharSize.Normal];
             if (_indexNextContentTap < _rowLine)
             {
                 rowInPage++;
                 var text = _rowTextTap[_indexNextContentTap];
-                var listChar = text.ToCharArray();
-                int countminsize = 0;
-                foreach (var textChar in listChar)
+                var length = text.Length;
+                var rowInTextLine = length / charsPerLine;
+                if (length % charsPerLine > 0)
                 {
-                    if (_arrayCharFilter.Contains(textChar))
-                    {
-                        countminsize++;
-                    }
+                    ++rowInTextLine;
                 }
-                var buffPixelInPage = countminsize * smallSizeChar + (text.Length - countminsize) * normlaSizeChar;
-                countPixelInPage += buffPixelInPage;
-                if (countPixelInPage > _areaTextTap)
+                countLineInPage += rowInTextLine;
+                if(countLineInPage> lineCount|| rowInPage >= _maxLineInPage)
                 {
-                    countPixelInPage = 0;
+                    countLineInPage = rowInTextLine;
                     _prevContentChapterTapList.Add(ContentChapterTap);
+                    //ContentChapterTap
+                    rowInPage = 1;
                     ContentChapterTap = text;
+                    RaisePropertyChanged(nameof(ContentChapterTap));
                 }
                 else
                 {
-                    if (rowInPage == _maxLineInPage)
-                    {
-                        ContentChapterTap += "\n" + text;
-                        RaisePropertyChanged(nameof(ContentChapterTap));
-                        countPixelInPage = 0;
-                    }
-                    else if (rowInPage > _maxLineInPage)
-                    {
-                        rowInPage = 1;
-                        countPixelInPage = buffPixelInPage;
-                        _prevContentChapterTapList.Add(ContentChapterTap);
-                        ContentChapterTap = text;
-                    }
-                    else
-                    {
-                        ContentChapterTap += "\n" + text;
-                        RaisePropertyChanged(nameof(ContentChapterTap));
-                    }
-                    _indexNextContentTap++;
+                    ContentChapterTap += "\n" + text;
+                    RaisePropertyChanged(nameof(ContentChapterTap));
                 }
+                _indexNextContentTap++;
+
             }
         }
         private void TextSizeReadMode(TextSize textSize)

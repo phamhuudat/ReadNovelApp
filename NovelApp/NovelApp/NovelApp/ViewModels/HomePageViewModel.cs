@@ -48,8 +48,11 @@ namespace NovelApp.ViewModels
             else
             {
                 var list = await _bookService.SearchNovelList(name, 0);
-                if (list != null && list.Any())
-                    ListNovel = new ObservableCollection<Novel>(list);
+                if (list == null || !list.Any())
+                {
+                    list = new List<Novel>();
+                }
+                ListNovel = new ObservableCollection<Novel>(list);
             }
 
         }

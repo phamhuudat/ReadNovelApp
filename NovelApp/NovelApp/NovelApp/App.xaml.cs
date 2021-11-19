@@ -42,23 +42,25 @@ namespace NovelApp
         {
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTMwNTY3QDMxMzkyZTMzMmUzMEx2R2dSSFRkdVRDMGFrU1h3d1d3L04ycEJhS2IwdThOY2hIQnNkemwyRXc9");
-            var cacheService = Container.Resolve<ICacheService>();
-           /* if (cacheService != null)
+            if(Device.RuntimePlatform == Device.Android)
             {
-                var theme = string.IsNullOrEmpty(cacheService.GetCache(AppConstants.CacheParameter.ThemeMode)) ?
-                    Theme.Light : (Theme)int.Parse(cacheService.GetCache(AppConstants.CacheParameter.ThemeMode));
-                if(theme == Theme.Light)
+                var cacheService = Container.Resolve<ICacheService>();
+                if (cacheService != null)
                 {
-                    App.Current.UserAppTheme = OSAppTheme.Light;
-                    Helpers.AppThemeHelper.SetAppTheme(Theme.Light);
+                    var theme = string.IsNullOrEmpty(cacheService.GetCache(AppConstants.CacheParameter.ThemeMode)) ?
+                        Theme.Light : (Theme)int.Parse(cacheService.GetCache(AppConstants.CacheParameter.ThemeMode));
+                    if (theme == Theme.Light)
+                    {
+                        App.Current.UserAppTheme = OSAppTheme.Light;
+                        Helpers.AppThemeHelper.SetAppTheme(Theme.Light);
+                    }
+                    else
+                    {
+                        App.Current.UserAppTheme = OSAppTheme.Dark;
+                        Helpers.AppThemeHelper.SetAppTheme(Theme.Dark);
+                    }
                 }
-                else
-                {
-                    App.Current.UserAppTheme = OSAppTheme.Dark;
-                    Helpers.AppThemeHelper.SetAppTheme(Theme.Dark);
-                }
-            }*/
-            
+            }
             await NavigationService.NavigateAsync("NavigationPage/HomePage");
             //MainPage = new MainPage();
 
