@@ -3,6 +3,7 @@
     x:Class="NovelApp.Views.TableContentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:NovelApp.Controls"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     ios:Page.UseSafeArea="true"
@@ -13,6 +14,7 @@
             BackgroundColor="{DynamicResource TableContentThemeBgColor}"
             ColumnDefinitions="*,40"
             RowDefinitions="40,*">
+            <!--  Header  -->
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
@@ -71,23 +73,38 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Padding="10,20,10,0">
+                <!--  SearchBar  -->
                 <Frame
-                    Padding="10,7,10,7"
+                    Padding="0"
                     BackgroundColor="{DynamicResource TableContentSearchBarBgColor}"
-                    CornerRadius="5">
-                    <StackLayout Orientation="Horizontal">
-                        <Label
-                            FontAttributes="Bold"
+                    BorderColor="{OnPlatform Android=Gray,
+                                             iOS=Transparent}"
+                    CornerRadius="5"
+                    HasShadow="{OnPlatform Android=true,
+                                           iOS=false}">
+                    <Grid ColumnDefinitions="*,30">
+                        <controls:CustomSearchBar
+                            x:Name="Search"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="{OnPlatform Android=1,
+                                                         iOS=2}"
                             FontSize="{StaticResource TextSmallSize}"
-                            Text="{Binding CountChapter, StringFormat='{0} Chapters'}"
-                            TextColor="{StaticResource GrayColor}" />
+                            Placeholder="{Binding CountChapter, StringFormat='{0} Chapters'}"
+                            PlaceholderColor="{StaticResource GrayColor}"
+                            SearchCommand="{Binding SearchCommand}"
+                            SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}"
+                            TextColor="{DynamicResource TableContentTextColor}" />
                         <Label
+                            Grid.Column="1"
                             FontFamily="AC"
                             FontSize="{StaticResource TextTagSize}"
-                            HorizontalOptions="EndAndExpand"
+                            HorizontalOptions="Start"
+                            IsVisible="{OnPlatform Android=True,
+                                                   iOS=False}"
                             Text="{StaticResource IconCircleQuestion}"
-                            TextColor="{DynamicResource TableContentIconColor}" />
-                    </StackLayout>
+                            TextColor="{DynamicResource TableContentIconColor}"
+                            VerticalOptions="Center" />
+                    </Grid>
 
                 </Frame>
                 <Label

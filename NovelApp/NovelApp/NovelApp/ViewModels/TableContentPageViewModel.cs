@@ -20,23 +20,62 @@ namespace NovelApp.ViewModels
         private int _novelId;
         private int countChapter;
         private bool isSortDown;
-
+        /// <summary>
+        /// Lưu danh sách chapter ở local
+        /// </summary>
+        private List<ChapInfo> _staticListChapter;
         public List<ChapInfo> ListChapter { get => listChapter; set => SetProperty(ref listChapter, value); }
         public int CountChapter { get => countChapter; set => SetProperty(ref countChapter, value); }
         public ICommand SortCommand { get; set; }
         public ICommand ItemTappedCommand { get; set; }
         public ICommand GobackCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
         public bool IsSortDown { get => isSortDown; set => SetProperty(ref isSortDown, value); }
+
         public TableContentPageViewModel(INavigationService navigationService, IBookService bookService, IPageDialogService dialogService) : base(navigationService)
         {
             _bookService = bookService;
             _dialogService = dialogService;
             SortCommand = new DelegateCommand(Sort);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
+            SearchCommand = new DelegateCommand<string>(SearchNovel);
             GobackCommand = new DelegateCommand(async () =>
             {
                 await NavigationService.GoBackAsync();
             });
+        }
+        private void SearchNovel(string search)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(search))
+                {
+                    ListChapter = new List<ChapInfo>(_staticListChapter);
+                }
+                else if (_staticListChapter != null && _staticListChapter.Any())
+                {
+                    var list = new List<ChapInfo>();
+                    search = search.ToUpper();
+                    if (isSortDown)
+                    {
+                        var listBuffDown = _staticListChapter.Where(x => x.Name.ToUpper().Contains(search) || x.No.ToString().Contains(search)).OrderByDescending(x => x.No);
+                        if (listBuffDown != null && listBuffDown.Any())
+                            list = listBuffDown.ToList();
+                    }
+                    else
+                    {
+                        var listBuffUp = _staticListChapter.Where(x => x.Name.ToUpper().Contains(search) || x.No.ToString().Contains(search)).OrderBy(x => x.No);
+                        if (listBuffUp != null && listBuffUp.Any())
+                            list = listBuffUp.ToList();
+                    }
+                    ListChapter = new List<ChapInfo>(list);
+                }
+            }
+            catch(Exception e)
+            {
+                ListChapter = new List<ChapInfo>(0);
+            }
+            
         }
         private async void ItemTapped(object obj)
         {
@@ -77,24 +116,29 @@ namespace NovelApp.ViewModels
         private void Sort()
         {
             IsSortDown = !IsSortDown;
-            if (IsSortDown)
-                ListChapter = ListChapter.OrderByDescending(x => x.No).ToList();
-            else
-                ListChapter = ListChapter.OrderBy(x => x.No).ToList();
+            if (ListChapter != null && ListChapter.Any())
+            {
+                if (IsSortDown)
+                    ListChapter = ListChapter.OrderByDescending(x => x.No).ToList();
+                else
+                    ListChapter = ListChapter.OrderBy(x => x.No).ToList();
+            }
         }
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey("ID"))
                 _novelId = int.Parse(parameters["ID"].ToString());
-            var list = await _bookService.GetTBC(_novelId);
-            if (list != null && list.Chapters.Any())
+            var chapterInfo = await _bookService.GetTBC(_novelId);
+            var list = new List<ChapInfo>();
+            if (chapterInfo != null && chapterInfo.Chapters.Any())
             {
-                IsSortDown = false;
-                ListChapter = list.Chapters;
-                CountChapter = ListChapter.Count;
+                list = chapterInfo.Chapters;
             }
-
+            IsSortDown = false;
+            ListChapter = list;
+            _staticListChapter = new List<ChapInfo>(list);
+            CountChapter = ListChapter.Count;
         }
     }
 }
