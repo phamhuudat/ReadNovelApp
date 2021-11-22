@@ -52,15 +52,15 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    IsEnabled="True"
+                    IsEnabled="False"
                     SizeChanged="ScrollBook_SizeChanged">
                     <StackLayout>
                         <Label
                             x:Name="ContentNovel"
-                            CharacterSpacing="0"
+                            BackgroundColor="Red"
                             FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
                             FontSize="{Binding FontSize}"
-                            HorizontalOptions="Fill"
+                            HorizontalOptions="Start"
                             LineBreakMode="WordWrap"
                             LineHeight=".99"
                             SizeChanged="ContentNovel_SizeChanged"

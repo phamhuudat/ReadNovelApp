@@ -197,8 +197,9 @@ namespace NovelApp.Views.ReadBook
         void ContentNovel_SizeChanged(System.Object sender, System.EventArgs e)
         {
             var label = sender as Label;
-            Debug.WriteLine($"Height Lable to {label.Height}");
-            Debug.WriteLine($"Width Label to {label.Width}");
+
+            Debug.WriteLine($"Height Lable {label.Text} to {label.Height}");
+            Debug.WriteLine($"Width Label {label.Text} to {label.Width}");
 
         }
     }

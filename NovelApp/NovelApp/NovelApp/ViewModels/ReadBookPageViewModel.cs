@@ -281,162 +281,210 @@ namespace NovelApp.ViewModels
 
         //    }
         //}
+        private void CheckWidthChar()
+        {
+            char[] alphaUp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+            char[] alphaDown = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToLower().ToCharArray();
+            char[] number = "0123456789.,\'\"!?;:-".ToCharArray();
+            var list = new List<PageChapter>();
+            int indexPage = 0;
+            var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
+            //alpha
+            foreach (var litter in alphaUp)
+            {
+                list.Add(new PageChapter()
+                {
+                    Text = litter.ToString(),
+                    IndexPage = ++indexPage,
+                    FontSize = fontSize
+                }) ;
+            }
+            //alpha Down
+            foreach (var litter in alphaDown)
+            {
+                list.Add(new PageChapter()
+                {
+                    Text = litter.ToString(),
+                    IndexPage = ++indexPage,
+                    FontSize = fontSize
+                });
+            }
+            //number
+            foreach (var litter in number)
+            {
+                list.Add(new PageChapter()
+                {
+                    Text = litter.ToString(),
+                    IndexPage = ++indexPage,
+                    FontSize = fontSize
+                });
+            }
+            CountPage = list.Count;
+            CarouselItems = new ObservableCollection<PageChapter>(list);
+
+        }
+        /// <summary>
+        /// Splite theo kí tự trong từ
+        /// </summary>
+        /// <param name="textSize"></param>
         private void SplitPage(TextSize textSize)
         {
-            try
-            {
-                //Phân trang chapter
-                var list = new List<PageChapter>();
-                
-                var WidthPage = App.DisplayScreenWidth - 50;
-                var HeightPage = App.DisplayScreenHeight - 120;
-                double charWidth = .5;
-                if (textSize == TextSize.Small )
-                {
-                    charWidth = .64;
-                }
-                else if(textSize == TextSize.Smallest)
-                {
-                    charWidth = .7;
-                }
-                else if (textSize == TextSize.Large)
-                    charWidth = .65;
-                else  if (textSize == TextSize.Largest)
-                    charWidth = .65;
-                else if(textSize == TextSize.Smaller){
-                    charWidth = .65;
-                }
-                else
-                {
-                    charWidth = .65;
-                }
+            CheckWidthChar();
+            //try
+            //{
+            //    //Phân trang chapter
+            //    var list = new List<PageChapter>();
+               
 
-                var fontSize = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
-                double lineHeight = Device.RuntimePlatform == Device.iOS ||
-                                    Device.RuntimePlatform == Device.Android ? 1.2: 1.4;
-               if(textSize == TextSize.Small )
-               {
-                    lineHeight = 1.34;
-                }
-                else if (textSize == TextSize.Smallest)
-                {
-                    lineHeight = 1.34;
-                }
-                else if (textSize == TextSize.Large) {
-                    lineHeight = 1.35;
-                }
-                //charWidth = .44;
-                else if (textSize == TextSize.Largest) {
-                    lineHeight = 1.35;
-                }
-                //charWidth = .46;
-                else if (textSize == TextSize.Smaller)
-                {
-                    lineHeight = 1.35;
-                }
-                else
-                {
-                    lineHeight = 1.35;
-                }
+            //    var WidthPage = App.DisplayScreenWidth - 50;
+            //    var HeightPage = App.DisplayScreenHeight - 120;
+            //    double charWidth = .5;
+            //    if (textSize == TextSize.Small )
+            //    {
+            //        charWidth = .64;
+            //    }
+            //    else if(textSize == TextSize.Smallest)
+            //    {
+            //        charWidth = .7;
+            //    }
+            //    else if (textSize == TextSize.Large)
+            //        charWidth = .65;
+            //    else  if (textSize == TextSize.Largest)
+            //        charWidth = .65;
+            //    else if(textSize == TextSize.Smaller){
+            //        charWidth = .65;
+            //    }
+            //    else
+            //    {
+            //        charWidth = .65;
+            //    }
 
-                //số dòng trên một trang
-                int lineCount = (int)Math.Ceiling(HeightPage / (lineHeight * fontSize));
-                //số kí tự trên một dòng
-                int charsPerLine = (int)(WidthPage / (charWidth * fontSize));
+            //    var fontSize = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
+            //    double lineHeight = Device.RuntimePlatform == Device.iOS ||
+            //                        Device.RuntimePlatform == Device.Android ? 1.2: 1.4;
+            //   if(textSize == TextSize.Small )
+            //   {
+            //        lineHeight = 1.34;
+            //    }
+            //    else if (textSize == TextSize.Smallest)
+            //    {
+            //        lineHeight = 1.34;
+            //    }
+            //    else if (textSize == TextSize.Large) {
+            //        lineHeight = 1.35;
+            //    }
+            //    //charWidth = .44;
+            //    else if (textSize == TextSize.Largest) {
+            //        lineHeight = 1.35;
+            //    }
+            //    //charWidth = .46;
+            //    else if (textSize == TextSize.Smaller)
+            //    {
+            //        lineHeight = 1.35;
+            //    }
+            //    else
+            //    {
+            //        lineHeight = 1.35;
+            //    }
 
-                var text = ContentChapter.Text;
-                var rowLine = text.Split('\n');
-                var row = rowLine.Length;
-                //text hiển thị trong một page
-                string textPage = "";
-                //row hiển thị trong một page
-                int rowInPaging = 0;
-                //Số trang
-                int indexPage = 0;
-                for (int i = 0; i < row; i++)
-                {
-                    var textLine = rowLine[i];
-                    var words = textLine.Split(' ');
-                    var countWord = words.Length;
-                    var length = textLine.Length;
-                    string wordInRow = "";
-                    int countCharInRow = 0;
-                    for (int j = 0; j < countWord; j++)
-                    {
-                        var word = words[j];
-                        /*var countSmallChar = 0;
-                        foreach(var letter in word.ToCharArray())
-                        {
-                            if (_arrayCharFilter.Contains(letter))
-                            {
-                                countSmallChar++;
+            //    //số dòng trên một trang
+            //    int lineCount = (int)Math.Ceiling(HeightPage / (lineHeight * fontSize));
+            //    //số kí tự trên một dòng
+            //    int charsPerLine = (int)(WidthPage / (charWidth * fontSize));
+
+            //    var text = ContentChapter.Text;
+            //    var rowLine = text.Split('\n');
+            //    var row = rowLine.Length;
+            //    //text hiển thị trong một page
+            //    string textPage = "";
+            //    //row hiển thị trong một page
+            //    int rowInPaging = 0;
+            //    //Số trang
+            //    int indexPage = 0;
+            //    for (int i = 0; i < row; i++)
+            //    {
+            //        var textLine = rowLine[i];
+            //        var words = textLine.Split(' ');
+            //        var countWord = words.Length;
+            //        var length = textLine.Length;
+            //        string wordInRow = "";
+            //        int countCharInRow = 0;
+            //        for (int j = 0; j < countWord; j++)
+            //        {
+            //            var word = words[j];
+            //            /*var countSmallChar = 0;
+            //            foreach(var letter in word.ToCharArray())
+            //            {
+            //                if (_arrayCharFilter.Contains(letter))
+            //                {
+            //                    countSmallChar++;
                                 
-                            }
-                        }
-                        Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {countSmallChar}\n");*/
-                        //countSmallChar = 0;
-                        var lengthWord = word.Length;
+            //                }
+            //            }
+            //            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {countSmallChar}\n");*/
+            //            //countSmallChar = 0;
+            //            var lengthWord = word.Length;
 
-                        countCharInRow += (int)(lengthWord  +1);
-                        if (countCharInRow <= charsPerLine)
-                        {
-                            wordInRow += $"{word} ";
-                        }
-                        else
-                        {
-                            j--;
-                            rowInPaging++;
-                            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
-                            countCharInRow = 0;
-                            textPage += wordInRow;
-                            if (rowInPaging == lineCount)
-                            {
-                                int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
-                                list.Add(new PageChapter()
-                                {
-                                    Text = textPage,
-                                    IndexPage = ++indexPage,
-                                    LineHeight = 1.4 * fontSize,
-                                    MaxLines = lineCount,
-                                    FontSize = fontSizePage> fontSize?fontSize:fontSizePage
-                                }) ; 
-                                Debug.WriteLine($"Page {indexPage} \n {textPage} {fontSizePage}\n");
-                                textPage = "";
-                                wordInRow = "";
-                                rowInPaging = 0;
-                            }
-                            else
-                            {
-                                //Debug.WriteLine($"Row {rowInPaging} page {indexPage +1} \n {wordInRow} \n");
-                                wordInRow = "";
-                            }
-                        }
-                    }
-                    textPage += wordInRow + "\n";
-                    if ((i+1)== row)
-                    {
-                        if (!string.IsNullOrEmpty(textPage))
-                        {
-                            int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
-                            list.Add(new PageChapter()
-                            {
-                                Text = textPage,
-                                IndexPage = ++indexPage,
-                                LineHeight = 1.4 * fontSize,
-                                FontSize = fontSizePage > fontSize ? fontSize : fontSizePage,
-                                MaxLines = lineCount
-                            });
-                        }
-                    }
+            //            countCharInRow += (int)(lengthWord  +1);
+            //            if (countCharInRow <= charsPerLine)
+            //            {
+            //                wordInRow += $"{word} ";
+            //            }
+            //            else
+            //            {
+            //                j--;
+            //                rowInPaging++;
+            //                Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
+            //                countCharInRow = 0;
+            //                textPage += wordInRow;
+            //                if (rowInPaging == lineCount)
+            //                {
+            //                    int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
+            //                    list.Add(new PageChapter()
+            //                    {
+            //                        Text = textPage,
+            //                        IndexPage = ++indexPage,
+            //                        LineHeight = 1.4 * fontSize,
+            //                        MaxLines = lineCount,
+            //                        FontSize = fontSizePage> fontSize?fontSize:fontSizePage
+            //                    }) ; 
+            //                    Debug.WriteLine($"Page {indexPage} \n {textPage} {fontSizePage}\n");
+            //                    textPage = "";
+            //                    wordInRow = "";
+            //                    rowInPaging = 0;
+            //                }
+            //                else
+            //                {
+            //                    //Debug.WriteLine($"Row {rowInPaging} page {indexPage +1} \n {wordInRow} \n");
+            //                    wordInRow = "";
+            //                }
+            //            }
+            //        }
+            //        textPage += wordInRow + "\n";
+            //        if ((i+1)== row)
+            //        {
+            //            if (!string.IsNullOrEmpty(textPage))
+            //            {
+            //                int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
+            //                list.Add(new PageChapter()
+            //                {
+            //                    Text = textPage,
+            //                    IndexPage = ++indexPage,
+            //                    LineHeight = 1.4 * fontSize,
+            //                    FontSize = fontSizePage > fontSize ? fontSize : fontSizePage,
+            //                    MaxLines = lineCount
+            //                });
+            //            }
+            //        }
 
-                }
-                CountPage = list.Count;
-                CarouselItems = new ObservableCollection<PageChapter>(list);
-            }
-            catch (Exception e)
-            {
+            //    }
+            //    CountPage = list.Count;
+            //    CarouselItems = new ObservableCollection<PageChapter>(list);
+            //}
+            //catch (Exception e)
+            //{
 
-            }
+            //}
         }
         /// <summary>
         /// Tapping, Scrolling, Paging
@@ -445,8 +493,8 @@ namespace NovelApp.ViewModels
         {
             ShowReadMode = readMode;
             TextCal = ContentChapter.Text;
-            //if (ShowReadMode == Models.Enums.ReadMode.Paging)
-                //SplitPage(_textSize);
+            if (ShowReadMode == Models.Enums.ReadMode.Paging)
+                SplitPage(_textSize);
             //else
             if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
@@ -559,7 +607,7 @@ namespace NovelApp.ViewModels
             {
                 _textSize = textSize;
                 TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
-                //SplitPage(textSize);
+                SplitPage(textSize);
             }
             else
             {

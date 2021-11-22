@@ -56,7 +56,7 @@ namespace NovelApp.Views
             viewmdel.Height = label.Height; 
             viewmdel.WidthReadPage = label.Height;
             Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
-            viewmdel.SplitPage(label.Height);
+            //viewmdel.SplitPage(label.Height);
         }
         /// <summary>
         /// Tinhs toans chieu cao cua tung cau
