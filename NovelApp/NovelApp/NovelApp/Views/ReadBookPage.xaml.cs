@@ -48,41 +48,41 @@ namespace NovelApp.Views
             
         }
 
-        void Label_SizeChanged_1(System.Object sender, System.EventArgs e)
-        {
-            var viewmdel = BindingContext as ReadBookPageViewModel;
-            var label = sender as Label;
+        //void Label_SizeChanged_1(System.Object sender, System.EventArgs e)
+        //{
+        //    var viewmdel = BindingContext as ReadBookPageViewModel;
+        //    var label = sender as Label;
             
-            viewmdel.Height = label.Height; 
-            viewmdel.WidthReadPage = label.Height;
-            Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
-            //viewmdel.SplitPage(label.Height);
-        }
-        /// <summary>
-        /// Tinhs toans chieu cao cua tung cau
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void Label_SizeChanged_2(System.Object sender, System.EventArgs e)
-        {
-            var viewmdel = BindingContext as ReadBookPageViewModel;
-            var label = sender as Label;
+        //    viewmdel.Height = label.Height; 
+        //    viewmdel.WidthReadPage = label.Height;
+        //    Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
+        //    //viewmdel.SplitPage(label.Height);
+        //}
+        ///// <summary>
+        ///// Tinhs toans chieu cao cua tung cau
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //void Label_SizeChanged_2(System.Object sender, System.EventArgs e)
+        //{
+        //    var viewmdel = BindingContext as ReadBookPageViewModel;
+        //    var label = sender as Label;
 
-            viewmdel.ViewReadHeight = label.Height;
-            //viewmdel.SplitPage(label.Height);
-        }
+        //    viewmdel.ViewReadHeight = label.Height;
+        //    //viewmdel.SplitPage(label.Height);
+        //}
 
-        void Label_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "Text")
-            {
+        //void Label_PropertyChanged(System.Object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    if(e.PropertyName == "Text")
+        //    {
 
-                var viewmdel = BindingContext as ReadBookPageViewModel;
-                var label = sender as Label;
+        //        var viewmdel = BindingContext as ReadBookPageViewModel;
+        //        var label = sender as Label;
 
-                viewmdel.Height = label.Height;
-                Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
-            }
-        }
+        //        viewmdel.Height = label.Height;
+        //        Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
+        //    }
+        //}
     }
 }

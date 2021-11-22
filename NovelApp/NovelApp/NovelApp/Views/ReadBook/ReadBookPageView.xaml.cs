@@ -8,34 +8,6 @@ namespace NovelApp.Views.ReadBook
     public partial class ReadBookPageView : ContentView
     {
         /// <summary>
-        /// Scroll to
-        /// </summary>
-        public static readonly BindableProperty ScrollToProperty = BindableProperty.Create(
-            propertyName: nameof(ScrollTo),
-            returnType: typeof(object),
-            declaringType: typeof(ReadBookPageView),
-            defaultValue: 0,
-            defaultBindingMode: BindingMode.OneWay,
-            propertyChanged: ScrollToPropertyChanged
-        );
-        public object ScrollTo
-        {
-            get { return base.GetValue(ScrollToProperty); }
-            set { base.SetValue(ScrollToProperty, value); }
-        }
-        private async static void ScrollToPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        { 
-            var control = bindable as ReadBookPageView;
-            if (control != null)
-            {
-                if (double.TryParse((newValue + "").ToString(), out var value))
-                   await  control.ContentNovel.TranslateTo(0,- value);
-                else
-                   await control.ContentNovel.TranslateTo(0, 0);
-            }
-        }
-
-        /// <summary>
         /// Set background page
         /// </summary>
         public static readonly BindableProperty PageBackgroundColorProperty = BindableProperty.Create(
@@ -189,8 +161,8 @@ namespace NovelApp.Views.ReadBook
         void ScrollBook_SizeChanged(System.Object sender, System.EventArgs e)
         {
             var scroll = sender as ScrollView;
-            Debug.WriteLine($"Height Scroll to {scroll.Height}");
-            Debug.WriteLine($"Width Scroll to {scroll.Width}");
+            //Debug.WriteLine($"Height Scroll to {scroll.Height}");
+            //Debug.WriteLine($"Width Scroll to {scroll.Width}");
 
         }
 
@@ -198,8 +170,8 @@ namespace NovelApp.Views.ReadBook
         {
             var label = sender as Label;
 
-            Debug.WriteLine($"Height Lable {label.Text} to {label.Height}");
-            Debug.WriteLine($"Width Label {label.Text} to {label.Width}");
+            //Debug.WriteLine($"Height Lable {label.Text} to {label.Height}");
+            //Debug.WriteLine($"Width Label {label.Text} to {label.Width}");
 
         }
     }

@@ -78,7 +78,7 @@ namespace NovelApp.ViewModels
         /// <summary>
         /// danh sach cac kí tự có kích thước nhỏ 
         /// </summary>
-        private char[] _arrayCharFilter = new char[] {'.', ',', ':', ';', '!','\'','\"','i','l','j','t','r'};
+        private char[] _arrayCharFilter = new char[] { '.', ',', ':', ';', '!', '\'', '\"', 'i', 'l', 'j', 't', 'r' };
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
@@ -92,9 +92,27 @@ namespace NovelApp.ViewModels
                 SetProperty(ref height, value);
             }
         }
-        public string TextCal { get => textCal;
+        public string TextCal
+        {
+            get => textCal;
             set => SetProperty(ref textCal, value);
 
+        }
+        /// <summary>
+        /// dùng trong tính toán phân trang
+        /// </summary>
+        private TextFont TextFont
+        {
+            get
+            {
+
+                if (TextFontFamily == AppConstants.FontFamily.ArialFont)
+                    return TextFont.Arial;
+                else if (TextFontFamily == AppConstants.FontFamily.RobotoFont)
+                    return TextFont.Roboto;
+                else
+                    return TextFont.VnTime;
+            }
         }
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
@@ -205,22 +223,27 @@ namespace NovelApp.ViewModels
             //659.428571428571
             //var widthPage = App.DisplayScreenWidth - 40;
             //Chiều cao của page
-            var heightPage = App.DisplayScreenHeight -100;
+            var heightPage = App.DisplayScreenHeight - 100;
             double lineHeightInPage = Device.RuntimePlatform == Device.iOS ||
                                     Device.RuntimePlatform == Device.Android ? 1.35 : 1.4;
             //số dòng trên một trang
             double lineCountInPage = heightPage / (lineHeightInPage * fontSize);
             //Tổng số line count in novel
             double lineCount = Math.Ceiling(height / (lineHeightInPage * fontSize));
-           
+
             var countPage = Math.Ceiling(lineCount / lineCountInPage);
             var indexPage = 0;
             double prev = 0;
             for (int i = 0; i < countPage; i++)
             {
-                list.Add(new PageChapter() { Text = text, IndexPage = ++indexPage,
-                     MaxLines = (i+1)*(int)lineCountInPage
-                    , Coordinates = i == 0 ? 5 : i * ((int)lineCountInPage) * lineHeightInPage* fontSize +(i>=2?10:5)});
+                list.Add(new PageChapter()
+                {
+                    Text = text,
+                    IndexPage = ++indexPage,
+                    MaxLines = (i + 1) * (int)lineCountInPage
+                    ,
+                    Coordinates = i == 0 ? 5 : i * ((int)lineCountInPage) * lineHeightInPage * fontSize + (i >= 2 ? 10 : 5)
+                });
             }
             CountPage = list.Count;
             CarouselItems = new ObservableCollection<PageChapter>(list);
@@ -297,7 +320,7 @@ namespace NovelApp.ViewModels
                     Text = litter.ToString(),
                     IndexPage = ++indexPage,
                     FontSize = fontSize
-                }) ;
+                });
             }
             //alpha Down
             foreach (var litter in alphaDown)
@@ -323,6 +346,118 @@ namespace NovelApp.ViewModels
             CarouselItems = new ObservableCollection<PageChapter>(list);
 
         }
+        private void SplitPage()
+        {
+            try
+            {
+                //Phân trang chapter
+                var list = new List<PageChapter>();
+
+                var WidthPage = App.DisplayScreenWidth - 50;
+                var HeightPage = App.DisplayScreenHeight - 100;
+                var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
+                //tỉ lệ độ cao tương ứng
+                double ratioHeight = TextSizeHelper.TextHeightRatio[TextFont];
+
+                //số dòng trên một trang
+                int lineCount = (int)(HeightPage / (ratioHeight * fontSize));
+
+                var text = ContentChapter.Text;
+                var rowLine = text.Split('\n');
+                var row = rowLine.Length;
+                //text hiển thị trong một page
+                string textPage = "";
+                //row hiển thị trong một page
+                int rowInPaging = 0;
+                //Số trang
+                int indexPage = 0;
+                
+                double widthSpace = TextSizeHelper.TextWidthRatio[TextFont][TextSizeHelper.CharDownWidthSmallest];
+                for (int i = 0; i < row; i++)
+                {
+                    var textLine = rowLine[i];
+                    var words = textLine.Split(' ');
+                    var countWord = words.Length;
+                    string wordInRow = "";
+                    //số độ rộng tính từng dòng
+                    double countWidthInRow = 0;
+                    for (int j = 0; j < countWord; j++)
+                    {
+                        var word = words[j];
+                        countWidthInRow += TextSizeHelper.GetWidthWord($"{word}",_textSize,TextFont);
+                        if (countWidthInRow < WidthPage&& countWidthInRow + widthSpace <= WidthPage)
+                        {
+                            wordInRow += $"{word} ";
+                            countWidthInRow += widthSpace;
+                        }
+                        else
+                        {
+                            j--;
+                            rowInPaging++;
+                            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
+                            countWidthInRow = 0;
+                            textPage += wordInRow;
+                            if (rowInPaging == lineCount)
+                            {
+                                list.Add(new PageChapter()
+                                {
+                                    Text = textPage,
+                                    IndexPage = ++indexPage,
+                                });
+                                textPage = "";
+                                wordInRow = "";
+                                rowInPaging = 0;
+                            }
+                            else
+                            {
+                                //Debug.WriteLine($"Row {rowInPaging} page {indexPage +1} \n {wordInRow} \n");
+                                wordInRow = "";
+                            }
+                        }
+                    }
+                    textPage += wordInRow + "\n";
+                    if (!string.IsNullOrEmpty(wordInRow))
+                    {
+                        rowInPaging++;
+                        if (rowInPaging == lineCount)
+                        {
+                            list.Add(new PageChapter()
+                            {
+                                Text = textPage,
+                                IndexPage = ++indexPage,
+                            });
+                            textPage = "";
+                            wordInRow = "";
+                            rowInPaging = 0;
+                        }
+                    }
+                        
+                    
+                    if ((i + 1) == row)
+                    {
+                        if (!string.IsNullOrEmpty(textPage))
+                        {
+                            list.Add(new PageChapter()
+                            {
+                                Text = textPage,
+                                IndexPage = ++indexPage,
+                            });
+                        }
+                    }
+
+                }
+                CountPage = list.Count;
+                CarouselItems = new ObservableCollection<PageChapter>(list);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+
+
+
         /// <summary>
         /// Splite theo kí tự trong từ
         /// </summary>
@@ -334,7 +469,7 @@ namespace NovelApp.ViewModels
             //{
             //    //Phân trang chapter
             //    var list = new List<PageChapter>();
-               
+
 
             //    var WidthPage = App.DisplayScreenWidth - 50;
             //    var HeightPage = App.DisplayScreenHeight - 120;
@@ -418,7 +553,7 @@ namespace NovelApp.ViewModels
             //                if (_arrayCharFilter.Contains(letter))
             //                {
             //                    countSmallChar++;
-                                
+
             //                }
             //            }
             //            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {countSmallChar}\n");*/
@@ -494,7 +629,7 @@ namespace NovelApp.ViewModels
             ShowReadMode = readMode;
             TextCal = ContentChapter.Text;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
-                SplitPage(_textSize);
+                SplitPage();
             //else
             if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
@@ -607,7 +742,7 @@ namespace NovelApp.ViewModels
             {
                 _textSize = textSize;
                 TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
-                SplitPage(textSize);
+                SplitPage();
             }
             else
             {

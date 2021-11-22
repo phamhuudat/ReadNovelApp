@@ -198,7 +198,7 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Grid>
-            <Grid
+            <!--<Grid
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="0"
@@ -224,7 +224,7 @@
                             TextColor="Transparent" />
                     </StackLayout>
                 </ScrollView>
-            </Grid>
+            </Grid>-->
             <!--  -40,-10,-100,-10  -->
             <!--  Paging  -->
             <swipeCardView:SwipeCardView
@@ -261,7 +261,6 @@
                             CountPage="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
                             FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
                             PageBackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
-                            ScrollTo="{Binding Coordinates}"
                             TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
                             TextFontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}" />
                     </DataTemplate>

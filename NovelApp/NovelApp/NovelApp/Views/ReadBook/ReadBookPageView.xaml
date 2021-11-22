@@ -14,7 +14,7 @@
                 x:Name="ContentView"
                 ColumnDefinitions="60,*,60"
                 HorizontalOptions="Fill"
-                RowDefinitions="50,*,30"
+                RowDefinitions="50,*,20"
                 RowSpacing="0"
                 VerticalOptions="Fill">
                 <!--  Header  -->
@@ -47,26 +47,17 @@
                         VerticalOptions="CenterAndExpand" />
                 </Grid>
                 <!--  Body  -->
-                <ScrollView
-                    x:Name="ScrollBook"
+                <Label
+                    x:Name="ContentNovel"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    IsEnabled="False"
-                    SizeChanged="ScrollBook_SizeChanged">
-                    <StackLayout>
-                        <Label
-                            x:Name="ContentNovel"
-                            BackgroundColor="Red"
-                            FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
-                            FontSize="{Binding FontSize}"
-                            HorizontalOptions="Start"
-                            LineBreakMode="WordWrap"
-                            LineHeight=".99"
-                            SizeChanged="ContentNovel_SizeChanged"
-                            Text="{Binding Text}" />
-                    </StackLayout>
-                </ScrollView>
+                    FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                    FontSize="{Binding FontSize}"
+                    HorizontalOptions="Fill"
+                    LineBreakMode="WordWrap"
+                    SizeChanged="ContentNovel_SizeChanged"
+                    Text="{Binding Text}" />
                 <!--<Label
                     x:Name="ContentNovel"
                     Grid.Row="1"
