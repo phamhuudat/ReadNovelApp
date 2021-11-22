@@ -116,10 +116,12 @@
     <None Remove="Syncfusion.Xamarin.SfPopupLayout" />
     <None Remove="Services\CacheService\" />
     <None Remove="MLToolkit.Forms.SwipeCardView" />
+    <None Remove="Views\ReadBook\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
     <Folder Include="Services\CacheService\" />
+    <Folder Include="Views\ReadBook\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

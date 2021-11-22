@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="NovelApp.Views.ReadBook.ReadBookPageView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentView.Content>
+        <Frame
+            x:Name="Page"
+            Padding="20,0,20,0"
+            BorderColor="{StaticResource GrayColor}"
+            CornerRadius="0"
+            HasShadow="False">
+            <Grid
+                x:Name="ContentView"
+                ColumnDefinitions="60,*,60"
+                HorizontalOptions="Fill"
+                RowDefinitions="50,*,30"
+                RowSpacing="0"
+                VerticalOptions="Fill">
+                <!--  Header  -->
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    ColumnDefinitions="50,*">
+                    <BoxView
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        BackgroundColor="{StaticResource GrayColor}"
+                        HeightRequest="1"
+                        VerticalOptions="End" />
+                    <Label
+                        x:Name="GoBack"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{DynamicResource TextNormalSize}"
+                        Text="{DynamicResource IconCircleArrowLeft}"
+                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                        VerticalOptions="CenterAndExpand" />
+                    <Label
+                        x:Name="NameChapter"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding ContentChapter.Name}"
+                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </Grid>
+                <!--  Body  -->
+                <ScrollView
+                    x:Name="ScrollBook"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    IsEnabled="True"
+                    SizeChanged="ScrollBook_SizeChanged">
+                    <StackLayout>
+                        <Label
+                            x:Name="ContentNovel"
+                            CharacterSpacing="0"
+                            FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                            FontSize="{Binding FontSize}"
+                            HorizontalOptions="Fill"
+                            LineBreakMode="WordWrap"
+                            LineHeight=".99"
+                            SizeChanged="ContentNovel_SizeChanged"
+                            Text="{Binding Text}" />
+                    </StackLayout>
+                </ScrollView>
+                <!--<Label
+                    x:Name="ContentNovel"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                    FontSize="{Binding FontSize}"
+                    HorizontalOptions="Fill"
+                    LineBreakMode="WordWrap"
+                    LineHeight="1.05"
+                    Text="{Binding Text}" />-->
+                <StackLayout
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    HorizontalOptions="End"
+                    Orientation="Horizontal">
+                    <Label
+                        Text="{Binding IndexPage, StringFormat='{0}/'}"
+                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        x:Name="CountPageLb"
+                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                        VerticalOptions="Center" />
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

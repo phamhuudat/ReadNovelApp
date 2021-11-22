@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:readbook="clr-namespace:NovelApp.Views.ReadBook"
     xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
     ios:Page.UseSafeArea="true"
     BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
@@ -59,6 +60,8 @@
                     <Setter Property="BackgroundColor" Value="{StaticResource BlackTextColor}" />
                 </DataTrigger>
             </Grid.Triggers>
+            <!--  Đo lường độ rộng của label  -->
+
             <!--  Scrolling  -->
             <Grid
                 Grid.Row="0"
@@ -195,6 +198,33 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Grid>
+            <Grid
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="false"
+                RowDefinitions="50,*,20">
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ShowReadMode}"
+                        TargetType="Grid"
+                        Value="Paging">
+                        <Setter Property="IsVisible" Value="true" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <ScrollView Grid.Row="0" Grid.RowSpan="3">
+                    <StackLayout>
+                        <Label
+                            FontSize="{Binding TextSizeChapter}"
+                            LineBreakMode="WordWrap"
+                            PropertyChanged="Label_PropertyChanged"
+                            SizeChanged="Label_SizeChanged_1"
+                            Text="{Binding TextCal}"
+                            TextColor="Transparent" />
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
             <!--  -40,-10,-100,-10  -->
             <!--  Paging  -->
             <swipeCardView:SwipeCardView
@@ -226,81 +256,14 @@
                 </swipeCardView:SwipeCardView.Triggers>
                 <swipeCardView:SwipeCardView.ItemTemplate>
                     <DataTemplate>
-                        <Frame
-                            Padding="20,0,20,0"
-                            BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
-                            BorderColor="{StaticResource GrayColor}"
-                            CornerRadius="0"
-                            HasShadow="False">
-                            <Grid
-                                ColumnDefinitions="60,*,60"
-                                HorizontalOptions="Fill"
-                                RowDefinitions="50,*,20"
-                                RowSpacing="0"
-                                VerticalOptions="Fill">
-                                <Grid.Resources>
-                                    <ResourceDictionary>
-                                        <Style TargetType="Label">
-                                            <Setter Property="TextColor" Value="{Binding Source={x:Reference book}, Path=BindingContext.TextColor}" />
-                                            <Setter Property="FontFamily" Value="{Binding Source={x:Reference book}, Path=BindingContext.TextFontFamily}" />
-                                        </Style>
-                                    </ResourceDictionary>
-                                </Grid.Resources>
-                                <!--  Header  -->
-                                <Grid
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    ColumnDefinitions="50,*">
-                                    <BoxView
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        BackgroundColor="{StaticResource GrayColor}"
-                                        HeightRequest="1"
-                                        VerticalOptions="End" />
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontFamily="AC"
-                                        FontSize="{DynamicResource TextNormalSize}"
-                                        Text="{DynamicResource IconCircleArrowLeft}"
-                                        VerticalOptions="CenterAndExpand">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference book}, Path=BindingContext.GoBackCommand}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Text="{Binding Source={x:Reference book}, Path=BindingContext.ContentChapter.Name}"
-                                        VerticalOptions="CenterAndExpand" />
-                                </Grid>
-
-                                <!--  Body  -->
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    FontSize="{Binding Source={x:Reference book}, Path=BindingContext.TextSizeChapter}"
-                                    HorizontalOptions="Fill"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Text}" />
-                                <Label
-                                    Grid.Row="2"
-                                    Grid.Column="2"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding IndexPage}" />
-                                            <Span Text="/" />
-                                            <Span Text="{Binding Source={x:Reference book}, Path=BindingContext.CountPage}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </Grid>
-                        </Frame>
-
+                        <readbook:ReadBookPageView
+                            Title="{Binding Source={x:Reference page}, Path=BindingContext.ContentChapter.Name}"
+                            CountPage="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
+                            FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
+                            PageBackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
+                            ScrollTo="{Binding Coordinates}"
+                            TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
+                            TextFontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}" />
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
             </swipeCardView:SwipeCardView>
