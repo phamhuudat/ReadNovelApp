@@ -7,6 +7,7 @@ using NovelApp.Services.CacheService;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
+using Syncfusion.ListView.XForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,13 +29,13 @@ namespace NovelApp.ViewModels
         /// content hieen thi trong mod tap
         /// </summary>
         public string ContentChapterTap { get => contentChapterTap; set => SetProperty(ref contentChapterTap, value); }
-        private double _areaTextTap;
+        //private double _areaTextTap;
         private string[] _rowTextTap;
         private int _rowLine;
         private int _indexPrevContentTap = -1;
         private int _indexNextContentTap = 0;
         private int rowInPage = 0;
-        private int countPixelInPage;
+        //private int countPixelInPage;
         private int _maxLineInPage = 4;
         private Color textColor;
         public double WidthReadPage { get; set; }
@@ -70,10 +71,20 @@ namespace NovelApp.ViewModels
         private int _countPage;
         public int CountPage { get => _countPage; set => SetProperty(ref _countPage, value); }
         private ObservableCollection<PageChapter> carouselItems;
+        public ObservableCollection<Chapter> ListChaptersScroll { get; set; }
         private readonly IBookService _bookService;
         private readonly ICacheService _cacheService;
+        public bool IsIsLoading { get => isIsLoading; set => SetProperty(ref isIsLoading, value); }
         public ICommand NavigationSettingsCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
+        /// <summary>
+        /// Load khi ấn footer
+        /// </summary>
+        public ICommand LoadNextChapterCommand { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand LoadMoreCommand { get; set; }
         public ObservableCollection<PageChapter> CarouselItems { get => carouselItems; set => SetProperty(ref carouselItems, value); }
         /// <summary>
         /// danh sach cac kí tự có kích thước nhỏ 
@@ -124,7 +135,29 @@ namespace NovelApp.ViewModels
             GoBackCommand = new DelegateCommand(GoBack);
             PrevContentCommand = new DelegateCommand(PrevContent);
             NextContentCommand = new DelegateCommand(NextContent);
+            LoadNextChapterCommand = new DelegateCommand<object>(LoadMore);
+            ListChaptersScroll = new ObservableCollection<Chapter>();
+            LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             GetCache();
+        }
+        private async void LoadMore(object obj)
+        {
+            var listView = obj as Syncfusion.ListView.XForms.SfListView;
+            if (listView == null) return;
+            try
+            {
+                if (ListChaptersScroll == null || !ListChaptersScroll.Any())
+                    return;
+                listView.IsBusy = true;
+                await Task.Delay(1000);
+                await GetContentChapter(_novelId, ++_no);
+                (listView.LayoutManager as LinearLayout).ScrollToRowIndex(ListChaptersScroll.Count-1);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+            }
+            listView.IsBusy = false;
         }
         private void GetCache()
         {
@@ -209,6 +242,7 @@ namespace NovelApp.ViewModels
         private async Task GetContentChapter(int novelId, int no)
         {
             ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
+            ListChaptersScroll.Add(ContentChapter);
             RaisePropertyChanged(nameof(contentChapterTap));
             ReadMode(ShowReadMode);
 
@@ -371,8 +405,8 @@ namespace NovelApp.ViewModels
                 int rowInPaging = 0;
                 //Số trang
                 int indexPage = 0;
-                
-                double widthSpace = TextSizeHelper.TextWidthRatio[TextFont][TextSizeHelper.CharDownWidthSmallest]* fontSize;
+
+                double widthSpace = TextSizeHelper.TextWidthRatio[TextFont][TextSizeHelper.CharDownWidthSmallest] * fontSize;
                 for (int i = 0; i < row; i++)
                 {
                     var textLine = rowLine[i];
@@ -384,8 +418,8 @@ namespace NovelApp.ViewModels
                     for (int j = 0; j < countWord; j++)
                     {
                         var word = words[j].Trim();
-                        countWidthInRow += TextSizeHelper.GetWidthWord($"{word}",_textSize,TextFont);
-                        if (countWidthInRow < WidthPage&& countWidthInRow + widthSpace <= WidthPage)
+                        countWidthInRow += TextSizeHelper.GetWidthWord($"{word}", _textSize, TextFont);
+                        if (countWidthInRow < WidthPage && countWidthInRow + widthSpace <= WidthPage)
                         {
                             wordInRow += $"{word} ";
                             countWidthInRow += widthSpace;
@@ -394,7 +428,7 @@ namespace NovelApp.ViewModels
                         {
                             j--;
                             rowInPaging++;
-                           // Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
+                            // Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
                             countWidthInRow = 0;
                             textPage += wordInRow;
                             if (rowInPaging == lineCount)
@@ -431,8 +465,8 @@ namespace NovelApp.ViewModels
                             rowInPaging = 0;
                         }
                     }
-                        
-                    
+
+
                     if ((i + 1) == row)
                     {
                         if (!string.IsNullOrEmpty(textPage))
@@ -676,6 +710,7 @@ namespace NovelApp.ViewModels
         private int lineCount;
         private double height;
         private string textCal;
+        private bool isIsLoading;
 
         /// <summary>
         /// Xử lý back content

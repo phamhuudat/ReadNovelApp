@@ -1,4 +1,5 @@
 ﻿using MLToolkit.Forms.SwipeCardView;
+using NovelApp.Models.BookGwModels;
 using NovelApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -47,12 +48,44 @@ namespace NovelApp.Views
             var view = sender as SwipeCardView;
             
         }
+        /// <summary>
+        /// khi vuốt cuối danh sách
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
+        {
+            var scroll = sender as ScrollView;
+            if (!(sender is ScrollView scrollView))
+                return;
+
+            var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
+
+            if (scrollingSpace > e.ScrollY)
+                return;
+
+            // load more content.
+        }
+        /// <summary>
+        /// Item xuất hiện trên listview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView_ItemAppearing(object sender, Syncfusion.ListView.XForms.ItemAppearingEventArgs e)
+        {
+            if (e.ItemData != null)
+            {
+                var obj = e.ItemData as Chapter;
+                if (obj != null)
+                    NameChapterLabel.Text = obj.Name;
+            }
+        }
 
         //void Label_SizeChanged_1(System.Object sender, System.EventArgs e)
         //{
         //    var viewmdel = BindingContext as ReadBookPageViewModel;
         //    var label = sender as Label;
-            
+
         //    viewmdel.Height = label.Height; 
         //    viewmdel.WidthReadPage = label.Height;
         //    Debug.WriteLine("ddooj cao ta=hay doi" + viewmdel.Height);
