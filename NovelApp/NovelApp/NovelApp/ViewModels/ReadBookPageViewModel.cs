@@ -223,7 +223,7 @@ namespace NovelApp.ViewModels
             //659.428571428571
             //var widthPage = App.DisplayScreenWidth - 40;
             //Chiều cao của page
-            var heightPage = App.DisplayScreenHeight - 100;
+            var heightPage = App.DisplayScreenHeight - 80;
             double lineHeightInPage = Device.RuntimePlatform == Device.iOS ||
                                     Device.RuntimePlatform == Device.Android ? 1.35 : 1.4;
             //số dòng trên một trang
@@ -354,7 +354,7 @@ namespace NovelApp.ViewModels
                 var list = new List<PageChapter>();
 
                 var WidthPage = App.DisplayScreenWidth - 50;
-                var HeightPage = App.DisplayScreenHeight - 110;
+                var HeightPage = App.DisplayScreenHeight - 100;
                 var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
                 //tỉ lệ độ cao tương ứng
                 double ratioHeight = TextSizeHelper.TextHeightRatio[TextFont];
@@ -372,7 +372,7 @@ namespace NovelApp.ViewModels
                 //Số trang
                 int indexPage = 0;
                 
-                double widthSpace = TextSizeHelper.TextWidthRatio[TextFont][TextSizeHelper.CharDownWidthSmallest];
+                double widthSpace = TextSizeHelper.TextWidthRatio[TextFont][TextSizeHelper.CharDownWidthSmallest]* fontSize;
                 for (int i = 0; i < row; i++)
                 {
                     var textLine = rowLine[i];
@@ -383,7 +383,7 @@ namespace NovelApp.ViewModels
                     double countWidthInRow = 0;
                     for (int j = 0; j < countWord; j++)
                     {
-                        var word = words[j];
+                        var word = words[j].Trim();
                         countWidthInRow += TextSizeHelper.GetWidthWord($"{word}",_textSize,TextFont);
                         if (countWidthInRow < WidthPage&& countWidthInRow + widthSpace <= WidthPage)
                         {

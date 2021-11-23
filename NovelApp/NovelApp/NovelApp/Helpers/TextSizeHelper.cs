@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using NovelApp.Models.Enums;
 
 namespace NovelApp.Helpers
@@ -14,7 +15,7 @@ namespace NovelApp.Helpers
         /// </summary>
         public static string CharUpWidthLargest = "W"; // = 12.2
         public static string CharUpWidthLarger = "Mm"; // = 11.43
-        public static string CharUpWidthLarge1 = "l"; //=10.7
+        //public static string CharUpWidthLarge1 = "l"; //=10.7
         public static string CharUpWidthLarge = "O"; // =10.3
         public static string CharUpWidthNormal = "GQ"; // =9.9
         public static string CharUpWidthSmall = "CHNUw"; //=9.5
@@ -37,7 +38,7 @@ namespace NovelApp.Helpers
 
         public static string CharDownWidthSmaller = "Ift.,!:";//=3.4
 
-        public static string CharDownWidthSmallest = "ij ";//=3.04
+        public static string CharDownWidthSmallest = "ijl ";//=3.04
 
         public static string CharDownWidthTiny = "\';"; //2.7
 
@@ -55,7 +56,7 @@ namespace NovelApp.Helpers
                 //UpChar
                 {CharUpWidthLargest, 12.2/13 },
                 {CharUpWidthLarger, 11.43/13 },
-                {CharUpWidthLarge1, 10.7/13 },
+                //{CharUpWidthLarge1, 10.7/13 },
                 {CharUpWidthLarge, 10.3/13 },
                 {CharUpWidthNormal, 9.9/13 },
                 {CharUpWidthSmall, 9.5/13},
@@ -77,7 +78,7 @@ namespace NovelApp.Helpers
                {
                 {CharUpWidthLargest, 0.96*12.2/13 },
                 {CharUpWidthLarger, 0.96*11.43/13 },
-                {CharUpWidthLarge1, 0.96*10.7/13 },
+                //{CharUpWidthLarge1, 0.96*10.7/13 },
                 {CharUpWidthLarge, 0.96*10.3/13 },
                 {CharUpWidthNormal, 0.96*9.9/13 },
                 {CharUpWidthSmall, 0.96*9.5/13},
@@ -119,7 +120,7 @@ namespace NovelApp.Helpers
                {
                    {CharUpWidthLargest, 1.09*12.2/13 },
                 {CharUpWidthLarger, 1.09*11.43/13 },
-                {CharUpWidthLarge1, 1.09*10.7/13 },
+                //{CharUpWidthLarge1, 1.09*10.7/13 },
                 {CharUpWidthLarge, 1.09*10.3/13 },
                 {CharUpWidthNormal, 1.09*9.9/13 },
                 {CharUpWidthSmall, 1.09*9.5/13},
@@ -184,12 +185,26 @@ namespace NovelApp.Helpers
             double widthWord = 0;
             foreach (var item in chars)
             {
+                var isContaints = false;
+                double width = 0;
                 foreach (var radito in widthRadito)
                 {
+
                     if (radito.Key.Contains(item.ToString()))
                     {
+                        isContaints = true;
                         widthWord += radito.Value * size;
+                        width = radito.Value * size;
+                        break;
                     }
+                }
+                if (string.IsNullOrWhiteSpace(item.ToString()))
+                {
+                    Debug.WriteLine("Kí tự space " + width);
+                }
+                if (!isContaints)
+                {
+                    Debug.WriteLine("Kí tự chưa định nghĩa: " + item);
                 }
             }
             return widthWord;
