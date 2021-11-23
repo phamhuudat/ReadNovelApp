@@ -30,7 +30,7 @@ namespace NovelApp.ViewModels
         /// </summary>
         public string ContentChapterTap { get => contentChapterTap; set => SetProperty(ref contentChapterTap, value); }
         //private double _areaTextTap;
-        private string[] _rowTextTap;
+        private List<string> _rowTextTap;
         private int _rowLine;
         private int _indexPrevContentTap = -1;
         private int _indexNextContentTap = 0;
@@ -134,12 +134,16 @@ namespace NovelApp.ViewModels
             NavigationSettingsCommand = new DelegateCommand(PopupSettings);
             GoBackCommand = new DelegateCommand(GoBack);
             PrevContentCommand = new DelegateCommand(PrevContent);
-            NextContentCommand = new DelegateCommand(NextContent);
+            NextContentCommand = new DelegateCommand(() => NextContent());
             LoadNextChapterCommand = new DelegateCommand<object>(LoadMore);
             ListChaptersScroll = new ObservableCollection<Chapter>();
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             GetCache();
         }
+        /// <summary>
+        /// Load more scrollview
+        /// </summary>
+        /// <param name="obj"></param>
         private async void LoadMore(object obj)
         {
             var listView = obj as Syncfusion.ListView.XForms.SfListView;
@@ -151,7 +155,7 @@ namespace NovelApp.ViewModels
                 listView.IsBusy = true;
                 await Task.Delay(1000);
                 await GetContentChapter(_novelId, ++_no);
-                (listView.LayoutManager as LinearLayout).ScrollToRowIndex(ListChaptersScroll.Count-1);
+                (listView.LayoutManager as LinearLayout).ScrollToRowIndex(ListChaptersScroll.Count - 1);
             }
             catch (Exception e)
             {
@@ -237,15 +241,28 @@ namespace NovelApp.ViewModels
             if (parameters.ContainsKey(AppConstants.NavigationParameter.NoChapter))
                 _no = int.Parse(parameters[AppConstants.NavigationParameter.NoChapter].ToString());
             await GetContentChapter(_novelId, _no);
-
-        }
-        private async Task GetContentChapter(int novelId, int no)
-        {
-            ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
-            ListChaptersScroll.Add(ContentChapter);
-            RaisePropertyChanged(nameof(contentChapterTap));
             ReadMode(ShowReadMode);
 
+        }
+        /// <summary>
+        /// Load more data tapping
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> GetContentChapter()
+        {
+            ContentChapter = await _bookService.GetContentChapter(_novelId, ++_no);
+            return ContentChapter != null;
+        }
+        private async Task<bool> GetContentChapter(int novelId, int no)
+        {
+            var isSuccess = false;
+            ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
+            if (ContentChapter != null)
+            {
+                isSuccess = true;
+                ListChaptersScroll.Add(ContentChapter);
+            }
+            return isSuccess;
         }
         public void SplitPage(double height)
         {
@@ -281,104 +298,6 @@ namespace NovelApp.ViewModels
             }
             CountPage = list.Count;
             CarouselItems = new ObservableCollection<PageChapter>(list);
-        }
-        //private void SplitPage()
-        //{
-        //    try
-        //    {
-        //        //Phân trang chapter
-        //        var list = new List<PageChapter>();
-        //        var HeightPage = App.DisplayScreenHeight - 80;
-
-        //        var text = ContentChapter.Text;
-        //        var rowLine = text.Split('\n');
-        //        var row = rowLine.Length;
-        //        //text hiển thị trong một page
-        //        string textPage = "";
-        //        TextCal = "";
-        //        //row hiển thị trong một page
-        //        //Số trang
-        //        int indexPage = 0;
-        //        for (int i = 0; i < row; i++)
-        //        {
-        //            var textLine = rowLine[i];
-        //            var words = textLine.Split(' ');
-        //            var countWord = words.Length;
-        //            var length = textLine.Length;
-        //            for (int j = 0; j < countWord; j++)
-        //            {
-        //                var word = words[j];
-        //                TextCal += $"{word} ";
-        //                Task.Delay(100);
-        //                if (Height > HeightPage)
-        //                {
-        //                    j--;
-        //                    TextCal = "";
-        //                    list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-        //                    textPage = "";
-        //                }
-        //                else
-        //                    textPage = TextCal;
-        //            }
-        //            textPage +="\n";
-        //            if ((i+1) == row)
-        //            {
-        //                if (!string.IsNullOrEmpty(textPage))
-        //                {
-        //                    list.Add(new PageChapter() { Text = textPage, IndexPage = ++indexPage });
-        //                }
-        //            }
-
-        //        }
-        //        CountPage = list.Count;
-        //        CarouselItems = new ObservableCollection<PageChapter>(list);
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //}
-        private void CheckWidthChar()
-        {
-            char[] alphaUp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-            char[] alphaDown = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToLower().ToCharArray();
-            char[] number = "0123456789.,\'\"!?;:-".ToCharArray();
-            var list = new List<PageChapter>();
-            int indexPage = 0;
-            var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
-            //alpha
-            foreach (var litter in alphaUp)
-            {
-                list.Add(new PageChapter()
-                {
-                    Text = litter.ToString(),
-                    IndexPage = ++indexPage,
-                    FontSize = fontSize
-                });
-            }
-            //alpha Down
-            foreach (var litter in alphaDown)
-            {
-                list.Add(new PageChapter()
-                {
-                    Text = litter.ToString(),
-                    IndexPage = ++indexPage,
-                    FontSize = fontSize
-                });
-            }
-            //number
-            foreach (var litter in number)
-            {
-                list.Add(new PageChapter()
-                {
-                    Text = litter.ToString(),
-                    IndexPage = ++indexPage,
-                    FontSize = fontSize
-                });
-            }
-            CountPage = list.Count;
-            CarouselItems = new ObservableCollection<PageChapter>(list);
-
         }
         private void SplitPage()
         {
@@ -489,172 +408,6 @@ namespace NovelApp.ViewModels
             }
         }
 
-
-
-
-        /// <summary>
-        /// Splite theo kí tự trong từ
-        /// </summary>
-        /// <param name="textSize"></param>
-        private void SplitPage(TextSize textSize)
-        {
-            CheckWidthChar();
-            //try
-            //{
-            //    //Phân trang chapter
-            //    var list = new List<PageChapter>();
-
-
-            //    var WidthPage = App.DisplayScreenWidth - 50;
-            //    var HeightPage = App.DisplayScreenHeight - 120;
-            //    double charWidth = .5;
-            //    if (textSize == TextSize.Small )
-            //    {
-            //        charWidth = .64;
-            //    }
-            //    else if(textSize == TextSize.Smallest)
-            //    {
-            //        charWidth = .7;
-            //    }
-            //    else if (textSize == TextSize.Large)
-            //        charWidth = .65;
-            //    else  if (textSize == TextSize.Largest)
-            //        charWidth = .65;
-            //    else if(textSize == TextSize.Smaller){
-            //        charWidth = .65;
-            //    }
-            //    else
-            //    {
-            //        charWidth = .65;
-            //    }
-
-            //    var fontSize = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
-            //    double lineHeight = Device.RuntimePlatform == Device.iOS ||
-            //                        Device.RuntimePlatform == Device.Android ? 1.2: 1.4;
-            //   if(textSize == TextSize.Small )
-            //   {
-            //        lineHeight = 1.34;
-            //    }
-            //    else if (textSize == TextSize.Smallest)
-            //    {
-            //        lineHeight = 1.34;
-            //    }
-            //    else if (textSize == TextSize.Large) {
-            //        lineHeight = 1.35;
-            //    }
-            //    //charWidth = .44;
-            //    else if (textSize == TextSize.Largest) {
-            //        lineHeight = 1.35;
-            //    }
-            //    //charWidth = .46;
-            //    else if (textSize == TextSize.Smaller)
-            //    {
-            //        lineHeight = 1.35;
-            //    }
-            //    else
-            //    {
-            //        lineHeight = 1.35;
-            //    }
-
-            //    //số dòng trên một trang
-            //    int lineCount = (int)Math.Ceiling(HeightPage / (lineHeight * fontSize));
-            //    //số kí tự trên một dòng
-            //    int charsPerLine = (int)(WidthPage / (charWidth * fontSize));
-
-            //    var text = ContentChapter.Text;
-            //    var rowLine = text.Split('\n');
-            //    var row = rowLine.Length;
-            //    //text hiển thị trong một page
-            //    string textPage = "";
-            //    //row hiển thị trong một page
-            //    int rowInPaging = 0;
-            //    //Số trang
-            //    int indexPage = 0;
-            //    for (int i = 0; i < row; i++)
-            //    {
-            //        var textLine = rowLine[i];
-            //        var words = textLine.Split(' ');
-            //        var countWord = words.Length;
-            //        var length = textLine.Length;
-            //        string wordInRow = "";
-            //        int countCharInRow = 0;
-            //        for (int j = 0; j < countWord; j++)
-            //        {
-            //            var word = words[j];
-            //            /*var countSmallChar = 0;
-            //            foreach(var letter in word.ToCharArray())
-            //            {
-            //                if (_arrayCharFilter.Contains(letter))
-            //                {
-            //                    countSmallChar++;
-
-            //                }
-            //            }
-            //            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {countSmallChar}\n");*/
-            //            //countSmallChar = 0;
-            //            var lengthWord = word.Length;
-
-            //            countCharInRow += (int)(lengthWord  +1);
-            //            if (countCharInRow <= charsPerLine)
-            //            {
-            //                wordInRow += $"{word} ";
-            //            }
-            //            else
-            //            {
-            //                j--;
-            //                rowInPaging++;
-            //                Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
-            //                countCharInRow = 0;
-            //                textPage += wordInRow;
-            //                if (rowInPaging == lineCount)
-            //                {
-            //                    int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
-            //                    list.Add(new PageChapter()
-            //                    {
-            //                        Text = textPage,
-            //                        IndexPage = ++indexPage,
-            //                        LineHeight = 1.4 * fontSize,
-            //                        MaxLines = lineCount,
-            //                        FontSize = fontSizePage> fontSize?fontSize:fontSizePage
-            //                    }) ; 
-            //                    Debug.WriteLine($"Page {indexPage} \n {textPage} {fontSizePage}\n");
-            //                    textPage = "";
-            //                    wordInRow = "";
-            //                    rowInPaging = 0;
-            //                }
-            //                else
-            //                {
-            //                    //Debug.WriteLine($"Row {rowInPaging} page {indexPage +1} \n {wordInRow} \n");
-            //                    wordInRow = "";
-            //                }
-            //            }
-            //        }
-            //        textPage += wordInRow + "\n";
-            //        if ((i+1)== row)
-            //        {
-            //            if (!string.IsNullOrEmpty(textPage))
-            //            {
-            //                int fontSizePage = (int)Math.Sqrt(WidthPage * HeightPage / (textPage.Length * lineHeight * charWidth));
-            //                list.Add(new PageChapter()
-            //                {
-            //                    Text = textPage,
-            //                    IndexPage = ++indexPage,
-            //                    LineHeight = 1.4 * fontSize,
-            //                    FontSize = fontSizePage > fontSize ? fontSize : fontSizePage,
-            //                    MaxLines = lineCount
-            //                });
-            //            }
-            //        }
-
-            //    }
-            //    CountPage = list.Count;
-            //    CarouselItems = new ObservableCollection<PageChapter>(list);
-            //}
-            //catch (Exception e)
-            //{
-
-            //}
-        }
         /// <summary>
         /// Tapping, Scrolling, Paging
         /// </summary>
@@ -664,7 +417,7 @@ namespace NovelApp.ViewModels
             TextCal = ContentChapter.Text;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
                 SplitPage();
-            //else
+            else
             if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
                 TextSizeReadMode(TextSize.Small);
@@ -676,14 +429,12 @@ namespace NovelApp.ViewModels
         /// </summary>
         private void SetTapReadMode()
         {
-            var width = ((App.DisplayScreenWidth - 40) * 2) / 3;
+            var width = (App.DisplayScreenWidth - 40) * 2 / 3;
 
             // Height (in pixels)
-            var height = ((App.DisplayScreenHeight - 50) * 2) / 3;
+            var height = (App.DisplayScreenHeight - 50) * 2 / 3;
             //Diện thích hiển thị content
             double charWidth = .4;
-
-
             var fontSize = TextSizeHelper.TextSizeMode[TextSize.Small][CharSize.Normal];
             double lineHeight = Device.RuntimePlatform == Device.iOS ||
                                 Device.RuntimePlatform == Device.Android ? 1.3 : 1.4;
@@ -691,9 +442,9 @@ namespace NovelApp.ViewModels
             lineCount = (int)(height / (lineHeight * fontSize));
             //số kí tự trên một dòng
             charsPerLine = (int)(width / (charWidth * fontSize));
-            _rowTextTap = ContentChapter.Text.Split('\n');
+            _rowTextTap = new List<string>(ContentChapter.Text.Split('\n').ToList());
             _rowLine = _rowTextTap.Count();
-            ContentChapterTap = _rowTextTap[0];
+            ContentChapterTap = ContentChapter.Name;
             var length = ContentChapterTap.Length;
             var rowInTextLine = length / charsPerLine;
             if (length % charsPerLine > 0)
@@ -701,9 +452,19 @@ namespace NovelApp.ViewModels
                 ++rowInTextLine;
             }
             countLineInPage = rowInTextLine;
-            _indexNextContentTap++;
+            _indexNextContentTap = 0;
             rowInPage++;
-
+        }
+        private async Task<bool> SetTapLoadMoreReadMode()
+        {
+            var result = await GetContentChapter();
+            if (result)
+            {
+                _rowTextTap.Add(ContentChapter.Name);
+                _rowTextTap.AddRange(ContentChapter.Text.Split('\n').ToList());
+                _rowLine = _rowTextTap.Count();
+            }
+            return result;
         }
         private int countLineInPage = 0;
         private int charsPerLine;
@@ -719,6 +480,10 @@ namespace NovelApp.ViewModels
         {
             if (_prevContentChapterTapList.Any())
             {
+                if (isNextcontent)
+                {
+                    _prevContentChapterTapList.Add(ContentChapterTap);
+                }
                 var leng = _prevContentChapterTapList.Count;
                 if (_indexPrevContentTap == -1)
                 {
@@ -732,16 +497,19 @@ namespace NovelApp.ViewModels
             }
 
         }
+        bool isNextcontent = false;
         /// <summary>
         /// Xử lý next content
         /// </summary>
-        private void NextContent()
+        private async void NextContent(bool isAutoNext = false)
         {
-            if (_indexPrevContentTap > 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
+            
+            if (_indexPrevContentTap >= 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
             {
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
                 return;
             }
+            isNextcontent = true;
             if (_indexNextContentTap < _rowLine)
             {
                 rowInPage++;
@@ -753,7 +521,7 @@ namespace NovelApp.ViewModels
                     ++rowInTextLine;
                 }
                 countLineInPage += rowInTextLine;
-                if (countLineInPage > lineCount || rowInPage >= _maxLineInPage)
+                if (countLineInPage > lineCount || rowInPage >= _maxLineInPage || isAutoNext)
                 {
                     countLineInPage = rowInTextLine;
                     _prevContentChapterTapList.Add(ContentChapterTap);
@@ -769,6 +537,11 @@ namespace NovelApp.ViewModels
                 }
                 _indexNextContentTap++;
 
+            }
+            else
+            {
+                var isSuccess = await SetTapLoadMoreReadMode();
+                if (isSuccess) NextContent(true);
             }
         }
         private void TextSizeReadMode(TextSize textSize)

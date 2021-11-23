@@ -139,9 +139,6 @@
                     SelectionBackgroundColor="Transparent"
                     SelectionMode="None"
                     ItemAppearing="listView_ItemAppearing"
-                    LoadMoreCommand="{Binding LoadMoreCommand}"
-                    LoadMoreCommandParameter="{Binding Source={x:Reference listView}}"
-                    LoadMoreOption="AutoOnScroll"
                     ItemsSource="{Binding  ListChaptersScroll}">
                     <xforms:SfListView.ItemTemplate>
                         <DataTemplate>
@@ -248,11 +245,11 @@
                                 Command="{Binding GoBackCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label
+                    <!--<Label
                         Grid.Row="0"
                         Grid.Column="1"
                         Text="{Binding ContentChapter.Name}"
-                        VerticalOptions="CenterAndExpand" />
+                        VerticalOptions="CenterAndExpand" />-->
                 </Grid>
                 <!--  Tap prev  -->
                 <StackLayout
@@ -275,6 +272,7 @@
                             LineBreakMode="WordWrap"
                             Text="{Binding ContentChapterTap}"
                             VerticalOptions="CenterAndExpand" />
+
                     </StackLayout>
                 </ScrollView>
                 <!--  Tap Next  -->
