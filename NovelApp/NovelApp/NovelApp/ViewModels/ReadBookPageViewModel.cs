@@ -394,7 +394,7 @@ namespace NovelApp.ViewModels
                         {
                             j--;
                             rowInPaging++;
-                            Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
+                           // Debug.WriteLine($"Page {indexPage} \n row {rowInPaging} {wordInRow}\n");
                             countWidthInRow = 0;
                             textPage += wordInRow;
                             if (rowInPaging == lineCount)
@@ -743,6 +743,7 @@ namespace NovelApp.ViewModels
                 _textSize = textSize;
                 TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
                 SplitPage();
+                RaisePropertyChanged(nameof(TextColor));
             }
             else
             {

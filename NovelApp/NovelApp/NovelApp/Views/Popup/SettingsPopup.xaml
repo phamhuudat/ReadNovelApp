@@ -9,8 +9,7 @@
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
-    x:Name="Page"
-    CloseWhenBackgroundIsClicked="True">
+    x:Name="Page">
     <pages:PopupPage.Animation>
         <animations:PopupAnimation />
     </pages:PopupPage.Animation>
@@ -22,6 +21,16 @@
                 </Style>
             </ResourceDictionary>
         </Grid.Resources>
+        <BoxView
+            Grid.Row="0"
+            HorizontalOptions="Fill"
+            BackgroundColor="Transparent"
+            Color="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+            </BoxView.GestureRecognizers>
+            
+        </BoxView>
         <Frame
             Grid.Row="1"
             Margin="0,0,0,-30"
