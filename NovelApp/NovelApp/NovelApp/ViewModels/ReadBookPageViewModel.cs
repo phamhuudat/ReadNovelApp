@@ -484,6 +484,7 @@ namespace NovelApp.ViewModels
                 {
                     _prevContentChapterTapList.Add(ContentChapterTap);
                 }
+                isNextcontent = false;
                 var leng = _prevContentChapterTapList.Count;
                 if (_indexPrevContentTap == -1)
                 {
@@ -504,7 +505,7 @@ namespace NovelApp.ViewModels
         private async void NextContent(bool isAutoNext = false)
         {
             
-            if (_indexPrevContentTap >= 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
+            if (!isNextcontent && _indexPrevContentTap >= 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
             {
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];
                 return;
