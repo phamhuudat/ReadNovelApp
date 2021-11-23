@@ -50,6 +50,7 @@
                 <Label
                     x:Name="ContentNovel"
                     Grid.Row="1"
+                    Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"

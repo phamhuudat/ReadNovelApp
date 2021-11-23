@@ -354,7 +354,7 @@ namespace NovelApp.ViewModels
                 var list = new List<PageChapter>();
 
                 var WidthPage = App.DisplayScreenWidth - 50;
-                var HeightPage = App.DisplayScreenHeight - 100;
+                var HeightPage = App.DisplayScreenHeight - 110;
                 var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
                 //tỉ lệ độ cao tương ứng
                 double ratioHeight = TextSizeHelper.TextHeightRatio[TextFont];
