@@ -4,7 +4,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-    xmlns:readbook="clr-namespace:NovelApp.Views.ReadBook"
     xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
     xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     ios:Page.UseSafeArea="true"
@@ -17,14 +16,9 @@
             RowDefinitions="*,60,30">
             <Grid.Resources>
                 <ResourceDictionary>
-                    <Style
-                        TargetType="Label">
-                        <Setter
-                            Property="TextColor"
-                            Value="{Binding TextColor}" />
-                        <Setter
-                            Property="FontFamily"
-                            Value="{Binding TextFontFamily}" />
+                    <Style TargetType="Label">
+                        <Setter Property="TextColor" Value="{Binding TextColor}" />
+                        <Setter Property="FontFamily" Value="{Binding TextFontFamily}" />
                     </Style>
                 </ResourceDictionary>
             </Grid.Resources>
@@ -33,49 +27,37 @@
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="White">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource WhiteTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource WhiteTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="YellowLight">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource YellowTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource YellowTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="GreenLight">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource GreenTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource GreenTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="GrayLight">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource GrayTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource GrayTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="OrangeLight">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource OrangeTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource OrangeTextColor}" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding SelectBgColor}"
                     TargetType="Grid"
                     Value="Black">
-                    <Setter
-                        Property="BackgroundColor"
-                        Value="{StaticResource BlackTextColor}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource BlackTextColor}" />
                 </DataTrigger>
             </Grid.Triggers>
             <!--  Đo lường độ rộng của label  -->
@@ -87,7 +69,6 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Padding="20,0,20,20"
-                BackgroundColor="Transparent"
                 ColumnDefinitions="60,*"
                 IsVisible="false"
                 RowDefinitions="50,*">
@@ -96,9 +77,7 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="Grid"
                         Value="Scrolling">
-                        <Setter
-                            Property="IsVisible"
-                            Value="true" />
+                        <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
                 </Grid.Triggers>
                 <Grid
@@ -120,8 +99,7 @@
                         Text="{DynamicResource IconCircleArrowLeft}"
                         VerticalOptions="CenterAndExpand">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding GoBackCommand}" />
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
                     <Label
@@ -156,9 +134,7 @@
                     </xforms:SfListView.ItemTemplate>
                     <xforms:SfListView.FooterTemplate>
                         <DataTemplate>
-                            <Grid
-                                BackgroundColor="Transparent"
-                                HeightRequest="45">
+                            <Grid BackgroundColor="Transparent" HeightRequest="45">
                                 <Label
                                     x:Name="Swipe"
                                     FontSize="{Binding TextSizeChapter}"
@@ -166,39 +142,13 @@
                                     Text="SWIPE DOWN TO CONTINUE"
                                     VerticalOptions="EndAndExpand">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding LoadNextChapterCommand}"
-                                            CommandParameter="{Binding Source={x:Reference listView}}" />
+                                        <TapGestureRecognizer Command="{Binding LoadNextChapterCommand}" CommandParameter="{Binding Source={x:Reference listView}}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </Grid>
                         </DataTemplate>
                     </xforms:SfListView.FooterTemplate>
                 </xforms:SfListView>
-                <!--<ScrollView
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Scrolled="ScrollView_Scrolled">
-                    <StackLayout>
-                        <Label
-                            x:Name="ContentNovelScroll"
-                            FontSize="{Binding TextSizeChapter}"
-                            HorizontalOptions="Fill"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding ContentChapter.Text}"
-                            VerticalOptions="Fill" />
-                        <Label Text="SWIPE DOWN TO CONTINUE"
-                               x:Name="Swipe"
-                               FontSize="{Binding TextSizeChapter}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="EndAndExpand">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding LoadNextChapterCommand}"/>
-                            </Label.GestureRecognizers>
-                            </Label>
-                    </StackLayout>
-                </ScrollView>-->
             </Grid>
             <!--  Tapping  -->
             <Grid
@@ -215,9 +165,7 @@
                         Binding="{Binding ShowReadMode}"
                         TargetType="Grid"
                         Value="Tapping">
-                        <Setter
-                            Property="IsVisible"
-                            Value="true" />
+                        <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
                 </Grid.Triggers>
                 <!--  Header  -->
@@ -241,8 +189,7 @@
                         Text="{DynamicResource IconCircleArrowLeft}"
                         VerticalOptions="CenterAndExpand">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding GoBackCommand}" />
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
                     <!--<Label
@@ -252,12 +199,9 @@
                         VerticalOptions="CenterAndExpand" />-->
                 </Grid>
                 <!--  Tap prev  -->
-                <StackLayout
-                    Grid.Row="1"
-                    Grid.Column="1">
+                <StackLayout Grid.Row="1" Grid.Column="1">
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding PrevContentCommand}" />
+                        <TapGestureRecognizer Command="{Binding PrevContentCommand}" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
                 <!--  Content  -->
@@ -276,42 +220,13 @@
                     </StackLayout>
                 </ScrollView>
                 <!--  Tap Next  -->
-                <StackLayout
-                    Grid.Row="3"
-                    Grid.Column="1">
+                <StackLayout Grid.Row="3" Grid.Column="1">
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding NextContentCommand}" />
+                        <TapGestureRecognizer Command="{Binding NextContentCommand}" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Grid>
-            <!--<Grid
-                Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                IsVisible="false"
-                RowDefinitions="50,*,20">
-                <Grid.Triggers>
-                    <DataTrigger
-                        Binding="{Binding ShowReadMode}"
-                        TargetType="Grid"
-                        Value="Paging">
-                        <Setter Property="IsVisible" Value="true" />
-                    </DataTrigger>
-                </Grid.Triggers>
-                <ScrollView Grid.Row="0" Grid.RowSpan="3">
-                    <StackLayout>
-                        <Label
-                            FontSize="{Binding TextSizeChapter}"
-                            LineBreakMode="WordWrap"
-                            PropertyChanged="Label_PropertyChanged"
-                            SizeChanged="Label_SizeChanged_1"
-                            Text="{Binding TextCal}"
-                            TextColor="Transparent" />
-                    </StackLayout>
-                </ScrollView>
-            </Grid>-->
+
             <!--  -40,-10,-100,-10  -->
             <!--  Paging  -->
             <swipeCardView:SwipeCardView
@@ -320,7 +235,7 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                AnimationLength="250"
+                AnimationLength="500"
                 BackCardScale="1"
                 CardRotation="0"
                 HorizontalOptions="FillAndExpand"
@@ -330,17 +245,15 @@
                 SizeChanged="book_SizeChanged"
                 SupportedDraggingDirections="Left"
                 SupportedSwipeDirections="Left"
-                Threshold="100"
                 Swiped="bookLeft_Swiped"
+                Threshold="50"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.Triggers>
                     <DataTrigger
                         Binding="{Binding ShowReadMode}"
                         TargetType="swipeCardView:SwipeCardView"
                         Value="Paging">
-                        <Setter
-                            Property="IsVisible"
-                            Value="true" />
+                        <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
                 </swipeCardView:SwipeCardView.Triggers>
                 <swipeCardView:SwipeCardView.ItemTemplate>
@@ -348,10 +261,10 @@
                         <Frame
                             x:Name="Page"
                             Padding="20,0,20,0"
+                            BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
                             BorderColor="Transparent"
                             CornerRadius="0"
-                            HasShadow="False"
-                            BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}">
+                            HasShadow="False">
                             <Grid
                                 x:Name="ContentView"
                                 ColumnDefinitions="60,*,60"
@@ -380,8 +293,7 @@
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="CenterAndExpand">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Label
@@ -389,7 +301,7 @@
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
-                                        Text="{Binding Source={x:Reference page}, Path=BindingContext.ContentChapter.Name}"
+                                        Text="{Binding Name}"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="CenterAndExpand" />
                                 </Grid>
@@ -400,27 +312,59 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
-                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
-                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
                                     FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
                                     HorizontalOptions="Fill"
                                     LineBreakMode="WordWrap"
-                                    Text="{Binding Text}" />
+                                    Text="{Binding Text}"
+                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
                                 <StackLayout
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     HorizontalOptions="End"
                                     Orientation="Horizontal">
+
                                     <Label
                                         Text="{Binding IndexPage, StringFormat='{0}/'}"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="Center" />
                                     <Label
                                         x:Name="CountPageLb"
-                                        Text="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
+                                        Text="{Binding CountPage}"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="Center" />
+
                                 </StackLayout>
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding ShowSwipToNextChapter}"
+                                    Text="SWIPE DOWN TO CONTINUE"
+                                    TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                    VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapNextPage_Tapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <!--  Next Chapter  -->
+                                <BoxView
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapNextPage_Tapped" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                                <!--  Prev Chapter  -->
+                                <BoxView
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapPrevPage_Tapped" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -435,11 +379,10 @@
                 Grid.ColumnSpan="1">-->
             <swipeCardView:SwipeCardView
                 x:Name="bookRight"
-                TranslationX="-400"
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                AnimationLength="250"
+                AnimationLength="500"
                 BackCardScale="1"
                 CardRotation="0"
                 HeightRequest="{Binding Source={x:Reference bookLeft}, Path=Height}"
@@ -450,16 +393,15 @@
                 SupportedDraggingDirections="Right"
                 SupportedSwipeDirections="Right"
                 Swiped="bookRight_Swiped"
-                Threshold="100"
+                Threshold="50"
+                TranslationX="{Binding BookRightTranslationX}"
                 WidthRequest="{Binding Source={x:Reference bookLeft}, Path=Width}">
                 <swipeCardView:SwipeCardView.Triggers>
                     <DataTrigger
                         Binding="{Binding ShowReadMode}"
                         TargetType="swipeCardView:SwipeCardView"
                         Value="Paging">
-                        <Setter
-                            Property="IsVisible"
-                            Value="true" />
+                        <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
                 </swipeCardView:SwipeCardView.Triggers>
                 <swipeCardView:SwipeCardView.ItemTemplate>
@@ -467,10 +409,10 @@
                         <Frame
                             x:Name="Page"
                             Padding="20,0,20,0"
+                            BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
                             BorderColor="Transparent"
                             CornerRadius="0"
-                            HasShadow="False"
-                            BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}">
+                            HasShadow="False">
                             <Grid
                                 x:Name="ContentView"
                                 ColumnDefinitions="60,*,60"
@@ -499,8 +441,7 @@
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="CenterAndExpand">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Label
@@ -508,7 +449,7 @@
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
-                                        Text="{Binding Source={x:Reference page}, Path=BindingContext.ContentChapter.Name}"
+                                        Text="{Binding Name}"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="CenterAndExpand" />
                                 </Grid>
@@ -519,12 +460,12 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
-                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
-                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
                                     FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
                                     HorizontalOptions="Fill"
                                     LineBreakMode="WordWrap"
-                                    Text="{Binding Text}" />
+                                    Text="{Binding Text}"
+                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
                                 <StackLayout
                                     Grid.Row="2"
                                     Grid.Column="2"
@@ -536,10 +477,11 @@
                                         VerticalOptions="Center" />
                                     <Label
                                         x:Name="CountPageLb"
-                                        Text="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
+                                        Text="{Binding CountPage}"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="Center" />
                                 </StackLayout>
+
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -561,16 +503,9 @@
                     TextColor="{StaticResource WhiteColor}"
                     VerticalOptions="Center" />
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding NavigationSettingsCommand}" />
+                    <TapGestureRecognizer Command="{Binding NavigationSettingsCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
-            <ActivityIndicator
-                Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

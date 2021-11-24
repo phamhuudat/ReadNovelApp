@@ -154,7 +154,10 @@ namespace NovelApp.ViewModels
             }
         }
         public ICommand ShowBookRightCommand { get; set; }
-
+        public double BookRightTranslationX { get => bookRightTranslationX; set =>SetProperty(ref bookRightTranslationX, value); }
+        public int indexNoScroll = 0;
+        public int indexNoPaging = 0;
+        public int indexNoTapping = 0;
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
             ) : base(navigationService)
@@ -172,6 +175,7 @@ namespace NovelApp.ViewModels
             MarginBookRight = new Thickness(-App.DisplayScreenWidth, 0, 0, 0);
             ShowBookRightCommand = new DelegateCommand(() => { IsSwipRight = true; });
             PrevCarouselItems = new ObservableCollection<PageChapter>();
+            BookRightTranslationX = -(App.DisplayScreenWidth - 20);
         }
         /// <summary>
         /// Load more scrollview
@@ -187,7 +191,7 @@ namespace NovelApp.ViewModels
                     return;
                 listView.IsBusy = true;
                 await Task.Delay(1000);
-                await GetContentChapter(_novelId, ++_no);
+                await GetContentChapter(_novelId, ++indexNoScroll);
                 (listView.LayoutManager as LinearLayout).ScrollToRowIndex(ListChaptersScroll.Count - 1);
             }
             catch (Exception e)
@@ -221,10 +225,12 @@ namespace NovelApp.ViewModels
         }
         private void RegisterMessageSettings()
         {
-            MessagingCenter.Subscribe<SettingsPopupViewModel, Dictionary<SettingMode, object>>(this, Message.MessageSettings, (send, e) =>
+            MessagingCenter.Subscribe<SettingsPopupViewModel, Dictionary<SettingMode, object>>(this, Message.MessageSettings, async (send, e) =>
             {
                 if (e.ContainsKey(SettingMode.ReadMode))
                 {
+                    indexNoPaging = indexNoScroll = indexNoTapping = _no;
+                    await GetContentChapter(_novelId, _no);
                     _cacheService.SaveCache(AppConstants.CacheParameter.ReadMode, ((int)e[SettingMode.ReadMode]).ToString());
                     ReadMode((ReadMode)e[SettingMode.ReadMode]);
                 }
@@ -273,6 +279,7 @@ namespace NovelApp.ViewModels
                 _novelId = int.Parse(parameters[AppConstants.NavigationParameter.NovelId].ToString());
             if (parameters.ContainsKey(AppConstants.NavigationParameter.NoChapter))
                 _no = int.Parse(parameters[AppConstants.NavigationParameter.NoChapter].ToString());
+            indexNoPaging = indexNoScroll = indexNoTapping = _no;
             await GetContentChapter(_novelId, _no);
             ReadMode(ShowReadMode);
 
@@ -281,15 +288,15 @@ namespace NovelApp.ViewModels
         /// Load more data tapping
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> GetContentChapter()
+        private async Task<bool> GetContentChapter(int no)
         {
-            ContentChapter = await _bookService.GetContentChapter(_novelId, ++_no);
+            ContentChapter = await _bookService.GetContentChapter(_novelId, no);
             return ContentChapter != null;
         }
         private async Task<bool> GetContentChapter(int novelId, int no)
         {
             var isSuccess = false;
-            ContentChapter = await _bookService.GetContentChapter(_novelId, _no);
+            ContentChapter = await _bookService.GetContentChapter(novelId, no);
             if (ContentChapter != null)
             {
                 isSuccess = true;
@@ -333,19 +340,27 @@ namespace NovelApp.ViewModels
             CarouselItems = new ObservableCollection<PageChapter>(list);
         }
         //int countBookLeft;
-        int countBookRight;
+        //int countBookRight;
         private int indexNextLeft = 0;
         private int indexNextRight = 0;
-        public void NextLeftPageChapter(PageChapter page)
+        public async void NextLeftPageChapter(PageChapter page)
         {
             if (CarouselItems.Any())
             {
-                indexNextLeft = page.IndexPage;
+                indexNextLeft = page.IndexPageInChapter;
                 if (!PrevCarouselItems.Contains(page))
                 {
                     PrevCarouselItems.Add(page);
                 }
-                PrevCarouselItems = new ObservableCollection<PageChapter>(PrevCarouselItems.Where(x=>x.IndexPage <= indexNextLeft).OrderByDescending(x => x.IndexPage).ToArray());
+                PrevCarouselItems = new ObservableCollection<PageChapter>(PrevCarouselItems.Where(x => x.IndexPageInChapter <= indexNextLeft).OrderByDescending(x => x.IndexPageInChapter).ToArray());
+                if(indexNextLeft == indexPageInChapter)
+                {
+                   var result = await GetContentChapter(++indexNoPaging);
+                   if(result)
+                    {
+                        SplitPage(false);
+                    }
+                }
             }
 
         }
@@ -353,17 +368,18 @@ namespace NovelApp.ViewModels
         {
             if (PrevCarouselItems.Any())
             {
-                indexNextRight = page.IndexPage;
+                indexNextRight = page.IndexPageInChapter;
                 if (!CarouselItems.Contains(page))
                 {
                     CarouselItems.Add(page);
                 }
-                CarouselItems = new ObservableCollection<PageChapter>(CarouselItems.Where(x => x.IndexPage >= indexNextRight).OrderBy(x => x.IndexPage).ToArray());
+                CarouselItems = new ObservableCollection<PageChapter>(CarouselItems.Where(x => x.IndexPageInChapter >= indexNextRight).OrderBy(x => x.IndexPageInChapter).ToArray());
+
             }
         }
 
-
-        private void SplitPage()
+        int indexPageInChapter = 0;
+        private void SplitPage(bool isReload = true)
         {
             try
             {
@@ -420,6 +436,9 @@ namespace NovelApp.ViewModels
                                 {
                                     Text = textPage,
                                     IndexPage = ++indexPage,
+                                    Name = ContentChapter.Name,
+                                    IndexPageInChapter=++indexPageInChapter,
+
                                 });
                                 textPage = "";
                                 wordInRow = "";
@@ -442,6 +461,8 @@ namespace NovelApp.ViewModels
                             {
                                 Text = textPage,
                                 IndexPage = ++indexPage,
+                                Name = ContentChapter.Name,
+                                IndexPageInChapter = ++indexPageInChapter,
                             });
                             textPage = "";
                             wordInRow = "";
@@ -458,13 +479,28 @@ namespace NovelApp.ViewModels
                             {
                                 Text = textPage,
                                 IndexPage = ++indexPage,
+                                Name = ContentChapter.Name,
+                                IndexPageInChapter = ++indexPageInChapter,
                             });
                         }
                     }
 
                 }
                 CountPage = list.Count;
+                list.Last().ShowSwipToNextChapter = true;
+                foreach (var item in list)
+                {
+                    item.CountPage = CountPage;
+                }
+                if (isReload)
                 CarouselItems = new ObservableCollection<PageChapter>(list);
+                else
+                {
+                    foreach(var item in list)
+                    {
+                        CarouselItems.Add(item);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -480,7 +516,10 @@ namespace NovelApp.ViewModels
             ShowReadMode = readMode;
             TextCal = ContentChapter.Text;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
+            {
+                indexPageInChapter = 0;
                 SplitPage();
+            }
             else
             if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
@@ -521,7 +560,7 @@ namespace NovelApp.ViewModels
         }
         private async Task<bool> SetTapLoadMoreReadMode()
         {
-            var result = await GetContentChapter();
+            var result = await GetContentChapter(++indexNoTapping);
             if (result)
             {
                 _rowTextTap.Add(ContentChapter.Name);
@@ -567,6 +606,7 @@ namespace NovelApp.ViewModels
         private bool isShowBookRight;
         private bool isSwipRight;
         private ObservableCollection<PageChapter> prevCarouselItems;
+        private double bookRightTranslationX;
 
         /// <summary>
         /// Xử lý next content
@@ -614,13 +654,40 @@ namespace NovelApp.ViewModels
                 if (isSuccess) NextContent(true);
             }
         }
-        private void TextSizeReadMode(TextSize textSize)
+        private async Task ResetReadModePaging()
+        {
+            indexNoPaging = _no;
+            await GetContentChapter(indexNoPaging);
+            CarouselItems.Clear();
+            PrevCarouselItems.Clear();
+            indexPageInChapter = 0;
+            SplitPage();
+        }
+        private async Task ResetReadModeTapping()
+        {
+            indexNoPaging = _no;
+            await GetContentChapter(indexNoPaging);
+            CarouselItems.Clear();
+            PrevCarouselItems.Clear();
+            indexPageInChapter = 0;
+            SplitPage();
+        }
+        private async Task ResetReadModeScrolling()
+        {
+            indexNoPaging = _no;
+            await GetContentChapter(indexNoPaging);
+            CarouselItems.Clear();
+            PrevCarouselItems.Clear();
+            indexPageInChapter = 0;
+            SplitPage();
+        }
+        private async void TextSizeReadMode(TextSize textSize)
         {
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
             {
                 _textSize = textSize;
                 TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
-                SplitPage();
+                await ResetReadModePaging();
                 RaisePropertyChanged(nameof(TextColor));
             }
             else

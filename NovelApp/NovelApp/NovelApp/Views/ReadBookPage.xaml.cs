@@ -97,6 +97,16 @@ namespace NovelApp.Views
             var viewmdel = BindingContext as ReadBookPageViewModel;
             viewmdel.NextLeftPageChapter(e.Item as PageChapter);
         }
+        private async void TapNextPage_Tapped(object sender, EventArgs e)
+        {
+            
+           await bookLeft.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left);
+        }
+        
+        private async void TapPrevPage_Tapped(object sender, EventArgs e)
+        {
+          await  bookRight.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Right);
+        }
         //{
         //    var viewmdel = BindingContext as ReadBookPageViewModel;
         //    var label = sender as Label;
