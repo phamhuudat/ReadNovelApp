@@ -13,7 +13,7 @@
     <ContentPage.Content>
         <Grid
             x:Name="page"
-            ColumnDefinitions="60,*,60"
+            ColumnDefinitions="*,60"
             RowDefinitions="*,60,30">
             <Grid.Resources>
                 <ResourceDictionary>
@@ -293,12 +293,12 @@
                 HorizontalOptions="FillAndExpand"
                 IsVisible="false"
                 ItemsSource="{Binding CarouselItems}"
-                LoopCards="True"
+                LoopCards="False"
                 SizeChanged="book_SizeChanged"
                 SupportedDraggingDirections="Left"
                 SupportedSwipeDirections="Left"
                 Threshold="100"
-                TopItem="0"
+                Swiped="bookLeft_Swiped"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.Triggers>
                     <DataTrigger
@@ -320,51 +320,62 @@
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
             </swipeCardView:SwipeCardView>
-            <swipeCardView:SwipeCardView
-                x:Name="bookRight"
+            <!--<Grid
+                BackgroundColor="Blue"
+                TranslationX="-250"
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Margin="{Binding MarginBookRight}"
-                AnimationLength="250"
-                BackCardScale="1"
-                CardRotation="0"
-                HeightRequest="{Binding Source={x:Reference bookLeft}, Path=Height}"
-                IsVisible="false"
-                ItemsSource="{Binding CarouselItems}"
-                LoopCards="True"
-                SizeChanged="book_SizeChanged"
-                SupportedDraggingDirections="Right"
-                SupportedSwipeDirections="Right"
-                Swiped="book_Swiped"
-                Threshold="100"
-                TopItem="0"
-                WidthRequest="{Binding Source={x:Reference bookLeft}, Path=Width}">
-                <swipeCardView:SwipeCardView.Triggers>
-                    <DataTrigger
-                        Binding="{Binding IsShowBookRight}"
-                        TargetType="swipeCardView:SwipeCardView"
-                        Value="True">
-                        <Setter Property="IsVisible" Value="True" />
-                    </DataTrigger>
-                </swipeCardView:SwipeCardView.Triggers>
-                <swipeCardView:SwipeCardView.ItemTemplate>
-                    <DataTemplate>
-                        <readbook:ReadBookPageView
-                            Title="{Binding Source={x:Reference page}, Path=BindingContext.ContentChapter.Name}"
-                            CountPage="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
-                            FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
-                            HeightRequest="{Binding Source={x:Reference bookLeft}, Path=Height}"
-                            HorizontalOptions="Start"
-                            PageBackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
-                            TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
-                            TextFontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
-                            WidthRequest="{Binding Source={x:Reference bookLeft}, Path=Width}" />
-                    </DataTemplate>
-                </swipeCardView:SwipeCardView.ItemTemplate>
-            </swipeCardView:SwipeCardView>
-            <BoxView
+                Grid.ColumnSpan="1">-->
+                <swipeCardView:SwipeCardView
+                    x:Name="bookRight"
+                    TranslationX="-400"
+                    Grid.RowSpan="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    AnimationLength="250"
+                    BackCardScale="1"
+                    CardRotation="0"
+                    HeightRequest="{Binding Source={x:Reference bookLeft}, Path=Height}"
+                    IsVisible="false"
+                    ItemsSource="{Binding PrevCarouselItems}"
+                    LoopCards="False"
+                    SizeChanged="book_SizeChanged"
+                    SupportedDraggingDirections="Right"
+                    SupportedSwipeDirections="Right"
+                    Swiped="bookRight_Swiped"
+                    Threshold="100"
+                    WidthRequest="{Binding Source={x:Reference bookLeft}, Path=Width}">
+                    <swipeCardView:SwipeCardView.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ShowReadMode}"
+                            TargetType="swipeCardView:SwipeCardView"
+                            Value="Paging">
+                            <Setter
+                                Property="IsVisible"
+                                Value="true" />
+                        </DataTrigger>
+                    </swipeCardView:SwipeCardView.Triggers>
+                    <swipeCardView:SwipeCardView.ItemTemplate>
+                        <DataTemplate>
+                            <readbook:ReadBookPageView
+                                Scale="1.2"
+                                BackgroundColor="Red"
+                                Title="{Binding Source={x:Reference page}, Path=BindingContext.ContentChapter.Name}"
+                                CountPage="{Binding Source={x:Reference page}, Path=BindingContext.CountPage}"
+                                FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
+                                HeightRequest="{Binding Source={x:Reference bookLeft}, Path=Height}"
+                                HorizontalOptions="Start"
+                                PageBackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
+                                TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}"
+                                TextFontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
+                                WidthRequest="{Binding Source={x:Reference bookLeft}, Path=Width}" />
+                        </DataTemplate>
+                    </swipeCardView:SwipeCardView.ItemTemplate>
+                </swipeCardView:SwipeCardView>
+            <!--</Grid>-->
+            
+            <!--<BoxView
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 BackgroundColor="Red"
@@ -390,7 +401,7 @@
                         Direction="Right"
                         Swiped="SwipeGestureRecognizer_Swiped" />
                 </BoxView.GestureRecognizers>
-            </BoxView>
+            </BoxView>-->
 
 
             <!--<cards:SfCardLayout

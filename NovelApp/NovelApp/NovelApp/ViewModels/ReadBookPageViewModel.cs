@@ -85,6 +85,13 @@ namespace NovelApp.ViewModels
         /// 
         /// </summary>
         public ICommand LoadMoreCommand { get; set; }
+        /// <summary>
+        /// Chứa các page chapter prev
+        /// </summary>
+        public ObservableCollection<PageChapter> PrevCarouselItems { get => prevCarouselItems; set => SetProperty(ref prevCarouselItems, value); }
+        /// <summary>
+        /// Chứa các page chapter current
+        /// </summary>
         public ObservableCollection<PageChapter> CarouselItems { get => carouselItems; set => SetProperty(ref carouselItems, value); }
         /// <summary>
         /// danh sach cac kí tự có kích thước nhỏ 
@@ -130,17 +137,22 @@ namespace NovelApp.ViewModels
         {
             get
             {
-                if (ShowReadMode == Models.Enums.ReadMode.Paging&&IsSwipRight)
+                if (ShowReadMode == Models.Enums.ReadMode.Paging && IsSwipRight)
                 {
                     return true;
                 }
                 return false;
             }
-            
+
         }
-        public bool IsSwipRight { get => isSwipRight; set { isSwipRight = value;
+        public bool IsSwipRight
+        {
+            get => isSwipRight; set
+            {
+                isSwipRight = value;
                 RaisePropertyChanged(nameof(IsShowBookRight));
-            } }
+            }
+        }
         public ICommand ShowBookRightCommand { get; set; }
 
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
@@ -158,7 +170,8 @@ namespace NovelApp.ViewModels
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             GetCache();
             MarginBookRight = new Thickness(-App.DisplayScreenWidth, 0, 0, 0);
-            ShowBookRightCommand = new DelegateCommand(()=>{ IsSwipRight = true; });
+            ShowBookRightCommand = new DelegateCommand(() => { IsSwipRight = true; });
+            PrevCarouselItems = new ObservableCollection<PageChapter>();
         }
         /// <summary>
         /// Load more scrollview
@@ -319,6 +332,37 @@ namespace NovelApp.ViewModels
             CountPage = list.Count;
             CarouselItems = new ObservableCollection<PageChapter>(list);
         }
+        //int countBookLeft;
+        int countBookRight;
+        private int indexNextLeft = 0;
+        private int indexNextRight = 0;
+        public void NextLeftPageChapter(PageChapter page)
+        {
+            if (CarouselItems.Any())
+            {
+                indexNextLeft = page.IndexPage;
+                if (!PrevCarouselItems.Contains(page))
+                {
+                    PrevCarouselItems.Add(page);
+                }
+                PrevCarouselItems = new ObservableCollection<PageChapter>(PrevCarouselItems.Where(x=>x.IndexPage <= indexNextLeft).OrderByDescending(x => x.IndexPage).ToArray());
+            }
+
+        }
+        public void NextRightPageChapter(PageChapter page)
+        {
+            if (PrevCarouselItems.Any())
+            {
+                indexNextRight = page.IndexPage;
+                if (!CarouselItems.Contains(page))
+                {
+                    CarouselItems.Add(page);
+                }
+                CarouselItems = new ObservableCollection<PageChapter>(CarouselItems.Where(x => x.IndexPage >= indexNextRight).OrderBy(x => x.IndexPage).ToArray());
+            }
+        }
+
+
         private void SplitPage()
         {
             try
@@ -522,6 +566,7 @@ namespace NovelApp.ViewModels
         private Thickness marginBookRight;
         private bool isShowBookRight;
         private bool isSwipRight;
+        private ObservableCollection<PageChapter> prevCarouselItems;
 
         /// <summary>
         /// Xử lý next content

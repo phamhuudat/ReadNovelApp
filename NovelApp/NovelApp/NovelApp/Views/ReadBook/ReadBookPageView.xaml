@@ -7,7 +7,7 @@
         <Frame
             x:Name="Page"
             Padding="20,0,20,0"
-            BorderColor="{StaticResource GrayColor}"
+            BorderColor="Transparent"
             CornerRadius="0"
             HasShadow="False">
             <Grid
@@ -59,17 +59,6 @@
                     LineBreakMode="WordWrap"
                     SizeChanged="ContentNovel_SizeChanged"
                     Text="{Binding Text}" />
-                <!--<Label
-                    x:Name="ContentNovel"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
-                    FontSize="{Binding FontSize}"
-                    HorizontalOptions="Fill"
-                    LineBreakMode="WordWrap"
-                    LineHeight="1.05"
-                    Text="{Binding Text}" />-->
                 <StackLayout
                     Grid.Row="2"
                     Grid.Column="2"
