@@ -125,6 +125,24 @@ namespace NovelApp.ViewModels
                     return TextFont.VnTime;
             }
         }
+        public Thickness MarginBookRight { get => marginBookRight; set => SetProperty(ref marginBookRight, value); }
+        public bool IsShowBookRight
+        {
+            get
+            {
+                if (ShowReadMode == Models.Enums.ReadMode.Paging&&IsSwipRight)
+                {
+                    return true;
+                }
+                return false;
+            }
+            
+        }
+        public bool IsSwipRight { get => isSwipRight; set { isSwipRight = value;
+                RaisePropertyChanged(nameof(IsShowBookRight));
+            } }
+        public ICommand ShowBookRightCommand { get; set; }
+
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
             ICacheService cacheService
             ) : base(navigationService)
@@ -139,6 +157,8 @@ namespace NovelApp.ViewModels
             ListChaptersScroll = new ObservableCollection<Chapter>();
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             GetCache();
+            MarginBookRight = new Thickness(-App.DisplayScreenWidth, 0, 0, 0);
+            ShowBookRightCommand = new DelegateCommand(()=>{ IsSwipRight = true; });
         }
         /// <summary>
         /// Load more scrollview
@@ -499,12 +519,16 @@ namespace NovelApp.ViewModels
 
         }
         bool isNextcontent = false;
+        private Thickness marginBookRight;
+        private bool isShowBookRight;
+        private bool isSwipRight;
+
         /// <summary>
         /// Xử lý next content
         /// </summary>
         private async void NextContent(bool isAutoNext = false)
         {
-            
+
             if (!isNextcontent && _indexPrevContentTap >= 0 && _prevContentChapterTapList.Any() && _indexPrevContentTap < _prevContentChapterTapList.Count - 1)
             {
                 ContentChapterTap = _prevContentChapterTapList[++_indexPrevContentTap];

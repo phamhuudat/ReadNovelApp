@@ -81,7 +81,16 @@ namespace NovelApp.Views
             }
         }
 
-        //void Label_SizeChanged_1(System.Object sender, System.EventArgs e)
+        void book_Swiped(System.Object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs e)
+        {
+            bookRight.IsVisible = false;
+            var viewmdel = BindingContext as ReadBookPageViewModel;
+            viewmdel.IsSwipRight = false;
+        }
+
+        void SwipeGestureRecognizer_Swiped(System.Object sender, Xamarin.Forms.SwipedEventArgs e)
+        {
+        }        //void Label_SizeChanged_1(System.Object sender, System.EventArgs e)
         //{
         //    var viewmdel = BindingContext as ReadBookPageViewModel;
         //    var label = sender as Label;
