@@ -99,7 +99,6 @@ namespace NovelApp.Views
         }
         private async void TapNextPage_Tapped(object sender, EventArgs e)
         {
-            
            await bookLeft.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left);
         }
         

@@ -260,112 +260,123 @@
                     <DataTemplate>
                         <Frame
                             x:Name="Page"
-                            Padding="20,0,20,0"
+                            Padding="0"
                             BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
                             BorderColor="Transparent"
                             CornerRadius="0"
                             HasShadow="False">
-                            <Grid
-                                x:Name="ContentView"
-                                ColumnDefinitions="60,*,60"
-                                HorizontalOptions="Fill"
-                                RowDefinitions="50,*,20"
-                                RowSpacing="0"
-                                VerticalOptions="Fill">
-                                <!--  Header  -->
+                            <Grid ColumnDefinitions="*,40">
                                 <Grid
-                                    Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    ColumnDefinitions="50,*">
-                                    <BoxView
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        BackgroundColor="{StaticResource GrayColor}"
-                                        HeightRequest="1"
-                                        VerticalOptions="End" />
-                                    <Label
+                                    Grid.ColumnSpan="2"
+                                    Padding="20,0,20,0"
+                                    x:Name="ContentView"
+                                    ColumnDefinitions="60,*,60"
+                                    HorizontalOptions="Fill"
+                                    RowDefinitions="50,*,20"
+                                    RowSpacing="0"
+                                    VerticalOptions="Fill">
+                                    <!--  Header  -->
+                                    <Grid
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        FontFamily="AC"
-                                        FontSize="{DynamicResource TextNormalSize}"
-                                        Text="{DynamicResource IconCircleArrowLeft}"
+                                        Grid.ColumnSpan="3"
+                                        ColumnDefinitions="50,*">
+                                        <BoxView
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            BackgroundColor="{StaticResource GrayColor}"
+                                            HeightRequest="1"
+                                            VerticalOptions="End" />
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            FontFamily="AC"
+                                            FontSize="{DynamicResource TextNormalSize}"
+                                            Text="{DynamicResource IconCircleArrowLeft}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="CenterAndExpand">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label
+                                            x:Name="NameChapter"
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
+                                            Text="{Binding Name}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </Grid>
+                                    <!--  Body  -->
+                                    <Label
+                                        x:Name="ContentNovel"
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                                        FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
+                                        HorizontalOptions="Fill"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Text}"
+                                        TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
+                                    <StackLayout
+                                        Grid.Row="2"
+                                        Grid.Column="2"
+                                        HorizontalOptions="End"
+                                        Orientation="Horizontal">
+
+                                        <Label
+                                            Text="{Binding IndexPage, StringFormat='{0}/'}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            x:Name="CountPageLb"
+                                            Text="{Binding CountPage}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="Center" />
+
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding ShowSwipToNextChapter}"
+                                        Text="SWIPE DOWN TO CONTINUE"
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="CenterAndExpand">
+                                        VerticalOptions="Center">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
+                                            <TapGestureRecognizer
+                                                Tapped="TapNextPage_Tapped" />
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Label
-                                        x:Name="NameChapter"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
-                                        Text="{Binding Name}"
-                                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="CenterAndExpand" />
+                                    <!--  Next Chapter  -->
+                                    <BoxView
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        BackgroundColor="Transparent">
+                                        <BoxView.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Tapped="TapPrevPage_Tapped" />
+                                        </BoxView.GestureRecognizers>
+                                    </BoxView>
+                                    <!--  Prev Chapter  -->
+                                    
                                 </Grid>
-                                <!--  Body  -->
-                                <Label
-                                    x:Name="ContentNovel"
-                                    Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
-                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
-                                    HorizontalOptions="Fill"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Text}"
-                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
-                                <StackLayout
-                                    Grid.Row="2"
-                                    Grid.Column="2"
-                                    HorizontalOptions="End"
-                                    Orientation="Horizontal">
-
-                                    <Label
-                                        Text="{Binding IndexPage, StringFormat='{0}/'}"
-                                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        x:Name="CountPageLb"
-                                        Text="{Binding CountPage}"
-                                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="Center" />
-
-                                </StackLayout>
-                                <Label
-                                    Grid.Row="2"
+                                <BoxView
+                                    Grid.Row="0"
                                     Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    IsVisible="{Binding ShowSwipToNextChapter}"
-                                    Text="SWIPE DOWN TO CONTINUE"
-                                    TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                    VerticalOptions="Center">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapNextPage_Tapped" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <!--  Next Chapter  -->
-                                <BoxView
-                                    Grid.Row="1"
-                                    Grid.Column="0"
                                     BackgroundColor="Transparent">
                                     <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapNextPage_Tapped" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-                                <!--  Prev Chapter  -->
-                                <BoxView
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapPrevPage_Tapped" />
+                                        <TapGestureRecognizer
+                                            Tapped="TapNextPage_Tapped" />
                                     </BoxView.GestureRecognizers>
                                 </BoxView>
                             </Grid>
+                          
                         </Frame>
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
@@ -408,64 +419,68 @@
                     <DataTemplate>
                         <Frame
                             x:Name="Page"
-                            Padding="20,0,20,0"
+                            Padding="0"
                             BackgroundColor="{Binding Source={x:Reference page}, Path=BackgroundColor}"
                             BorderColor="Transparent"
                             CornerRadius="0"
                             HasShadow="False">
                             <Grid
-                                x:Name="ContentView"
-                                ColumnDefinitions="60,*,60"
-                                HorizontalOptions="Fill"
-                                RowDefinitions="50,*,20"
-                                RowSpacing="0"
-                                VerticalOptions="Fill">
-                                <!--  Header  -->
-                                <Grid
-                                    Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    ColumnDefinitions="50,*">
-                                    <BoxView
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        BackgroundColor="{StaticResource GrayColor}"
-                                        HeightRequest="1"
-                                        VerticalOptions="End" />
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontFamily="AC"
-                                        FontSize="{DynamicResource TextNormalSize}"
-                                        Text="{DynamicResource IconCircleArrowLeft}"
-                                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="CenterAndExpand">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <Label
-                                        x:Name="NameChapter"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
-                                        Text="{Binding Name}"
-                                        TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
-                                        VerticalOptions="CenterAndExpand" />
-                                </Grid>
-                                <!--  Body  -->
-                                <Label
-                                    x:Name="ContentNovel"
-                                    Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
-                                    FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
+                                    Grid.ColumnSpan="2"
+                                    Padding="20,0,20,0"
+                                    x:Name="ContentView"
+                                    ColumnDefinitions="60,*,60"
                                     HorizontalOptions="Fill"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Text}"
-                                    TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
+                                    RowDefinitions="50,*,20"
+                                    RowSpacing="0"
+                                    VerticalOptions="Fill">
+                                    <!--  Header  -->
+                                    <Grid
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        ColumnDefinitions="50,*">
+                                        <BoxView
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            BackgroundColor="{StaticResource GrayColor}"
+                                            HeightRequest="1"
+                                            VerticalOptions="End" />
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            FontFamily="AC"
+                                            FontSize="{DynamicResource TextNormalSize}"
+                                            Text="{DynamicResource IconCircleArrowLeft}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="CenterAndExpand">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBackCommand}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label
+                                            x:Name="NameChapter"
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontFamily="{Binding Source={x:Reference page}, Path=BindingContext.TextFontFamily}"
+                                            Text="{Binding Name}"
+                                            TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </Grid>
+                                    <!--  Body  -->
+                                    <Label
+                                        x:Name="ContentNovel"
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        FontFamily="{Binding Source={x:Reference NameChapter}, Path=FontFamily}"
+                                        FontSize="{Binding Source={x:Reference page}, Path=BindingContext.TextSizeChapter}"
+                                        HorizontalOptions="Fill"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Text}"
+                                        TextColor="{Binding Source={x:Reference page}, Path=BindingContext.TextColor}" />
                                 <StackLayout
                                     Grid.Row="2"
                                     Grid.Column="2"
@@ -481,7 +496,6 @@
                                         TextColor="{Binding Source={x:Reference ContentNovel}, Path=TextColor}"
                                         VerticalOptions="Center" />
                                 </StackLayout>
-
                             </Grid>
                         </Frame>
                     </DataTemplate>
