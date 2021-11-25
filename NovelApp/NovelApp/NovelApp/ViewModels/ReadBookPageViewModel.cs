@@ -123,7 +123,6 @@ namespace NovelApp.ViewModels
         {
             get
             {
-
                 if (TextFontFamily == AppConstants.FontFamily.ArialFont)
                     return TextFont.Arial;
                 else if (TextFontFamily == AppConstants.FontFamily.RobotoFont)
@@ -253,6 +252,7 @@ namespace NovelApp.ViewModels
                 {
                     TextFontFamily = e[SettingMode.Font].ToString();
                     _cacheService.SaveCache(AppConstants.CacheParameter.TextFont, TextFontFamily);
+                    SetFontReadMode();
                 }
             });
         }
@@ -661,6 +661,13 @@ namespace NovelApp.ViewModels
             {
                 _textSize = textSize;
                 TextSizeChapter = TextSizeHelper.TextSizeMode[textSize][CharSize.Normal];
+            }
+        }
+        private async void SetFontReadMode()
+        {
+            if (ShowReadMode == Models.Enums.ReadMode.Paging)
+            {
+                await ResetReadModePaging();
             }
         }
     }
