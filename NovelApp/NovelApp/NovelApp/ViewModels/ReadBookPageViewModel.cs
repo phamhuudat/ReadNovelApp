@@ -96,7 +96,7 @@ namespace NovelApp.ViewModels
         /// <summary>
         /// danh sach cac kí tự có kích thước nhỏ 
         /// </summary>
-        private char[] _arrayCharFilter = new char[] { '.', ',', ':', ';', '!', '\'', '\"', 'i', 'l', 'j', 't', 'r' };
+        //private char[] _arrayCharFilter = new char[] { '.', ',', ':', ';', '!', '\'', '\"', 'i', 'l', 'j', 't', 'r' };
         private ReadMode readMode;
         private double _textSizeChange;
         private Chapter contentChapter;
@@ -110,12 +110,12 @@ namespace NovelApp.ViewModels
                 SetProperty(ref height, value);
             }
         }
-        public string TextCal
-        {
-            get => textCal;
-            set => SetProperty(ref textCal, value);
+        //public string TextCal
+        //{
+        //    get => textCal;
+        //    set => SetProperty(ref textCal, value);
 
-        }
+        //}
         /// <summary>
         /// dùng trong tính toán phân trang
         /// </summary>
@@ -175,6 +175,7 @@ namespace NovelApp.ViewModels
             MarginBookRight = new Thickness(-App.DisplayScreenWidth, 0, 0, 0);
             ShowBookRightCommand = new DelegateCommand(() => { IsSwipRight = true; });
             PrevCarouselItems = new ObservableCollection<PageChapter>();
+            CarouselItems = new ObservableCollection<PageChapter>();
             BookRightTranslationX = -(App.DisplayScreenWidth - 20);
         }
         /// <summary>
@@ -229,8 +230,8 @@ namespace NovelApp.ViewModels
             {
                 if (e.ContainsKey(SettingMode.ReadMode))
                 {
-                    indexNoPaging = indexNoScroll = indexNoTapping = _no;
-                    await GetContentChapter(_novelId, _no);
+                    //indexNoPaging = indexNoScroll = indexNoTapping = _no;
+                    //await GetContentChapter(_novelId, _no);
                     _cacheService.SaveCache(AppConstants.CacheParameter.ReadMode, ((int)e[SettingMode.ReadMode]).ToString());
                     ReadMode((ReadMode)e[SettingMode.ReadMode]);
                 }
@@ -279,8 +280,8 @@ namespace NovelApp.ViewModels
                 _novelId = int.Parse(parameters[AppConstants.NavigationParameter.NovelId].ToString());
             if (parameters.ContainsKey(AppConstants.NavigationParameter.NoChapter))
                 _no = int.Parse(parameters[AppConstants.NavigationParameter.NoChapter].ToString());
-            indexNoPaging = indexNoScroll = indexNoTapping = _no;
-            await GetContentChapter(_novelId, _no);
+            //indexNoPaging = indexNoScroll = indexNoTapping = _no;
+            //await GetContentChapter(_novelId, _no);
             ReadMode(ShowReadMode);
 
         }
@@ -304,43 +305,6 @@ namespace NovelApp.ViewModels
             }
             return isSuccess;
         }
-        public void SplitPage(double height)
-        {
-            if (ContentChapter == null || string.IsNullOrWhiteSpace(ContentChapter.Text))
-                return;
-            var fontSize = TextSizeHelper.TextSizeMode[_textSize][CharSize.Normal];
-            var text = ContentChapter.Text;
-            var list = new List<PageChapter>();
-            //659.428571428571
-            //var widthPage = App.DisplayScreenWidth - 40;
-            //Chiều cao của page
-            var heightPage = App.DisplayScreenHeight - 80;
-            double lineHeightInPage = Device.RuntimePlatform == Device.iOS ||
-                                    Device.RuntimePlatform == Device.Android ? 1.35 : 1.4;
-            //số dòng trên một trang
-            double lineCountInPage = heightPage / (lineHeightInPage * fontSize);
-            //Tổng số line count in novel
-            double lineCount = Math.Ceiling(height / (lineHeightInPage * fontSize));
-
-            var countPage = Math.Ceiling(lineCount / lineCountInPage);
-            var indexPage = 0;
-            double prev = 0;
-            for (int i = 0; i < countPage; i++)
-            {
-                list.Add(new PageChapter()
-                {
-                    Text = text,
-                    IndexPage = ++indexPage,
-                    MaxLines = (i + 1) * (int)lineCountInPage
-                    ,
-                    Coordinates = i == 0 ? 5 : i * ((int)lineCountInPage) * lineHeightInPage * fontSize + (i >= 2 ? 10 : 5)
-                });
-            }
-            CountPage = list.Count;
-            CarouselItems = new ObservableCollection<PageChapter>(list);
-        }
-        //int countBookLeft;
-        //int countBookRight;
         private int indexNextLeft = 0;
         private int indexNextRight = 0;
         public async void NextLeftPageChapter(PageChapter page)
@@ -511,21 +475,24 @@ namespace NovelApp.ViewModels
         /// <summary>
         /// Tapping, Scrolling, Paging
         /// </summary>
-        private void ReadMode(ReadMode readMode)
+        private async void ReadMode(ReadMode readMode)
         {
             ShowReadMode = readMode;
-            TextCal = ContentChapter.Text;
+            //TextCal = ContentChapter.Text;
             if (ShowReadMode == Models.Enums.ReadMode.Paging)
             {
-                indexPageInChapter = 0;
-                SplitPage();
+                await ResetReadModePaging();
             }
             else
             if (ShowReadMode == Models.Enums.ReadMode.Tapping)
             {
+
                 TextSizeReadMode(TextSize.Small);
+                await ResetReadModeTapping();
                 SetTapReadMode();
             }
+            else
+                await ResetReadModeScrolling();
         }
         /// <summary>
         /// Set view Tapping
@@ -573,7 +540,7 @@ namespace NovelApp.ViewModels
         private int charsPerLine;
         private int lineCount;
         private double height;
-        private string textCal;
+        //private string textCal;
         private bool isIsLoading;
 
         /// <summary>
@@ -603,7 +570,6 @@ namespace NovelApp.ViewModels
         }
         bool isNextcontent = false;
         private Thickness marginBookRight;
-        private bool isShowBookRight;
         private bool isSwipRight;
         private ObservableCollection<PageChapter> prevCarouselItems;
         private double bookRightTranslationX;
@@ -654,32 +620,33 @@ namespace NovelApp.ViewModels
                 if (isSuccess) NextContent(true);
             }
         }
+        /// <summary>
+        /// ResetPaging
+        /// </summary>
+        /// <returns></returns>
         private async Task ResetReadModePaging()
         {
             indexNoPaging = _no;
-            await GetContentChapter(indexNoPaging);
             CarouselItems.Clear();
             PrevCarouselItems.Clear();
             indexPageInChapter = 0;
+            await GetContentChapter(indexNoPaging);
             SplitPage();
         }
         private async Task ResetReadModeTapping()
         {
-            indexNoPaging = _no;
-            await GetContentChapter(indexNoPaging);
-            CarouselItems.Clear();
-            PrevCarouselItems.Clear();
-            indexPageInChapter = 0;
-            SplitPage();
+            indexNoTapping = _no;
+            _prevContentChapterTapList.Clear();
+            _indexPrevContentTap = -1;
+            isNextcontent = false;
+            await GetContentChapter(indexNoTapping);
         }
         private async Task ResetReadModeScrolling()
         {
-            indexNoPaging = _no;
-            await GetContentChapter(indexNoPaging);
-            CarouselItems.Clear();
-            PrevCarouselItems.Clear();
-            indexPageInChapter = 0;
-            SplitPage();
+            indexNoScroll = _no;
+            ListChaptersScroll?.Clear();
+            await GetContentChapter(_novelId, indexNoScroll);
+
         }
         private async void TextSizeReadMode(TextSize textSize)
         {
