@@ -82,5 +82,8 @@
     <x:String x:Key="IconArrowLeft">&#x2190;</x:String>
     <x:String x:Key="IconComment">&#xf075;</x:String>
     <x:String x:Key="IconThumbsUp">&#xf087;</x:String>
+    <x:String x:Key="IconLibrary">&#xf56c;</x:String>
+    <x:String x:Key="IconExplorer">&#xf5fd;</x:String>
+    <x:String x:Key="IconUser">&#xf406;</x:String>
 
 </ResourceDictionary>

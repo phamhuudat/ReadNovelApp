@@ -117,11 +117,13 @@
     <None Remove="Services\CacheService\" />
     <None Remove="MLToolkit.Forms.SwipeCardView" />
     <None Remove="Views\ReadBook\" />
+    <None Remove="Views\Main\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
     <Folder Include="Services\CacheService\" />
     <Folder Include="Views\ReadBook\" />
+    <Folder Include="Views\Main\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">
