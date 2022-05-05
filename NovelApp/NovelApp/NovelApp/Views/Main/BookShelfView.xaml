@@ -1,9 +1,48 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
+    x:Class="NovelApp.Views.Main.BookShelfView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="NovelApp.Views.Main.BookShelfView">
+    xmlns:bookself="clr-namespace:NovelApp.Views.BookSelf"
+    xmlns:tabview="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms">
     <ContentView.Content>
-        
+        <tabview:SfTabView
+            DisplayMode="Text"
+            TabHeight="40"
+            VisibleHeaderCount="3">
+            <tabview:SfTabView.SelectionIndicatorSettings>
+                <tabview:SelectionIndicatorSettings
+                    Position="Bottom"
+                    StrokeThickness="2"
+                    Color="{DynamicResource HomeSelectionIndicatorColor}" />
+            </tabview:SfTabView.SelectionIndicatorSettings>
+            <!--  tin gần đây  -->
+            <tabview:SfTabItem
+                Title="Reading"
+                TitleFontAttributes="Bold"
+                TitleFontSize="15">
+                <tabview:SfTabItem.Content>
+                    <bookself:RecentReadingView />
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <!--  Tin đang theo dõi  -->
+            <tabview:SfTabItem
+                Title="Following"
+                TitleFontAttributes="Bold"
+                TitleFontSize="15">
+                <tabview:SfTabItem.Content>
+                    <bookself:FollowingView />
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <!--  tin đã download  -->
+            <tabview:SfTabItem
+                Title="Downloading"
+                TitleFontAttributes="Bold"
+                TitleFontSize="15">
+                <tabview:SfTabItem.Content>
+                    <bookself:RecentReadingView />
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView>
     </ContentView.Content>
 </ContentView>

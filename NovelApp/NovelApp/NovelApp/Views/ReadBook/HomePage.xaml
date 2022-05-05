@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="NovelApp.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:main="clr-namespace:NovelApp.Views.Main"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    ios:Page.UseSafeArea="true"
+    BackgroundColor="{DynamicResource HomeThemeBgColor}"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <tabView:SfTabView
+            DisplayMode="ImageWithText"
+            TabHeaderPosition="Bottom"
+            TabHeight="50"
+            VisibleHeaderCount="3">
+            <tabView:SfTabView.SelectionIndicatorSettings>
+                <tabView:SelectionIndicatorSettings
+                    Position="Top"
+                    StrokeThickness="0"
+                    Color="{DynamicResource HomeSelectionIndicatorColor}" />
+            </tabView:SfTabView.SelectionIndicatorSettings>
+            <tabView:SfTabItem
+                Title="Library"
+                FontIconFontAttributes="Bold"
+                FontIconFontFamily="AC"
+                FontIconFontSize="20"
+                IconFont="{DynamicResource IconLibrary}"
+                TitleFontAttributes="Bold">
+                <tabView:SfTabItem.Content>
+                    <Grid RowDefinitions="*,1">
+                        <main:BookShelfView />
+                        <BoxView
+                            Grid.Row="1"
+                            BackgroundColor="{DynamicResource GrayColor}"
+                            HorizontalOptions="Fill" />
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+            <tabView:SfTabItem
+                Title="Explore"
+                FontIconFontAttributes="Bold"
+                FontIconFontFamily="AC"
+                FontIconFontSize="20"
+                IconFont="{DynamicResource IconExplorer}"
+                TitleFontAttributes="Bold">
+                <tabView:SfTabItem.Content>
+                    <Grid RowDefinitions="*,1">
+                        <main:BookListView />
+                        <BoxView
+                            Grid.Row="1"
+                            BackgroundColor="{DynamicResource GrayColor}"
+                            HorizontalOptions="Fill" />
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+            <tabView:SfTabItem
+                Title="User"
+                FontIconFontAttributes="Bold"
+                FontIconFontFamily="AC"
+                FontIconFontSize="20"
+                IconFont="{DynamicResource IconUser}"
+                TitleFontAttributes="Bold">
+
+                <tabView:SfTabItem.Content>
+                    <Grid RowDefinitions="*,1">
+                        <main:UserView />
+                        <BoxView
+                            Grid.Row="1"
+                            BackgroundColor="{DynamicResource GrayColor}"
+                            HorizontalOptions="Fill" />
+                    </Grid>
+
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+        </tabView:SfTabView>
+
+    </ContentPage.Content>
+</ContentPage>

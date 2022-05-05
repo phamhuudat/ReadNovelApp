@@ -63,9 +63,6 @@
     <EmbeddedResource Update="Views\BookDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
@@ -118,12 +115,14 @@
     <None Remove="MLToolkit.Forms.SwipeCardView" />
     <None Remove="Views\ReadBook\" />
     <None Remove="Views\Main\" />
+    <None Remove="Views\BookSelf\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
     <Folder Include="Services\CacheService\" />
     <Folder Include="Views\ReadBook\" />
     <Folder Include="Views\Main\" />
+    <Folder Include="Views\BookSelf\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">
