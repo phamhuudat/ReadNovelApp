@@ -2,7 +2,8 @@
 <ResourceDictionary
     x:Class="NovelApp.Styles.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
     <Color x:Key="Background_Dark">#131219</Color>
     <Color x:Key="Background_Light">#ffffff</Color>
 
@@ -85,5 +86,68 @@
     <x:String x:Key="IconLibrary">&#xf56c;</x:String>
     <x:String x:Key="IconExplorer">&#xf5fd;</x:String>
     <x:String x:Key="IconUser">&#xf406;</x:String>
+
+    <DataTemplate x:Key="BookView">
+        <ViewCell>
+            <Grid ColumnDefinitions="60,*,30">
+                <Frame Padding="0" CornerRadius="6">
+                    <ffimageloading:CachedImage
+                        Grid.Column="0"
+                        Aspect="AspectFill"
+                        BackgroundColor="Blue"
+                        Source="{Binding PathImage}" />
+                </Frame>
+                <StackLayout
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Orientation="Vertical"
+                    Spacing="5"
+                    VerticalOptions="Center">
+                    <Label
+                        FontSize="{StaticResource TextNormalSize}"
+                        Text="{Binding Name}"
+                        TextColor="{DynamicResource HomeTextTitleBookColor}" />
+                    <Label
+                        FontSize="{StaticResource TextSmallSize}"
+                        Text="{Binding Author}"
+                        TextColor="{StaticResource GrayColor}" />
+                    <Grid ColumnDefinitions="Auto,100">
+                        <StackLayout
+                            Grid.Column="0"
+                            Orientation="Horizontal"
+                            WidthRequest="100">
+                            <ffimageloading:CachedImage
+                                Aspect="AspectFit"
+                                Scale="1.4"
+                                Source="resource://NovelApp.Resources.icons.ic_views.png" />
+                            <Label
+                                Margin="0,0,20,0"
+                                FontSize="{StaticResource TextSmallSize}"
+                                Text="{Binding Views, StringFormat='{0} Chs'}"
+                                TextColor="{DynamicResource HomeTextTitleBookColor}" />
+                            <StackLayout.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Views}"
+                                    TargetType="StackLayout"
+                                    Value="0">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </StackLayout.Triggers>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <StackLayout Grid.Column="2">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="EndAndExpand"
+                        Text="..."
+                        TextColor="{DynamicResource HomeBlueColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+
+            </Grid>
+        </ViewCell>
+    </DataTemplate>
 
 </ResourceDictionary>
