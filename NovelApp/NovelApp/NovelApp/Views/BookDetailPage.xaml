@@ -475,7 +475,6 @@
                                         </ViewCell>
                                     </DataTemplate>
                                 </sfListView:SfListView.ItemTemplate>
-
                             </sfListView:SfListView>
                         </StackLayout>
                     </Frame>
@@ -509,6 +508,9 @@
                 Grid.Column="0"
                 BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DownloadBookCommand}" />
+                </Grid.GestureRecognizers>
                 <Label
                     Grid.Row="0"
                     FontFamily="AC"

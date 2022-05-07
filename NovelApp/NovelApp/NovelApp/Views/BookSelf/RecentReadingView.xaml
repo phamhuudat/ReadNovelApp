@@ -6,11 +6,14 @@
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
     <ContentView.Content>
         <sfListView:SfListView
+            x:Name="listView"
             Margin="20,20,0,0"
             ItemSize="85"
             ItemSpacing="0,0,0,20"
             ItemTemplate="{DynamicResource BookView}"
             ItemsSource="{Binding BookSelfVM.RecentList}"
-            SelectionBackgroundColor="Transparent" />
+            SelectionBackgroundColor="Transparent"
+            SelectionChangedCommand="{Binding ItemTappedCommand}"
+            SelectionChangedCommandParameter="{x:Reference listView}" />
     </ContentView.Content>
 </ContentView>

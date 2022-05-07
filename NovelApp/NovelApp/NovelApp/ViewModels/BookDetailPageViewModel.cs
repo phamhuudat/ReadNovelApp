@@ -71,6 +71,7 @@ namespace NovelApp.ViewModels
         private async void NavigationReadNow()
         {
             await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}");
+            var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel, 1));
         }
         private async void NavigationCommentPage()
         {

@@ -10,6 +10,13 @@ namespace NovelApp.Services.DatabaseService
     public interface IDatabaseService
     {
         /// <summary>
+        /// Lưu vị trí chapter đang đọc
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="no"></param>
+        /// <returns></returns>
+        Task<bool> SaveReadStatus(int chapter, int no);
+        /// <summary>
         /// Lưu thông tin sách
         /// </summary>
         /// <param name="bookInfo"></param>

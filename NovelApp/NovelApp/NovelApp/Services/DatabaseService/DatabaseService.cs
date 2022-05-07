@@ -43,21 +43,21 @@ namespace NovelApp.Services.DatabaseService
         {
             var realm = _getInstance();
             var listBook = realm.All<BookInfo>().Where(x => x.ListType == 3);
-            return listBook?.ToList();
+            return listBook?.ToList().OrderByDescending(x => x.LatestReadTime).ToList();
         }
 
         public async Task<List<BookInfo>> GetFollowingBookInfos()
         {
             var realm = _getInstance();
             var listBook = realm.All<BookInfo>().Where(x => x.ListType == 2 || x.ListType ==3);
-            return listBook?.ToList();
+            return listBook?.ToList().OrderByDescending(x => x.LatestReadTime).ToList();
         }
 
         public async Task<List<BookInfo>> GetRecentlyBookInfos()
         {
             var realm = _getInstance();
-            var listBook = realm.All<BookInfo>().Where(x => x.ListType == 1);
-            return listBook?.ToList();
+            var listBook = realm.All<BookInfo>();   
+            return listBook?.ToList().OrderByDescending(x => x.LatestReadTime).ToList();
         }
 
         public async Task<bool> RemoveBook(int no)
@@ -99,7 +99,17 @@ namespace NovelApp.Services.DatabaseService
                         });
                     }
                     else
-                        return StatusEnum.Exist;
+                    {
+                        using (var tran = realm.BeginWrite())
+                        {
+                            obj.ListType = bookInfo.ListType > obj.ListType? bookInfo.ListType:obj.ListType;
+                            obj.LastChapter = bookInfo.LastChapter;
+                            obj.LastReadTime = bookInfo.LastReadTime;
+                            tran.Commit();
+                        }
+                        //return StatusEnum.Exist;
+                    }
+                        
                 }
             }
             catch(Exception e)
@@ -129,6 +139,24 @@ namespace NovelApp.Services.DatabaseService
                         });
                         
                     });
+            }
+            return true;
+        }
+
+        public async Task<bool> SaveReadStatus(int chapter, int no)
+        {
+            using (var realm = _getInstance())
+            {
+                var book = realm.Find<BookInfo>(no);
+                if (book != null)
+                {
+                    using (var tran = realm.BeginWrite())
+                    {
+                        book.ReadState = chapter;
+                        tran.Commit();
+                    }
+                }
+                
             }
             return true;
         }

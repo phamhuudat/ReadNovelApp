@@ -4,6 +4,7 @@ using NovelApp.Models.BookGwModels;
 using NovelApp.Models.Enums;
 using NovelApp.Services.Book;
 using NovelApp.Services.CacheService;
+using NovelApp.Services.DatabaseService;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
@@ -74,6 +75,7 @@ namespace NovelApp.ViewModels
         public ObservableCollection<Chapter> ListChaptersScroll { get; set; }
         private readonly IBookService _bookService;
         private readonly ICacheService _cacheService;
+        private readonly IDatabaseService _databaseService;
         public bool IsIsLoading { get => isIsLoading; set => SetProperty(ref isIsLoading, value); }
         public ICommand NavigationSettingsCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
@@ -158,11 +160,12 @@ namespace NovelApp.ViewModels
         public int indexNoPaging = 0;
         public int indexNoTapping = 0;
         public ReadBookPageViewModel(INavigationService navigationService, IBookService bookService,
-            ICacheService cacheService
+            ICacheService cacheService, IDatabaseService databaseService
             ) : base(navigationService)
         {
             _bookService = bookService;
             _cacheService = cacheService;
+            _databaseService = databaseService;
             NavigationSettingsCommand = new DelegateCommand(PopupSettings);
             GoBackCommand = new DelegateCommand(GoBack);
             PrevContentCommand = new DelegateCommand(PrevContent);
@@ -292,12 +295,14 @@ namespace NovelApp.ViewModels
         private async Task<bool> GetContentChapter(int no)
         {
             ContentChapter = await _bookService.GetContentChapter(_novelId, no);
+            await _databaseService.SaveReadStatus(no, _novelId);
             return ContentChapter != null;
         }
         private async Task<bool> GetContentChapter(int novelId, int no)
         {
             var isSuccess = false;
             ContentChapter = await _bookService.GetContentChapter(novelId, no);
+            await _databaseService.SaveReadStatus(no, _novelId);
             if (ContentChapter != null)
             {
                 isSuccess = true;

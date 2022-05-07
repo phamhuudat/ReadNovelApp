@@ -20,7 +20,8 @@ namespace NovelApp.Helpers
                 Genre = obj.Genre,
                 Image = obj.Image,
                 UpdTime = DateTime.Parse(obj.Updtime),
-                LastReadState = obj.LastReadState
+                LastReadState = obj.LastReadState,
+                ReadState = obj.ReadState
             };
         }
         public static BookInfo NovelToConverterBook(Novel obj, int listType)

@@ -20,5 +20,7 @@ namespace NovelApp.Models.BookGwModels
         public string Image { get; set; }
         public string Updtime { get; set; }
         public int LastReadState { get; set; }
+        [Ignored]
+        public DateTime LatestReadTime => DateTime.Parse(LastReadTime); 
     }
 }
