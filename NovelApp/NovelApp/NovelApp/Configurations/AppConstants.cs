@@ -7,7 +7,10 @@ namespace NovelApp.Configurations
 {
     public class AppConstants
     {
-
+        public class AppParameters
+        {
+            internal const string DatabaseNovel = "Novel.realm";
+        }
         public class NavigationParameter
         {
             internal const string GoBack = "GoBack";

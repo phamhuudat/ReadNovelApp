@@ -111,33 +111,19 @@
                         FontSize="{StaticResource TextSmallSize}"
                         Text="{Binding Author}"
                         TextColor="{StaticResource GrayColor}" />
-                    <Grid ColumnDefinitions="Auto,100">
-                        <StackLayout
-                            Grid.Column="0"
-                            Orientation="Horizontal"
-                            WidthRequest="100">
-                            <ffimageloading:CachedImage
-                                Aspect="AspectFit"
-                                Scale="1.4"
-                                Source="resource://NovelApp.Resources.icons.ic_views.png" />
-                            <Label
-                                Margin="0,0,20,0"
-                                FontSize="{StaticResource TextSmallSize}"
-                                Text="{Binding Views, StringFormat='{0} Chs'}"
-                                TextColor="{DynamicResource HomeTextTitleBookColor}" />
-                            <StackLayout.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Views}"
-                                    TargetType="StackLayout"
-                                    Value="0">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </StackLayout.Triggers>
-                        </StackLayout>
-                    </Grid>
+                    <Label Grid.Column="0" FontSize="12">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ReadState}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding LastReadState}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
                 <StackLayout Grid.Column="2">
                     <Label
+                        Margin="0,0,10,0"
                         FontAttributes="Bold"
                         FontSize="20"
                         HorizontalOptions="EndAndExpand"

@@ -10,7 +10,7 @@
             ItemSize="85"
             ItemSpacing="0,0,0,20"
             ItemTemplate="{DynamicResource BookView}"
-            ItemsSource="{Binding ListNovel}"
+            ItemsSource="{Binding BookSelfVM.FollowingList}"
             SelectionBackgroundColor="Transparent" />
     </ContentView.Content>
 </ContentView>

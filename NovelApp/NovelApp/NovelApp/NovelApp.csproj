@@ -116,6 +116,7 @@
     <None Remove="Views\ReadBook\" />
     <None Remove="Views\Main\" />
     <None Remove="Views\BookSelf\" />
+    <None Remove="ViewModels\BookSelf\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
@@ -123,6 +124,7 @@
     <Folder Include="Views\ReadBook\" />
     <Folder Include="Views\Main\" />
     <Folder Include="Views\BookSelf\" />
+    <Folder Include="ViewModels\BookSelf\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

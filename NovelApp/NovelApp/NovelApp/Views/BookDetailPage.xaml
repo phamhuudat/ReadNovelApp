@@ -555,6 +555,9 @@
                 Grid.Column="2"
                 BackgroundColor="{DynamicResource BookDetailBgUnCheckBtntColor}"
                 RowDefinitions="*,*">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FollowBookCommand}" />
+                </Grid.GestureRecognizers>
                 <Label
                     Grid.Row="0"
                     FontFamily="AC"

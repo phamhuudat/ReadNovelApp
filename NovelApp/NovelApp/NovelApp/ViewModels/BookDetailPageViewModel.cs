@@ -1,5 +1,8 @@
-﻿using NovelApp.Models.BookGwModels;
+﻿using NovelApp.DependencyServices;
+using NovelApp.Helpers;
+using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Services.DatabaseService;
 using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -8,12 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace NovelApp.ViewModels
 {
     public class BookDetailPageViewModel : BaseViewModel
     {
         private readonly IBookService _bookService;
+        private readonly IDatabaseService _databaseService;
         public Novel Novel { get => novel; set => SetProperty(ref novel, value); }
         private int _novelId;
         private Novel novel;
@@ -27,11 +32,14 @@ namespace NovelApp.ViewModels
         public ICommand NavigationCmtCommand { get; set; }
         public ICommand NavigationReadCommand { get; set; }
         public ICommand GobackCommand { get; set; }
+        public ICommand FollowBookCommand { get; set; }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
-        public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
+        public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService,
+            IDatabaseService databaseService) : base(navigationService)
         {
             _bookService = bookService;
+            _databaseService = databaseService;
             ExpandCommand = new DelegateCommand(() =>
             {
                 IsExpand = !IsExpand;
@@ -43,6 +51,22 @@ namespace NovelApp.ViewModels
             {
                 await NavigationService.GoBackAsync();
             });
+            FollowBookCommand = new DelegateCommand(FollowBook);
+        }
+        private async void FollowBook()
+        {
+            var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel,2));
+            if(result == Models.Enums.StatusEnum.Success)
+            {
+                DependencyService.Get<IToastMessage>().Show("Đã lưu thông tin sách");
+            }
+            else if(result == Models.Enums.StatusEnum.Exist)
+            {
+                DependencyService.Get<IToastMessage>().Show("Sách đã tồn tại trong bộ nhớ");
+            }
+            else
+                DependencyService.Get<IToastMessage>().Show("Lỗi trong quá trình lưu thông tin sách");
+
         }
         private async void NavigationReadNow()
         {

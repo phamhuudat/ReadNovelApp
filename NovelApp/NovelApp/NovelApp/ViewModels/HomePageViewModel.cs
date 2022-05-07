@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Services.DatabaseService;
+using NovelApp.ViewModels.BookSelf;
 using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -17,17 +19,24 @@ namespace NovelApp.ViewModels
     {
         public ObservableCollection<Novel> ListNovel { get => listNovel; set => SetProperty(ref listNovel, value); }
         private readonly IBookService _bookService;
+        private readonly IDatabaseService _databaseService;
         private ObservableCollection<Novel> listNovel;
         public ICommand LoadMoreCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand ItemTappedCommand { get; set; }
         private string _nameNovel;
-        public HomePageViewModel(INavigationService navigationService, IBookService bookService) : base(navigationService)
+        private BookSelfViewModel bookSelfVM;
+
+        public BookSelfViewModel BookSelfVM { get => bookSelfVM; set => SetProperty(ref bookSelfVM, value); }
+        public HomePageViewModel(INavigationService navigationService, IBookService bookService,
+            IDatabaseService databaseService) : base(navigationService)
         {
             _bookService = bookService;
+            _databaseService = databaseService;
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             SearchCommand = new DelegateCommand<string>(SearchNovel);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
+            BookSelfVM = new BookSelfViewModel(navigationService, _databaseService);
         }
         private async void ItemTapped(object obj)
         {
@@ -38,7 +47,7 @@ namespace NovelApp.ViewModels
             await NavigationService.NavigateAsync($"{nameof(BookDetailPage)}?ID={item.ID}");
         }
 
-        private async void SearchNovel(string name="")
+        private async void SearchNovel(string name = "")
         {
             _nameNovel = name;
             if (string.IsNullOrEmpty(name))
@@ -81,10 +90,13 @@ namespace NovelApp.ViewModels
             }
             listView.IsBusy = false;
         }
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             SearchNovel(_nameNovel);
+            await BookSelfVM.GetRecentList();
+            await BookSelfVM.GetFollowingList();
+            await BookSelfVM.GetDownloadingList();
         }
 
         private async void LoadNovel()
