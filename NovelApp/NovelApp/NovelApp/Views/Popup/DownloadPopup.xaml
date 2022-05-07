@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="NovelApp.Views.Popup.DownloadPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:NovelApp.Animations"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    CloseWhenBackgroundIsClicked="True">
+    <pages:PopupPage.Animation>
+        <animations:PopupAnimation />
+    </pages:PopupPage.Animation>
+    <Grid RowDefinitions="*,2*">
+        <BoxView BackgroundColor="Transparent" Color="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GobackCommand}" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,-30"
+            Padding="20,15,20,0"
+            BackgroundColor="{DynamicResource SettingThemeBgColor}"
+            CornerRadius="20">
+            <Grid ColumnDefinitions="*,80,*" RowDefinitions="16,*">
+                <!--  Goback popup  -->
+                <Frame
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="15,0,15,0"
+                    BackgroundColor="{DynamicResource SettingGobackBgColor}"
+                    CornerRadius="10">
+                    <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GobackCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    ColumnDefinitions="20,*"
+                    ColumnSpacing="20"
+                    RowDefinitions="60,60,*"
+                    RowSpacing="10">
+                    <!--  Download  -->
+                    <Label
+                        x:Name="lb_download"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding IsLocked}"
+                        Text="{DynamicResource IconDownload}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Spacing="0"
+                        VerticalOptions="Center">
+                        <Label
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Download"
+                            TextColor="{DynamicResource SettingTextColor}" />
+                        <Label Text="All free and unlocked chapters" />
+                    </StackLayout>
+                    <!--  Unlock chapter  -->
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="{StaticResource IconUnlock}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="Batch unlock chapters"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BacklockedCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--  Danh sách download  -->
+                    <Grid
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        ColumnDefinitions="*,*"
+                        IsVisible="False"
+                        RowDefinitions="40,60,60,60,1,60,40">
+                        <Grid.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsLocked}"
+                                TargetType="Grid"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            FontSize="20"
+                            Text="Batch unlock chapters"
+                            TextColor="{DynamicResource SettingTextColor}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,10,0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            HorizontalOptions="EndAndExpand"
+                            Text="{DynamicResource IconCircleXmark}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BacklockedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <!--  next 10  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Next 10 clocked chapters"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfCheckBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            CornerRadius="10"
+                            HorizontalOptions="EndAndExpand"
+                            IsChecked="{Binding IsChecked10}" />
+                        <!--  next50  -->
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Next 50 clocked chapters"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfCheckBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            CornerRadius="10"
+                            HorizontalOptions="EndAndExpand"
+                            IsChecked="{Binding IsChecked50}" />
+                        <!--  next100  -->
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Next 100 clocked chapters"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfCheckBox
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            CornerRadius="10"
+                            HorizontalOptions="EndAndExpand"
+                            IsChecked="{Binding IsChecked100}" />
+                        <!--  Calculator  -->
+                        <BoxView
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="{DynamicResource GrayColor}" />
+                        <StackLayout Grid.Row="5">
+                            <Label
+                                FontSize="{StaticResource TextNormalSize}"
+                                HorizontalOptions="Center"
+                                Text="UNLOCK COST"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <Label HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CoinBuy}" />
+                                        <Span Text="  " />
+                                        <Span
+                                            FontFamily="AC"
+                                            Text="{DynamicResource IconCoins}"
+                                            TextColor="Yellow" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Grid.Row="5" Grid.Column="1">
+                            <Label
+                                FontSize="{StaticResource TextNormalSize}"
+                                HorizontalOptions="Center"
+                                Text="BALANCE"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <Label HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CoinCurrent}" />
+                                        <Span Text="  " />
+                                        <Span
+                                            FontFamily="AC"
+                                            Text="{DynamicResource IconCoins}"
+                                            TextColor="Yellow" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <Button
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Padding="2"
+                            BackgroundColor="{DynamicResource HomeBlueColor}"
+                            Command="{Binding UnLockChapterCommand}"
+                            CornerRadius="20"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Unlock chapters"
+                            TextColor="White" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Frame>
+
+    </Grid>
+</pages:PopupPage>

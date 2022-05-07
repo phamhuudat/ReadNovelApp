@@ -33,6 +33,7 @@ namespace NovelApp
             containerRegistry.RegisterForNavigation<PostCommentPage, PostCommentPageViewModel>();
             containerRegistry.RegisterForNavigation<ReadBookPage, ReadBookPageViewModel>();
             containerRegistry.RegisterForNavigation<SettingsPopup, SettingsPopupViewModel>();
+            containerRegistry.RegisterForNavigation<DownloadPopup,DownloadPopupViewModel>();
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();

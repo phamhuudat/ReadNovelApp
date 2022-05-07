@@ -86,7 +86,9 @@
     <x:String x:Key="IconLibrary">&#xf56c;</x:String>
     <x:String x:Key="IconExplorer">&#xf5fd;</x:String>
     <x:String x:Key="IconUser">&#xf406;</x:String>
-
+    <x:String x:Key="IconUnlock">&#xf09c;</x:String>
+    <x:String x:Key="IconCoins">&#xf51e;</x:String>
+    <x:String x:Key="IconCircleXmark">&#xf057;</x:String>
     <DataTemplate x:Key="BookView">
         <ViewCell>
             <Grid ColumnDefinitions="60,*,30">

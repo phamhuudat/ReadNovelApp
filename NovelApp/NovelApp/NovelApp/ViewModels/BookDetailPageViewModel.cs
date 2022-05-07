@@ -4,6 +4,7 @@ using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
 using NovelApp.Services.DatabaseService;
 using NovelApp.Views;
+using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -33,6 +34,7 @@ namespace NovelApp.ViewModels
         public ICommand NavigationReadCommand { get; set; }
         public ICommand GobackCommand { get; set; }
         public ICommand FollowBookCommand { get; set; }
+        public ICommand DownloadBookCommand { get; set; }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
         public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService,
@@ -47,11 +49,16 @@ namespace NovelApp.ViewModels
             SearchChapterCommand = new DelegateCommand(NavigationSearchChapter);
             NavigationCmtCommand = new DelegateCommand(NavigationCommentPage);
             NavigationReadCommand = new DelegateCommand(NavigationReadNow);
+            DownloadBookCommand = new DelegateCommand(DownLoadBook);
             GobackCommand = new DelegateCommand(async() =>
             {
                 await NavigationService.GoBackAsync();
             });
             FollowBookCommand = new DelegateCommand(FollowBook);
+        }
+        private async void DownLoadBook()
+        {
+            await NavigationService.NavigateAsync($"{nameof(DownloadPopup)}");
         }
         private async void FollowBook()
         {
