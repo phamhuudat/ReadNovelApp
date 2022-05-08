@@ -294,14 +294,23 @@ namespace NovelApp.ViewModels
         /// <returns></returns>
         private async Task<bool> GetContentChapter(int no)
         {
-            ContentChapter = await _bookService.GetContentChapter(_novelId, no);
+            var chapterInfo =  await _databaseService.GetChapterInfos(_novelId, no);
+            if (chapterInfo != null)
+                ContentChapter = NovelConverterHelper.ChapterInfoToConverterChapter(chapterInfo);
+            else
+                ContentChapter = await _bookService.GetContentChapter(_novelId, no);
             await _databaseService.SaveReadStatus(no, _novelId);
             return ContentChapter != null;
         }
         private async Task<bool> GetContentChapter(int novelId, int no)
         {
             var isSuccess = false;
-            ContentChapter = await _bookService.GetContentChapter(novelId, no);
+            var chapterInfo = await _databaseService.GetChapterInfos(_novelId, no);
+            if (chapterInfo != null)
+                ContentChapter = NovelConverterHelper.ChapterInfoToConverterChapter(chapterInfo);
+            else
+                ContentChapter = await _bookService.GetContentChapter(_novelId, no);
+            //ContentChapter = await _bookService.GetContentChapter(novelId, no);
             await _databaseService.SaveReadStatus(no, _novelId);
             if (ContentChapter != null)
             {

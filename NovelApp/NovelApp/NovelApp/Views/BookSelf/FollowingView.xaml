@@ -13,7 +13,7 @@
             ItemSpacing="0,0,0,20"
             ItemsSource="{Binding BookSelfVM.FollowingList}"
             SelectionBackgroundColor="Transparent"
-            SelectionChangedCommand="{Binding ItemTappedCommand}"
+            SelectionChangedCommand="{Binding BookSelfVM.NavigationReadDetailCommand}"
             SelectionChangedCommandParameter="{x:Reference listView}">
             <sfListView:SfListView.ItemTemplate>
                 <DataTemplate>

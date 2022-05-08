@@ -5,6 +5,7 @@ using System.Windows.Input;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.DatabaseService;
+using NovelApp.Views;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
@@ -21,10 +22,20 @@ namespace NovelApp.ViewModels.BookSelf
         private List<Novel> followingList;
         private List<Novel> downloadingList;
         public ICommand NavigationLibraryCommand { get; set; }
+        public ICommand NavigationReadDetailCommand { get; set; }
         public BookSelfViewModel(INavigationService navigationService, IDatabaseService database) : base(navigationService)
         {
             _databaseService = database;
             NavigationLibraryCommand = new DelegateCommand<Novel>(NavigationLibraryPopup);
+            NavigationReadDetailCommand = new DelegateCommand<object>(NavigationReadDetail);
+        }
+        private async void NavigationReadDetail(object obj)
+        {
+            var listView = obj as Syncfusion.ListView.XForms.SfListView;
+            if (listView == null) return;
+            var item = listView.SelectedItem as Novel;
+            listView.SelectedItem = null;
+            await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={item.ID}&NO={item.ReadState}");
         }
         public async void NavigationLibraryPopup(Novel novel)
         {

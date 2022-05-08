@@ -50,7 +50,7 @@ namespace NovelApp.Services.DatabaseService
         /// </summary>
         /// <param name="no">id book</param>
         /// <returns></returns>
-        Task<List<ChapterInfo>> GetChapterInfos(int no);
+        Task<ChapterInfo> GetChapterInfos(int novelId,int no);
         /// <summary>
         /// Xóa danh sách trong bảng
         /// </summary>

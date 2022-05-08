@@ -33,11 +33,11 @@ namespace NovelApp.Services.DatabaseService
         {
             return Realm.GetInstance(_configuration);
         }
-        public async Task<List<ChapterInfo>> GetChapterInfos(int no)
+        public async Task<ChapterInfo> GetChapterInfos(int novelId,int no)
         {
             var realm = _getInstance();
-            var listChapters = realm.All<ChapterInfo>().Where(x => x.No == no);
-            return listChapters?.ToList();
+            var listChapters = realm.All<ChapterInfo>().Where(x => x.No == no&& x.NovelID == novelId).FirstOrDefault();
+            return listChapters;
         }
 
         public async Task<List<BookInfo>> GetDownloadBookInfos()
@@ -170,6 +170,7 @@ namespace NovelApp.Services.DatabaseService
                     using (var tran = realm.BeginWrite())
                     {
                         book.ReadState = chapter;
+                        book.LastReadTime = DateTime.Now.ToString();
                         tran.Commit();
                     }
                 }
