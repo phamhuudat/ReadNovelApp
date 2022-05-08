@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="NovelApp.Views.Popup.LibraryPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:NovelApp.Animations"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:pages="http://rotorgames.com"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
+    <pages:PopupPage.Animation>
+        <animations:PopupAnimation />
+    </pages:PopupPage.Animation>
+    <Grid RowDefinitions="*,2*">
+        <BoxView BackgroundColor="Transparent" Color="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GobackCommand}" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,-30"
+            Padding="20,15,20,0"
+            BackgroundColor="{DynamicResource SettingThemeBgColor}"
+            CornerRadius="20">
+            <Grid ColumnDefinitions="*,80,*" RowDefinitions="16,*">
+                <!--  Goback popup  -->
+                <Frame
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="15,0,15,0"
+                    BackgroundColor="{DynamicResource SettingGobackBgColor}"
+                    CornerRadius="10">
+                    <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GobackCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    ColumnDefinitions="20,*"
+                    ColumnSpacing="20"
+                    RowDefinitions="60,60,60,60,60,*"
+                    RowSpacing="10">
+                    <!--  Update Notification  -->
+                    <Label
+                        x:Name="lb_download"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        Text="{DynamicResource IconBell}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        Text="Updates Notification"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <syncfusion:SfSwitch
+                        Grid.Column="1"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="Center" />
+                    <!--  DownLoad  -->
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        Text="{DynamicResource IconDownload}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        Text="Download"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DownloadChapterCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--  Vote  -->
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="{StaticResource IconVote}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="Vote"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <!--  Remove  -->
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="{StaticResource IconTrash}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="Remove from Library"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RemoveBookCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--  About this book  -->
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        FontFamily="AC"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="{StaticResource IconFileLines}"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        FontSize="{StaticResource TextNormalSize}"
+                        IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                        Text="About this book"
+                        TextColor="{DynamicResource SettingTextColor}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

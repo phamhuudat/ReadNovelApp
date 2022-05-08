@@ -70,14 +70,15 @@ namespace NovelApp.Services.DatabaseService
                     var chapters = realm.All<ChapterInfo>();
                     if(chapters!=null&& chapters.Any())
                     {
-                        chapters = chapters.Where(x => x.No == no);
+                        chapters = chapters.Where(x => x.NovelID == no);
                     }
-                    await realm.WriteAsync((x) =>
+                    using (var transaction = realm.BeginWrite())
                     {
-                        x.Remove(bookObject);
+                        realm.Remove(bookObject);
                         if (chapters != null && chapters.Any())
-                            x.RemoveRange(chapters);
-                    });
+                            realm.RemoveRange(chapters);
+                        transaction.Commit();
+                    }
                 }
                 
             }

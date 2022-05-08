@@ -3,6 +3,7 @@
     x:Class="NovelApp.Views.BookSelf.FollowingView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
     <ContentView.Content>
         <sfListView:SfListView
@@ -10,10 +11,63 @@
             Margin="20,20,0,0"
             ItemSize="85"
             ItemSpacing="0,0,0,20"
-            ItemTemplate="{DynamicResource BookView}"
             ItemsSource="{Binding BookSelfVM.FollowingList}"
             SelectionBackgroundColor="Transparent"
             SelectionChangedCommand="{Binding ItemTappedCommand}"
-            SelectionChangedCommandParameter="{x:Reference listView}" />
+            SelectionChangedCommandParameter="{x:Reference listView}">
+            <sfListView:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid ColumnDefinitions="60,*,30">
+                            <Frame Padding="0" CornerRadius="6">
+                                <ffimageloading:CachedImage
+                                    Grid.Column="0"
+                                    Aspect="AspectFill"
+                                    BackgroundColor="Blue"
+                                    Source="{Binding PathImage}" />
+                            </Frame>
+                            <StackLayout
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical"
+                                Spacing="5"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontSize="{StaticResource TextNormalSize}"
+                                    Text="{Binding Name}"
+                                    TextColor="{DynamicResource HomeTextTitleBookColor}" />
+                                <Label
+                                    FontSize="{StaticResource TextSmallSize}"
+                                    Text="{Binding Author}"
+                                    TextColor="{StaticResource GrayColor}" />
+                                <Label Grid.Column="0" FontSize="12">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding ReadState}" />
+                                            <Span Text="/" />
+                                            <Span Text="{Binding LastReadState}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference listView}, Path=BindingContext.BookSelfVM.NavigationLibraryCommand}" CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                                <Label
+                                    Margin="0,0,10,0"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="..."
+                                    TextColor="{DynamicResource HomeBlueColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </sfListView:SfListView.ItemTemplate>
+        </sfListView:SfListView>
     </ContentView.Content>
 </ContentView>

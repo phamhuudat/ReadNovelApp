@@ -119,7 +119,7 @@ namespace NovelApp.ViewModels
             {
                 if(book.ListType == 3)
                 {
-                     choice =  await _pageDialogService.DisplayAlertAsync("Thông báo", "Sách đã được tải. Bạn muốn tải lại không?","Cancel", "Ok");
+                     choice =  await _pageDialogService.DisplayAlertAsync("Thông báo", "Sách đã được tải. Bạn muốn tải lại không?","Ok", "Cancel");
                 } 
             }
             if (choice)
@@ -128,6 +128,7 @@ namespace NovelApp.ViewModels
                 {
                     DependencyService.Get<IToastMessage>().Show("Tải sách");
                     _downloadService.Download(_novel, _no);
+                    DependencyService.Get<IToastMessage>().Show("Sách đã được tải");
                     GobackCommand.Execute(null);
                 }
                 else

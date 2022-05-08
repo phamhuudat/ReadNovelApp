@@ -40,7 +40,7 @@
                 TitleFontAttributes="Bold"
                 TitleFontSize="15">
                 <tabview:SfTabItem.Content>
-                    <bookself:RecentReadingView />
+                    <bookself:DownloadView />
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
         </tabview:SfTabView>

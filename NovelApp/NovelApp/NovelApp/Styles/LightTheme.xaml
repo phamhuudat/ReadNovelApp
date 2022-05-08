@@ -89,53 +89,9 @@
     <x:String x:Key="IconUnlock">&#xf09c;</x:String>
     <x:String x:Key="IconCoins">&#xf51e;</x:String>
     <x:String x:Key="IconCircleXmark">&#xf057;</x:String>
-    <DataTemplate x:Key="BookView">
-        <ViewCell>
-            <Grid ColumnDefinitions="60,*,30">
-                <Frame Padding="0" CornerRadius="6">
-                    <ffimageloading:CachedImage
-                        Grid.Column="0"
-                        Aspect="AspectFill"
-                        BackgroundColor="Blue"
-                        Source="{Binding PathImage}" />
-                </Frame>
-                <StackLayout
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Orientation="Vertical"
-                    Spacing="5"
-                    VerticalOptions="Center">
-                    <Label
-                        FontSize="{StaticResource TextNormalSize}"
-                        Text="{Binding Name}"
-                        TextColor="{DynamicResource HomeTextTitleBookColor}" />
-                    <Label
-                        FontSize="{StaticResource TextSmallSize}"
-                        Text="{Binding Author}"
-                        TextColor="{StaticResource GrayColor}" />
-                    <Label Grid.Column="0" FontSize="12">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding ReadState}" />
-                                <Span Text="/" />
-                                <Span Text="{Binding LastReadState}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </StackLayout>
-                <StackLayout Grid.Column="2">
-                    <Label
-                        Margin="0,0,10,0"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalOptions="EndAndExpand"
-                        Text="..."
-                        TextColor="{DynamicResource HomeBlueColor}"
-                        VerticalOptions="CenterAndExpand" />
-                </StackLayout>
+    <x:String x:Key="IconBell">&#xf0a2;</x:String>
+    <x:String x:Key="IconVote">&#x2399;</x:String>
+    <x:String x:Key="IconTrash">&#xf829;</x:String>
 
-            </Grid>
-        </ViewCell>
-    </DataTemplate>
 
 </ResourceDictionary>

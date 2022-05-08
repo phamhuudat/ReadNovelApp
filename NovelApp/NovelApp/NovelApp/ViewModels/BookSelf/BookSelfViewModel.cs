@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.DatabaseService;
+using NovelApp.Views.Popup;
+using Prism.Commands;
 using Prism.Navigation;
 
 namespace NovelApp.ViewModels.BookSelf
@@ -17,10 +20,18 @@ namespace NovelApp.ViewModels.BookSelf
         private List<Novel> recentList;
         private List<Novel> followingList;
         private List<Novel> downloadingList;
-
+        public ICommand NavigationLibraryCommand { get; set; }
         public BookSelfViewModel(INavigationService navigationService, IDatabaseService database) : base(navigationService)
         {
             _databaseService = database;
+            NavigationLibraryCommand = new DelegateCommand<Novel>(NavigationLibraryPopup);
+        }
+        public async void NavigationLibraryPopup(Novel novel)
+        {
+            var param = new NavigationParameters();
+            param.Add("Novel", novel);
+            param.Add("ID", novel.ID);
+            await NavigationService.NavigateAsync($"{nameof(LibraryPopup)}", param);
         }
         public async Task<bool> GetRecentList()
         {

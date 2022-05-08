@@ -7,6 +7,7 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
     xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:xforms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
     ios:Page.UseSafeArea="true"
@@ -511,21 +512,60 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DownloadBookCommand}" />
                 </Grid.GestureRecognizers>
+                <progressBar:SfCircularProgressBar
+                    x:Name="progress"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    IsVisible="False"
+                    Progress="{Binding NovelDownloadInfo.Percent}"
+                    SegmentCount="4">
+                    <progressBar:SfCircularProgressBar.Triggers>
+                        <DataTrigger
+                            Binding="{Binding NovelDownloadInfo.Status}"
+                            TargetType="progressBar:SfCircularProgressBar"
+                            Value="Running">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </progressBar:SfCircularProgressBar.Triggers>
+                    <progressBar:SfCircularProgressBar.Content>
+                        <Grid>
+                            <Label
+                                x:Name="CustomContentProgressBarLabel"
+                                Grid.Row="0"
+                                Margin="5,0,0,0"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding NovelDownloadInfo.Percent, StringFormat='{0}%'}"
+                                TextColor="#007cee"
+                                VerticalTextAlignment="Center" />
+                        </Grid>
+                    </progressBar:SfCircularProgressBar.Content>
+                </progressBar:SfCircularProgressBar>
                 <Label
+                    x:Name="labelic"
                     Grid.Row="0"
                     FontFamily="AC"
                     FontSize="{StaticResource TextTagSize}"
                     HorizontalOptions="Center"
                     Text="{StaticResource IconDownload}"
                     TextColor="{StaticResource GrayColor}"
-                    VerticalOptions="End" />
+                    VerticalOptions="End">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference progress}, Path=IsVisible}"
+                            TargetType="Label"
+                            Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     FontSize="{StaticResource TextSmallSize}"
                     HorizontalOptions="Center"
+                    IsVisible="{Binding Source={x:Reference labelic}, Path=IsVisible}"
                     Text="DOWNLOAD"
                     TextColor="Gray" />
-
             </Grid>
             <!--  Read Now  -->
             <Grid
