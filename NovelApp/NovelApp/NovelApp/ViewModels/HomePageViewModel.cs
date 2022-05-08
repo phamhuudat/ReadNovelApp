@@ -34,8 +34,8 @@ namespace NovelApp.ViewModels
         private BookSelfViewModel bookSelfVM;
 
         public BookSelfViewModel BookSelfVM { get => bookSelfVM; set => SetProperty(ref bookSelfVM, value); }
-        public HomePageViewModel(INavigationService navigationService, IBookService bookService,
-            IDatabaseService databaseService) : base(navigationService)
+        public HomePageViewModel(INavigationService navigationService, IBookService bookService, IDatabaseService databaseService
+            ) : base(navigationService)
         {
             _bookService = bookService;
             _databaseService = databaseService;

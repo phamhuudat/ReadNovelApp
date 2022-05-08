@@ -15,7 +15,6 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
     <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
-    <PackageReference Include="Realm" Version="10.7.0" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
     <PackageReference Include="Syncfusion.Xamarin.SfRating" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfRotator" Version="19.3.0.48" />
@@ -29,6 +28,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.3.0.48" />
     <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.2.0" />
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="19.3.0.48" />
+    <PackageReference Include="Realm" Version="10.4.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -121,6 +121,7 @@
     <None Remove="Bussiness\" />
     <None Remove="Syncfusion.Xamarin.SfProgressBar" />
     <None Remove="ViewModels\Popup\" />
+    <None Remove="Realm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />

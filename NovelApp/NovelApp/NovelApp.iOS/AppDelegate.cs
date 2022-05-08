@@ -32,6 +32,7 @@ namespace NovelApp.iOS
             Syncfusion.XForms.iOS.Buttons.SfChipRenderer.Init();
             Syncfusion.SfRangeSlider.XForms.iOS.SfRangeSliderRenderer.Init();
             Syncfusion.SfRating.XForms.iOS.SfRatingRenderer.Init();
+            Syncfusion.XForms.iOS.ProgressBar.SfCircularProgressBarRenderer.Init();
             SfListViewRenderer.Init();
             SfEffectsViewRenderer.Init();
             new SfRotatorRenderer();
@@ -39,7 +40,7 @@ namespace NovelApp.iOS
             var ignore = typeof(SvgCachedImage);
             App.DisplayScreenWidth = (double)UIScreen.MainScreen.Bounds.Width;
             App.DisplayScreenHeight = (double)UIScreen.MainScreen.Bounds.Height;
-            Syncfusion.XForms.iOS.ProgressBar.SfCircularProgressBarRenderer.Init();
+            
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }

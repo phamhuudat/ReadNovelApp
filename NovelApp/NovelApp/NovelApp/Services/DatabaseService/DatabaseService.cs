@@ -14,7 +14,7 @@ namespace NovelApp.Services.DatabaseService
 {
     public class DatabaseService : IDatabaseService
     {
-        private ulong _schemaVersion = ulong.Parse(VersionTracking.CurrentBuild);
+        private ulong _schemaVersion = 1;
         private RealmConfiguration _configuration;
         public DatabaseService()
         {
