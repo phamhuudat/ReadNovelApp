@@ -7,9 +7,9 @@ using Prism.Navigation;
 
 namespace NovelApp.ViewModels.Popup
 {
-    public class FilterPopupViewModel:BaseViewModel
+    public class FilterPopupViewModel : BaseViewModel
     {
-        public List<string> ChoiceChapterItems = new List<string>()
+        public List<string> ChoiceChapterItems { get; set; } = new List<string>()
         {
             "All",
             "<50",
@@ -19,20 +19,20 @@ namespace NovelApp.ViewModels.Popup
             "500-1000",
             ">1000"
         };
-        public List<string> ChoiceTypeItems = new List<string>()
+        public List<string> ChoiceTypeItems { get; set; } = new List<string>()
         {
             "All",
             "Translation",
             "Original",
             "MTL",
         };
-        public List<string> ChoiceStatusItems = new List<string>()
+        public List<string> ChoiceStatusItems { get; set; } = new List<string>()
         {
             "All",
             "Ongoing",
             "Completed",
         };
-        public List<string> ChoiceGenreItems = new List<string>()
+        public List<string> ChoiceGenreItems { get; set; } = new List<string>()
         {
             "All",
             "Male",
