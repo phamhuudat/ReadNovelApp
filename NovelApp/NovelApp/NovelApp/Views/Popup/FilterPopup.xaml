@@ -39,163 +39,102 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3">
-                    <StackLayout>
-                        <Label
-                            Margin="0,20,0,0"
-                            FontAttributes="Bold"
-                            FontSize="22"
-                            Text="Filter by"
-                            TextColor="{DynamicResource SettingTextColor}" />
-                        <!--  Chapters  -->
-                        <Label
-                            FontAttributes="Bold"
+                    <Grid RowDefinitions="*,40,30">
+                        <StackLayout Spacing="15">
+                            <Label
+                                Margin="0,15,0,0"
+                                FontAttributes="Bold"
+                                FontSize="22"
+                                Text="Filter by"
+                                TextColor="{DynamicResource SettingTextColor}" />
+                            <!--  Chapters  -->
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="{StaticResource TextNormalSize}"
+                                Text="Chapters"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <syncfusion:SfChipGroup
+                                ChipPadding="5,0,0,5"
+                                ItemsSource="{Binding ChoiceChapterItems}"
+                                SelectedChipBackgroundColor="{DynamicResource BookDetailBgCheckBtntColor}"
+                                SelectedChipTextColor="{DynamicResource HomeBlueColor}"
+                                SelectedItem="{Binding SelectedChapterItem, Mode=TwoWay}"
+                                Type="Choice">
+                                <syncfusion:SfChipGroup.ChipLayout>
+                                    <FlexLayout
+                                        AlignContent="Start"
+                                        AlignItems="Center"
+                                        Direction="Row"
+                                        HorizontalOptions="Start"
+                                        JustifyContent="Start"
+                                        VerticalOptions="Center"
+                                        Wrap="Wrap" />
+                                </syncfusion:SfChipGroup.ChipLayout>
+                            </syncfusion:SfChipGroup>
+                            <!--  Types  -->
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="{StaticResource TextNormalSize}"
+                                Text="Types"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <syncfusion:SfChipGroup
+                                ChipPadding="2,0,0,0"
+                                ItemsSource="{Binding ChoiceTypeItems}"
+                                SelectedChipBackgroundColor="{DynamicResource BookDetailBgCheckBtntColor}"
+                                SelectedChipTextColor="{DynamicResource HomeBlueColor}"
+                                SelectedItem="{Binding SelectedTypeItem, Mode=TwoWay}"
+                                Type="Choice" />
+                            <!--  Status  -->
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="{StaticResource TextNormalSize}"
+                                Text="Status"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <syncfusion:SfChipGroup
+                                ChipPadding="2,0,0,0"
+                                ItemsSource="{Binding ChoiceStatusItems}"
+                                SelectedChipBackgroundColor="{DynamicResource BookDetailBgCheckBtntColor}"
+                                SelectedChipTextColor="{DynamicResource HomeBlueColor}"
+                                SelectedItem="{Binding SelectedStatusItem, Mode=TwoWay}"
+                                Type="Choice" />
+                            <!--  Genre  -->
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="{StaticResource TextNormalSize}"
+                                Text="Genre"
+                                TextColor="{DynamicResource SettingTextColor}"
+                                VerticalOptions="Center" />
+                            <syncfusion:SfChipGroup
+                                ChipPadding="2,0,0,0"
+                                ItemsSource="{Binding ChoiceGenreItems}"
+                                SelectedChipBackgroundColor="{DynamicResource BookDetailBgCheckBtntColor}"
+                                SelectedChipTextColor="{DynamicResource HomeBlueColor}"
+                                SelectedItem="{Binding SelectedGenreItem, Mode=TwoWay}"
+                                Type="Choice" />
+                        </StackLayout>
+                        <Button
+                            Grid.Row="1"
+                            Padding="2"
+                            BackgroundColor="{DynamicResource GrayColor}"
+                            Command="{Binding SubmitCommand}"
+                            CornerRadius="20"
                             FontSize="{StaticResource TextNormalSize}"
-                            Text="Chapters"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <syncfusion:SfChipGroup
-                            ChipPadding="2,0,0,0"
-                            ItemsSource="{Binding ChoiceChapterItems}"
-                            SelectedItem="{Binding SelectedChapterItem}"
-                            Type="Choice" />
-                        <!--  Types  -->
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="Types"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <syncfusion:SfChipGroup
-                            ChipPadding="2,0,0,0"
-                            ItemsSource="{Binding ChoiceTypeItems}"
-                            SelectedItem="{Binding SelectedChapterItem}"
-                            Type="Choice" />
-                        <!--  Status  -->
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="Status"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <syncfusion:SfChipGroup
-                            ChipPadding="2,0,0,0"
-                            ItemsSource="{Binding ChoiceStatusItems}"
-                            SelectedItem="{Binding SelectedChapterItem}"
-                            Type="Choice" />
-                        <!--  Genre  -->
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="Genre"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <syncfusion:SfChipGroup
-                            ChipPadding="2,0,0,0"
-                            ItemsSource="{Binding ChoiceGenreItems}"
-                            SelectedItem="{Binding SelectedChapterItem}"
-                            Type="Choice" />
-                    </StackLayout>
+                            Text="Submit"
+                            TextColor="White">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsEnableSubmit}"
+                                    TargetType="Button"
+                                    Value="True">
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource HomeBlueColor}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
 
-                    <!--Update Notification
-                        <Label
-                            x:Name="lb_download"
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            FontFamily="AC"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="{DynamicResource IconBell}"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="Updates Notification"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <syncfusion:SfSwitch
-                            Grid.Column="1"
-                            HorizontalOptions="EndAndExpand"
-                            VerticalOptions="Center" />
-                          DownLoad
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            FontFamily="AC"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="{DynamicResource IconDownload}"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            FontSize="{StaticResource TextNormalSize}"
-                            Text="Download"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DownloadChapterCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                          Vote
-                        <Label
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            FontFamily="AC"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="{StaticResource IconVote}"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="Vote"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                          Remove
-                        <Label
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            FontFamily="AC"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="{StaticResource IconTrash}"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="Remove from Library"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding RemoveBookCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                          About this book
-                        <Label
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            FontFamily="AC"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="{StaticResource IconFileLines}"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="4"
-                            Grid.Column="1"
-                            FontSize="{StaticResource TextNormalSize}"
-                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
-                            Text="About this book"
-                            TextColor="{DynamicResource SettingTextColor}"
-                            VerticalOptions="Center" />-->
-                    <!--</Grid>-->
                 </ScrollView>
 
             </Grid>

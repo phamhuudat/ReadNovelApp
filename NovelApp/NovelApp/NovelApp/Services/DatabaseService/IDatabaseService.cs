@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using NovelApp.Models;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Models.Enums;
 
@@ -56,5 +57,16 @@ namespace NovelApp.Services.DatabaseService
         /// <param name="no"></param>
         /// <returns></returns>
         Task<bool> RemoveBook(int no);
+        /// <summary>
+        /// Lưu tất cả filter trên giao diện
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
+        Task<bool> SaveFilters(List<FilterInfo> filters);
+        /// <summary>
+        /// Lấy tất cả filter trên giao diện
+        /// </summary>
+        /// <returns></returns>
+        Task<List<FilterInfo>> GetFilters();
     }
 }

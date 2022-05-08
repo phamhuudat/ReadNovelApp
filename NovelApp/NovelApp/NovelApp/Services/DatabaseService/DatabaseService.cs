@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NovelApp.Configurations;
+using NovelApp.Models;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Models.Enums;
 using Realms;
@@ -165,10 +166,40 @@ namespace NovelApp.Services.DatabaseService
         public async  Task<BookInfo> GetBookInfo(int novelId)
         {
             //using
-                var realm = _getInstance();
+            var realm = _getInstance();
             {
                 var book = realm.Find<BookInfo>(novelId);
                 return book;
+            }
+        }
+
+        public async Task<bool> SaveFilters(List<FilterInfo> filters)
+        {
+            var realm = _getInstance();
+            {
+                await realm.WriteAsync((x) =>
+                {
+                    filters.ForEach(obj =>
+                    {
+                        var item = x.Find<FilterInfo>(obj.Type);
+                        if (item != null)
+                        {
+                            x.Remove(item);
+                        }
+                        x.Add(obj);
+                    });
+
+                });
+            }
+            return true;
+        }
+
+        public async Task<List<FilterInfo>> GetFilters()
+        {
+            var realm = _getInstance();
+            {
+                var list = realm.All<FilterInfo>();
+                return (list!=null && list.Any())? list.ToList(): null;
             }
         }
     }
