@@ -42,5 +42,30 @@ namespace NovelApp.Helpers
                 LastReadState = int.Parse(obj.LastChapter.Replace("Chapter ", ""))
             };
         }
+        public static ChapterInfo ChapterToConverterChapterInfo(Chapter chapter)
+        {
+            return new ChapterInfo
+            {
+                NovelID = chapter.NovelID,
+                No = chapter.No,
+                Name = chapter.Name,
+                Text = chapter.Text,
+                UpdTime = chapter.UpdTime.ToString(),
+                Type = chapter.Type,
+                Id = chapter.NovelID + chapter.No
+            };
+        }
+        public static Chapter ChapterInfoToConverterChapter(ChapterInfo chapter)
+        {
+            return new Chapter
+            {
+                NovelID = chapter.NovelID,
+                No = chapter.No,
+                Name = chapter.Name,
+                Text = chapter.Text,
+                UpdTime =DateTime.Parse(chapter.UpdTime),
+                Type = chapter.Type
+            };
+        }
     }
 }

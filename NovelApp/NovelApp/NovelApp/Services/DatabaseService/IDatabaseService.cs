@@ -9,6 +9,7 @@ namespace NovelApp.Services.DatabaseService
 {
     public interface IDatabaseService
     {
+        Task<BookInfo> GetBookInfo(int novelId);
         /// <summary>
         /// Lưu vị trí chapter đang đọc
         /// </summary>

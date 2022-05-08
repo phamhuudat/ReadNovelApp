@@ -1,4 +1,5 @@
-﻿using NovelApp.DependencyServices;
+﻿using NovelApp.Bussiness;
+using NovelApp.DependencyServices;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
@@ -20,12 +21,14 @@ namespace NovelApp.ViewModels
     {
         private readonly IBookService _bookService;
         private readonly IDatabaseService _databaseService;
+        private readonly IDownloadService _downloadService;
         public Novel Novel { get => novel; set => SetProperty(ref novel, value); }
         private int _novelId;
         private Novel novel;
         private bool isExpand;
         private List<Comment> listComment;
         private int countReview;
+        private DownloadInfo novelDownloadInfo;
 
         public bool IsExpand { get => isExpand; set => SetProperty(ref isExpand, value); }
         public ICommand ExpandCommand { get; set; }
@@ -35,13 +38,15 @@ namespace NovelApp.ViewModels
         public ICommand GobackCommand { get; set; }
         public ICommand FollowBookCommand { get; set; }
         public ICommand DownloadBookCommand { get; set; }
+        public DownloadInfo NovelDownloadInfo { get => novelDownloadInfo; set => SetProperty(ref novelDownloadInfo, value); }
         public List<Comment> ListComment { get => listComment; set => SetProperty(ref listComment, value); }
         public int CountReview { get => countReview; set => SetProperty(ref countReview, value); }
         public BookDetailPageViewModel(INavigationService navigationService, IBookService bookService,
-            IDatabaseService databaseService) : base(navigationService)
+            IDatabaseService databaseService, IDownloadService downloadService) : base(navigationService)
         {
             _bookService = bookService;
             _databaseService = databaseService;
+            _downloadService = downloadService;
             ExpandCommand = new DelegateCommand(() =>
             {
                 IsExpand = !IsExpand;
@@ -58,7 +63,10 @@ namespace NovelApp.ViewModels
         }
         private async void DownLoadBook()
         {
-            await NavigationService.NavigateAsync($"{nameof(DownloadPopup)}");
+            var param = new NavigationParameters();
+            param.Add("Novel", Novel);
+            param.Add("ID", _novelId);
+            await NavigationService.NavigateAsync($"{nameof(DownloadPopup)}",param);
         }
         private async void FollowBook()
         {
@@ -99,6 +107,9 @@ namespace NovelApp.ViewModels
             var list = await _bookService.GetCommentList(_novelId);
             ListComment = list?.ToList();
             CountReview = ListComment.Count();
+            var novelInfo = new DownloadInfo(_novelId);
+            _downloadService.InstanceDownloadInfo(ref novelInfo);
+            NovelDownloadInfo = novelInfo;
         }
     }
 }

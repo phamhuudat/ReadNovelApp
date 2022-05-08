@@ -1,4 +1,5 @@
 ﻿
+using NovelApp.Bussiness;
 using NovelApp.Configurations;
 using NovelApp.Models.Enums;
 using NovelApp.Services.Book;
@@ -39,6 +40,7 @@ namespace NovelApp
             containerRegistry.RegisterSingleton<IBookService, BookService>();
             containerRegistry.RegisterSingleton<ICacheService, CacheService>();
             containerRegistry.RegisterSingleton<IDatabaseService, DatabaseService>();
+            containerRegistry.RegisterSingleton<IDownloadService, DownloadService>();
             #endregion
         }
         protected override async void OnInitialized()

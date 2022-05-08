@@ -160,5 +160,15 @@ namespace NovelApp.Services.DatabaseService
             }
             return true;
         }
+
+        public async  Task<BookInfo> GetBookInfo(int novelId)
+        {
+            //using
+                var realm = _getInstance();
+            {
+                var book = realm.Find<BookInfo>(novelId);
+                return book;
+            }
+        }
     }
 }

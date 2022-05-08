@@ -39,6 +39,7 @@ namespace NovelApp.iOS
             var ignore = typeof(SvgCachedImage);
             App.DisplayScreenWidth = (double)UIScreen.MainScreen.Bounds.Width;
             App.DisplayScreenHeight = (double)UIScreen.MainScreen.Bounds.Height;
+            Syncfusion.XForms.iOS.ProgressBar.SfCircularProgressBarRenderer.Init();
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }
