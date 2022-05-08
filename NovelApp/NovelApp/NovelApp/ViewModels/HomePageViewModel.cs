@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NovelApp.DependencyServices;
+using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
 using NovelApp.Services.DatabaseService;
@@ -13,6 +15,7 @@ using NovelApp.Views;
 using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
+using Xamarin.Forms;
 
 namespace NovelApp.ViewModels
 {
@@ -26,6 +29,7 @@ namespace NovelApp.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand ItemTappedCommand { get; set; }
         public ICommand FilterCommand { get; set; }
+        public ICommand FollowBookCommand { get; set; }
         private string _nameNovel;
         private BookSelfViewModel bookSelfVM;
 
@@ -40,6 +44,22 @@ namespace NovelApp.ViewModels
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
             FilterCommand = new DelegateCommand(NavigationFilterPopup);
             BookSelfVM = new BookSelfViewModel(navigationService, _databaseService);
+            FollowBookCommand = new DelegateCommand<Novel>(FollowBook);
+        }
+        private async void FollowBook(Novel novel)
+        {
+            var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel, 2));
+            if (result == Models.Enums.StatusEnum.Success)
+            {
+                DependencyService.Get<IToastMessage>().Show("Đã lưu thông tin sách");
+            }
+            else if (result == Models.Enums.StatusEnum.Exist)
+            {
+                DependencyService.Get<IToastMessage>().Show("Sách đã tồn tại trong bộ nhớ");
+            }
+            else
+                DependencyService.Get<IToastMessage>().Show("Lỗi trong quá trình lưu thông tin sách");
+
         }
         private async void NavigationFilterPopup()
         {

@@ -193,6 +193,9 @@
                                                             </StackLayout.Triggers>
                                                         </StackLayout>
                                                         <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer Command="{Binding Source={x:Reference listView}, Path=BindingContext.FollowBookCommand}" CommandParameter="{Binding .}" />
+                                                            </StackLayout.GestureRecognizers>
                                                             <Label
                                                                 FontFamily="AC"
                                                                 FontSize="{StaticResource TextSmallSize}"

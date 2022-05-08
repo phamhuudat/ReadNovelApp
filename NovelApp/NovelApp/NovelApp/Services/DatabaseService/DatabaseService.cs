@@ -91,27 +91,42 @@ namespace NovelApp.Services.DatabaseService
             try
             {
                 using (var realm = _getInstance())
-                {
+                {   
                     var obj = realm.Find<BookInfo>(bookInfo.ID);
+                    int listType = bookInfo.ListType;
                     if (obj == null)
                     {
                         await realm.WriteAsync((x) =>
                         {
                             x.Add(bookInfo);
                         });
+                        obj = bookInfo;
                     }
                     else
                     {
-                        using (var tran = realm.BeginWrite())
+                        var tran = realm.BeginWrite();
                         {
-                            obj.ListType = bookInfo.ListType > obj.ListType? bookInfo.ListType:obj.ListType;
+                            listType = obj.ListType = bookInfo.ListType > obj.ListType? bookInfo.ListType:obj.ListType;
                             obj.LastChapter = bookInfo.LastChapter;
                             obj.LastReadTime = bookInfo.LastReadTime;
                             tran.Commit();
                         }
-                        //return StatusEnum.Exist;
                     }
-                        
+
+                    var listObj = realm.All<BookInfo>().Where(x => x.ListType == listType);
+                    if ((listType == 1 && listObj != null && listObj.Any() && listObj.Count() > 10) ||
+                        (listType == 2 && listObj != null && listObj.Any() && listObj.Count() > 50))
+                    {
+                        listObj.ToList().OrderByDescending(x => x.LatestReadTime);
+                        var lastObj = listObj.Last();
+                        using (var transaction = realm.BeginWrite())
+                        {
+                            realm.Remove(lastObj);
+                            transaction.Commit();
+                        }
+                    }
+
+
                 }
             }
             catch(Exception e)
