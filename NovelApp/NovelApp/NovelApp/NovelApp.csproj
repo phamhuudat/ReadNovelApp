@@ -120,6 +120,7 @@
     <None Remove="ViewModels\BookSelf\" />
     <None Remove="Bussiness\" />
     <None Remove="Syncfusion.Xamarin.SfProgressBar" />
+    <None Remove="ViewModels\Popup\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Svg\" />
@@ -129,6 +130,7 @@
     <Folder Include="Views\BookSelf\" />
     <Folder Include="ViewModels\BookSelf\" />
     <Folder Include="Bussiness\" />
+    <Folder Include="ViewModels\Popup\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

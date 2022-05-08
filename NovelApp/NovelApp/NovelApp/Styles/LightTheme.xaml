@@ -92,6 +92,7 @@
     <x:String x:Key="IconBell">&#xf0a2;</x:String>
     <x:String x:Key="IconVote">&#x2399;</x:String>
     <x:String x:Key="IconTrash">&#xf829;</x:String>
+    <x:String x:Key="IconFilter">&#xf0b0;</x:String>
 
 
 </ResourceDictionary>

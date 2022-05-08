@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="NovelApp.Views.Popup.FilterPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:NovelApp.Animations"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
+    <pages:PopupPage.Animation>
+        <animations:PopupAnimation />
+    </pages:PopupPage.Animation>
+    <Grid RowDefinitions="*,4*">
+        <BoxView BackgroundColor="Transparent" Color="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GobackCommand}" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,-30"
+            Padding="20,15,20,0"
+            BackgroundColor="{DynamicResource SettingThemeBgColor}"
+            CornerRadius="20">
+            <Grid ColumnDefinitions="*,80,*" RowDefinitions="16,*">
+                <!--  Goback popup  -->
+                <Frame
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="15,0,15,0"
+                    BackgroundColor="{DynamicResource SettingGobackBgColor}"
+                    CornerRadius="10">
+                    <ffimageloading:SvgCachedImage HeightRequest="15" Source="resource://NovelApp.Resources.Svg.icon_arrow_down.svg" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GobackCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <ScrollView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
+                    <StackLayout>
+                        <Label
+                            Margin="0,20,0,0"
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            Text="Filter by"
+                            TextColor="{DynamicResource SettingTextColor}" />
+                        <!--  Chapters  -->
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Chapters"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfChipGroup
+                            ChipPadding="2,0,0,0"
+                            ItemsSource="{Binding ChoiceChapterItems}"
+                            SelectedItem="{Binding SelectedChapterItem}"
+                            Type="Choice" />
+                        <!--  Types  -->
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Types"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfChipGroup
+                            ChipPadding="2,0,0,0"
+                            ItemsSource="{Binding ChoiceTypeItems}"
+                            SelectedItem="{Binding SelectedChapterItem}"
+                            Type="Choice" />
+                        <!--  Status  -->
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Status"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfChipGroup
+                            ChipPadding="2,0,0,0"
+                            ItemsSource="{Binding ChoiceStatusItems}"
+                            SelectedItem="{Binding SelectedChapterItem}"
+                            Type="Choice" />
+                        <!--  Genre  -->
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Genre"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfChipGroup
+                            ChipPadding="2,0,0,0"
+                            ItemsSource="{Binding ChoiceGenreItems}"
+                            SelectedItem="{Binding SelectedChapterItem}"
+                            Type="Choice" />
+                    </StackLayout>
+
+                    <!--Update Notification
+                        <Label
+                            x:Name="lb_download"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="{DynamicResource IconBell}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Updates Notification"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <syncfusion:SfSwitch
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand"
+                            VerticalOptions="Center" />
+                          DownLoad
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="{DynamicResource IconDownload}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="{StaticResource TextNormalSize}"
+                            Text="Download"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DownloadChapterCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                          Vote
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="{StaticResource IconVote}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="Vote"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                          Remove
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="{StaticResource IconTrash}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="Remove from Library"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RemoveBookCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                          About this book
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontFamily="AC"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="{StaticResource IconFileLines}"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            FontSize="{StaticResource TextNormalSize}"
+                            IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
+                            Text="About this book"
+                            TextColor="{DynamicResource SettingTextColor}"
+                            VerticalOptions="Center" />-->
+                    <!--</Grid>-->
+                </ScrollView>
+
+            </Grid>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

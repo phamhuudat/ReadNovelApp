@@ -10,6 +10,7 @@ using NovelApp.Services.Book;
 using NovelApp.Services.DatabaseService;
 using NovelApp.ViewModels.BookSelf;
 using NovelApp.Views;
+using NovelApp.Views.Popup;
 using Prism.Commands;
 using Prism.Navigation;
 
@@ -24,6 +25,7 @@ namespace NovelApp.ViewModels
         public ICommand LoadMoreCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand ItemTappedCommand { get; set; }
+        public ICommand FilterCommand { get; set; }
         private string _nameNovel;
         private BookSelfViewModel bookSelfVM;
 
@@ -36,7 +38,12 @@ namespace NovelApp.ViewModels
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             SearchCommand = new DelegateCommand<string>(SearchNovel);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
+            FilterCommand = new DelegateCommand(NavigationFilterPopup);
             BookSelfVM = new BookSelfViewModel(navigationService, _databaseService);
+        }
+        private async void NavigationFilterPopup()
+        {
+            await NavigationService.NavigateAsync($"{nameof(FilterPopup)}");
         }
         private async void ItemTapped(object obj)
         {

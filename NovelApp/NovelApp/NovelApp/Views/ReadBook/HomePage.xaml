@@ -12,6 +12,7 @@
     <ContentPage.Content>
         <tabView:SfTabView
             DisplayMode="ImageWithText"
+            SelectedIndex="1"
             TabHeaderPosition="Bottom"
             TabHeight="50"
             VisibleHeaderCount="3">

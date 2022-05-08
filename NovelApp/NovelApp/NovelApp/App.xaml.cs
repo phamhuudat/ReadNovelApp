@@ -7,6 +7,7 @@ using NovelApp.Services.CacheService;
 using NovelApp.Services.DatabaseService;
 using NovelApp.Services.RequestProvider;
 using NovelApp.ViewModels;
+using NovelApp.ViewModels.Popup;
 using NovelApp.Views;
 using NovelApp.Views.Popup;
 using Prism;
@@ -36,6 +37,7 @@ namespace NovelApp
             containerRegistry.RegisterForNavigation<SettingsPopup, SettingsPopupViewModel>();
             containerRegistry.RegisterForNavigation<DownloadPopup,DownloadPopupViewModel>();
             containerRegistry.RegisterForNavigation<LibraryPopup, LibraryPopupViewModel>();
+            containerRegistry.RegisterForNavigation<FilterPopup, FilterPopupViewModel>();
             #region RegisterService SingleTon
             containerRegistry.RegisterSingleton<IRequestProvider, RequestProvider>();
             containerRegistry.RegisterSingleton<IBookService, BookService>();

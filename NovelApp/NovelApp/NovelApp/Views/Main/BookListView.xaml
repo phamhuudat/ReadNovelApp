@@ -99,6 +99,9 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterCommand}" />
+                                </StackLayout.GestureRecognizers>
                                 <Label
                                     FontSize="{StaticResource TextNormalSize}"
                                     HorizontalOptions="End"
