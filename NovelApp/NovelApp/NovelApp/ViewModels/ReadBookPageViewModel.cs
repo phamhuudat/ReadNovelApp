@@ -471,13 +471,20 @@ namespace NovelApp.ViewModels
                     item.CountPage = CountPage;
                 }
                 if (isReload)
-                CarouselItems = new ObservableCollection<PageChapter>(list);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        CarouselItems = new ObservableCollection<PageChapter>(list);
+                    });
                 else
                 {
-                    foreach(var item in list)
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        CarouselItems.Add(item);
-                    }
+                        foreach (var item in list)
+                        {
+                            CarouselItems.Add(item);
+                        }
+                    });
+                    
                 }
             }
             catch (Exception e)

@@ -109,7 +109,14 @@ namespace NovelApp.ViewModels
                     }
 
                 }
-                await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(_novel, 1));
+                BookInfo bookInfo;
+                if (_novel == null)
+                {
+                    bookInfo = await _databaseService.GetBookInfo(_novelId);
+                }
+                else
+                    bookInfo = NovelConverterHelper.NovelToConverterBook(_novel, 1);
+                await _databaseService.SaveBookInfo(bookInfo);
                 await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}&NO={item.No}");
             }
             catch (Exception ex)

@@ -99,12 +99,27 @@ namespace NovelApp.Views
         }
         private async void TapNextPage_Tapped(object sender, EventArgs e)
         {
-           await bookLeft.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left);
+            try
+            {
+                await bookLeft.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Left);
+            }
+            catch (Exception ex)
+            {
+
+            }
+          
         }
         
         private async void TapPrevPage_Tapped(object sender, EventArgs e)
         {
-          await  bookRight.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Right);
+            try
+            {
+                await bookRight.InvokeSwipe(MLToolkit.Forms.SwipeCardView.Core.SwipeCardDirection.Right);
+            }
+          catch(Exception ex)
+            {
+
+            }
         }
         //{
         //    var viewmdel = BindingContext as ReadBookPageViewModel;
