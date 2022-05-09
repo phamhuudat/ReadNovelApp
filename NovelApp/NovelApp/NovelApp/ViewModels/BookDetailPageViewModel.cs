@@ -57,7 +57,9 @@ namespace NovelApp.ViewModels
             DownloadBookCommand = new DelegateCommand(DownLoadBook);
             GobackCommand = new DelegateCommand(async() =>
             {
-                await NavigationService.GoBackAsync();
+                var param = new NavigationParameters();
+                param.Add("BookDetail", 1);
+                await NavigationService.GoBackAsync(param);
             });
             FollowBookCommand = new DelegateCommand(FollowBook);
         }
@@ -94,7 +96,10 @@ namespace NovelApp.ViewModels
         }
         private async void NavigationSearchChapter()
         {
-            await NavigationService.NavigateAsync($"{nameof(TableContentPage)}?ID={_novelId}");
+            var param = new NavigationParameters();
+            param.Add("Novel", Novel);
+            param.Add("ID", _novelId);
+            await NavigationService.NavigateAsync($"{nameof(TableContentPage)}", param);
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {

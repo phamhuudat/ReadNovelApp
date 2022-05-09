@@ -1,5 +1,7 @@
-﻿using NovelApp.Models.BookGwModels;
+﻿using NovelApp.Helpers;
+using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Services.DatabaseService;
 using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -14,6 +16,7 @@ namespace NovelApp.ViewModels
 {
     public class TableContentPageViewModel : BaseViewModel
     {
+        private readonly IDatabaseService _databaseService;
         private readonly IPageDialogService _dialogService;
         private readonly IBookService _bookService;
         private List<ChapInfo> listChapter;
@@ -32,10 +35,12 @@ namespace NovelApp.ViewModels
         public ICommand SearchCommand { get; set; }
         public bool IsSortDown { get => isSortDown; set => SetProperty(ref isSortDown, value); }
 
-        public TableContentPageViewModel(INavigationService navigationService, IBookService bookService, IPageDialogService dialogService) : base(navigationService)
+        public TableContentPageViewModel(INavigationService navigationService, IBookService bookService, IPageDialogService dialogService,
+            IDatabaseService databaseService) : base(navigationService)
         {
             _bookService = bookService;
             _dialogService = dialogService;
+            _databaseService = databaseService;
             SortCommand = new DelegateCommand(Sort);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
             SearchCommand = new DelegateCommand<string>(SearchNovel);
@@ -71,11 +76,11 @@ namespace NovelApp.ViewModels
                     ListChapter = new List<ChapInfo>(list);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ListChapter = new List<ChapInfo>(0);
             }
-            
+
         }
         private async void ItemTapped(object obj)
         {
@@ -102,8 +107,9 @@ namespace NovelApp.ViewModels
                         await _dialogService.DisplayAlertAsync("Notification", "Error network!!!", "OK");
                         return;
                     }
-                        
+
                 }
+                await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(_novel, 1));
                 await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}&NO={item.No}");
             }
             catch (Exception ex)
@@ -124,11 +130,14 @@ namespace NovelApp.ViewModels
                     ListChapter = ListChapter.OrderBy(x => x.No).ToList();
             }
         }
+        private Novel _novel;
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey("ID"))
                 _novelId = int.Parse(parameters["ID"].ToString());
+            if (parameters.ContainsKey("Novel"))
+                _novel = (Novel)parameters["Novel"];
             var chapterInfo = await _bookService.GetTBC(_novelId);
             var list = new List<ChapInfo>();
             if (chapterInfo != null && chapterInfo.Chapters.Any())

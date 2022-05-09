@@ -120,7 +120,10 @@ namespace NovelApp.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            SearchNovel(_nameNovel);
+            if (!parameters.ContainsKey("BookDetail"))
+            {
+                SearchNovel(_nameNovel);
+            }
             await BookSelfVM.GetRecentList();
             await BookSelfVM.GetFollowingList();
             await BookSelfVM.GetDownloadingList();
