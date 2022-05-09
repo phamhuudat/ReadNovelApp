@@ -33,6 +33,7 @@ namespace NovelApp.Configurations
             internal const string TextFont = "TextFont";
             internal const string ReadMode = "ReadMode";
             internal const string ThemeMode = "ThemeMode";
+            internal const string FilterMode = "FilterMode";
 
         }
         public class Message

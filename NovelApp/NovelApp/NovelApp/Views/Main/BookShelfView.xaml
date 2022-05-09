@@ -98,11 +98,11 @@
                     <syncfusion:SfRadioButton
                         x:Name="SortAZ"
                         Text="A to Z"
-                        IsChecked="{Binding IsCheckedSortAZ, Mode=TwoWay}" />
+                        IsChecked="{Binding BookSelfVM.IsCheckedSortAZ, Mode=TwoWay}" />
                     <syncfusion:SfRadioButton
                         x:Name="SortRecent"
                         Text="Recent reading"
-                        IsChecked="{Binding IsCheckedSortRecent, Mode=TwoWay}"/>
+                        IsChecked="{Binding BookSelfVM.IsCheckedSortRecent, Mode=TwoWay}"/>
                 </syncfusion:SfRadioGroup>
             </Frame>
         </Grid>

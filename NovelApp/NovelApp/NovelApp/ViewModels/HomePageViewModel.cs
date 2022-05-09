@@ -9,6 +9,7 @@ using NovelApp.DependencyServices;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
+using NovelApp.Services.CacheService;
 using NovelApp.Services.DatabaseService;
 using NovelApp.ViewModels.BookSelf;
 using NovelApp.Views;
@@ -24,6 +25,7 @@ namespace NovelApp.ViewModels
         public ObservableCollection<Novel> ListNovel { get => listNovel; set => SetProperty(ref listNovel, value); }
         private readonly IBookService _bookService;
         private readonly IDatabaseService _databaseService;
+        private readonly ICacheService _cacheService;
         private ObservableCollection<Novel> listNovel;
         public ICommand LoadMoreCommand { get; set; }
         public ICommand SearchCommand { get; set; }
@@ -34,16 +36,20 @@ namespace NovelApp.ViewModels
         private BookSelfViewModel bookSelfVM;
 
         public BookSelfViewModel BookSelfVM { get => bookSelfVM; set => SetProperty(ref bookSelfVM, value); }
-        public HomePageViewModel(INavigationService navigationService, IBookService bookService, IDatabaseService databaseService
+        public HomePageViewModel(INavigationService navigationService,
+            IBookService bookService,
+            IDatabaseService databaseService,
+            ICacheService cacheService
             ) : base(navigationService)
         {
             _bookService = bookService;
             _databaseService = databaseService;
+            _cacheService = cacheService;
             LoadMoreCommand = new DelegateCommand<object>(LoadMore);
             SearchCommand = new DelegateCommand<string>(SearchNovel);
             ItemTappedCommand = new DelegateCommand<object>(ItemTapped);
             FilterCommand = new DelegateCommand(NavigationFilterPopup);
-            BookSelfVM = new BookSelfViewModel(navigationService, _databaseService);
+            BookSelfVM = new BookSelfViewModel(navigationService, _databaseService, _cacheService);
             FollowBookCommand = new DelegateCommand<Novel>(FollowBook);
         }
         private async void FollowBook(Novel novel)
