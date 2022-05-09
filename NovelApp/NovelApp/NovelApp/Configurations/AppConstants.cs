@@ -25,6 +25,13 @@ namespace NovelApp.Configurations
             internal const string ArialFont = "AR";
 
         }
+        public class FilterParameter
+        {
+            internal const string Status = "stat";
+            internal const string Genre = "gen";
+            internal const string Chapters = "chno";
+            internal const string Type = "tag";
+        }
         public class CacheParameter
         {
             internal const string DatabaseLocalRealm = "RealmDatabase.realm";

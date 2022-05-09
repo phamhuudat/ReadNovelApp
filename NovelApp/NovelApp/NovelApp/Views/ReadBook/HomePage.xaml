@@ -12,7 +12,7 @@
     <ContentPage.Content>
         <tabView:SfTabView
             DisplayMode="ImageWithText"
-            SelectedIndex="1"
+            SelectedIndex="{Binding SelectIndex, Mode=TwoWay}"
             TabHeaderPosition="Bottom"
             TabHeight="50"
             VisibleHeaderCount="3">

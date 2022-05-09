@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NovelApp.Configurations;
 using NovelApp.DependencyServices;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
@@ -22,6 +23,7 @@ namespace NovelApp.ViewModels
 {
     public class HomePageViewModel : BaseViewModel
     {
+        public bool IsShowTags { get => isShowTags; set => SetProperty(ref isShowTags, value); }
         public ObservableCollection<Novel> ListNovel { get => listNovel; set => SetProperty(ref listNovel, value); }
         private readonly IBookService _bookService;
         private readonly IDatabaseService _databaseService;
@@ -34,8 +36,23 @@ namespace NovelApp.ViewModels
         public ICommand FollowBookCommand { get; set; }
         private string _nameNovel;
         private BookSelfViewModel bookSelfVM;
+        private int selectIndex;
+        private bool isShowTags;
 
         public BookSelfViewModel BookSelfVM { get => bookSelfVM; set => SetProperty(ref bookSelfVM, value); }
+        public int SelectIndex
+        {
+            get => selectIndex; set
+            {
+                if (SetProperty(ref selectIndex, value))
+                {
+                    if (selectIndex == 0)
+                    {
+                        LoadDbList();
+                    }
+                }
+            }
+        }
         public HomePageViewModel(INavigationService navigationService,
             IBookService bookService,
             IDatabaseService databaseService,
@@ -51,6 +68,7 @@ namespace NovelApp.ViewModels
             FilterCommand = new DelegateCommand(NavigationFilterPopup);
             BookSelfVM = new BookSelfViewModel(navigationService, _databaseService, _cacheService);
             FollowBookCommand = new DelegateCommand<Novel>(FollowBook);
+            SelectIndex = 1;
         }
         private async void FollowBook(Novel novel)
         {
@@ -79,7 +97,6 @@ namespace NovelApp.ViewModels
             listView.SelectedItem = null;
             await NavigationService.NavigateAsync($"{nameof(BookDetailPage)}?ID={item.ID}");
         }
-
         private async void SearchNovel(string name = "")
         {
             _nameNovel = name;
@@ -123,16 +140,21 @@ namespace NovelApp.ViewModels
             }
             listView.IsBusy = false;
         }
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (!parameters.ContainsKey("BookDetail"))
             {
                 SearchNovel(_nameNovel);
             }
-            await BookSelfVM.GetRecentList();
-            await BookSelfVM.GetFollowingList();
-            await BookSelfVM.GetDownloadingList();
+            if (parameters.ContainsKey(AppConstants.FilterParameter.Chapters) &&
+                parameters.ContainsKey(AppConstants.FilterParameter.Status) &&
+                parameters.ContainsKey(AppConstants.FilterParameter.Type) &&
+                parameters.ContainsKey(AppConstants.FilterParameter.Genre))
+            {
+                IsShowTags = true;
+            }
+            LoadDbList();
         }
 
         private async void LoadNovel()
@@ -143,6 +165,12 @@ namespace NovelApp.ViewModels
                 list = new List<Novel>();
             }
             ListNovel = new ObservableCollection<Novel>(list);
+        }
+        private async void LoadDbList()
+        {
+            await BookSelfVM.GetRecentList();
+            await BookSelfVM.GetFollowingList();
+            await BookSelfVM.GetDownloadingList();
         }
     }
 }

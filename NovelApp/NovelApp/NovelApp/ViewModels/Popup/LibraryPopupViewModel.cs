@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
 using NovelApp.Bussiness;
+using NovelApp.Configurations;
 using NovelApp.DependencyServices;
 using NovelApp.Models.BookGwModels;
 using NovelApp.Services.Book;
 using NovelApp.Services.DatabaseService;
+using NovelApp.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -25,6 +27,7 @@ namespace NovelApp.ViewModels
         public ICommand GobackCommand { get; set; }
         public ICommand RemoveBookCommand { get; set; }
         public ICommand DownloadChapterCommand { get; set; }
+        public ICommand NavigationNovelInforCommand { get; set; }
         public LibraryPopupViewModel(INavigationService navigationService, IPageDialogService pageDialog,
             IBookService bookService, IDatabaseService database, IDownloadService downloadService) : base(navigationService)
         {
@@ -34,10 +37,15 @@ namespace NovelApp.ViewModels
             _pageDialogService = pageDialog;
             RemoveBookCommand = new DelegateCommand(RemoveBook);
             DownloadChapterCommand = new DelegateCommand(DownloadBook);
+            NavigationNovelInforCommand = new DelegateCommand(NavigationNovelInfor);
             GobackCommand = new DelegateCommand(async() =>
             {
                await NavigationService.GoBackAsync();
             });
+        }
+        private async void NavigationNovelInfor()
+        {
+            await NavigationService.NavigateAsync($"{nameof(BookDetailPage)}?{AppConstants.NavigationParameter.NovelId}={_no}");
         }
         private async  void RemoveBook()
         {

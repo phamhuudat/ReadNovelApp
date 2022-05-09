@@ -141,7 +141,12 @@
                         IsVisible="{Binding Source={x:Reference lb_download}, Path=IsVisible}"
                         Text="About this book"
                         TextColor="{DynamicResource SettingTextColor}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding NavigationNovelInforCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
             </Grid>
         </Frame>

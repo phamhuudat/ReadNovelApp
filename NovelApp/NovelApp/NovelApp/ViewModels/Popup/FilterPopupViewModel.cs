@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using NovelApp.Configurations;
 using NovelApp.DependencyServices;
 using NovelApp.Models;
 using NovelApp.Services.DatabaseService;
@@ -102,13 +103,14 @@ namespace NovelApp.ViewModels.Popup
         {
             base.OnNavigatedTo(parameters);
             var listFilters = await _databaseService.GetFilters();
-            if (listFilters!=null&& listFilters.Any())
+            if (listFilters != null && listFilters.Any())
             {
                 foreach (var filter in listFilters)
                 {
                     if (filter.Type == 1)
                     {
-                        _statusFiler = new FilterInfo {
+                        _statusFiler = new FilterInfo
+                        {
                             ID = filter.ID,
                             Type = filter.Type,
                             Name = filter.Name,
@@ -181,9 +183,9 @@ namespace NovelApp.ViewModels.Popup
                 _statusFiler.ID = ChoiceStatusItems.IndexOf(SelectedStatusItem);
                 _selectedStatusItemPrv = _statusFiler.Name = SelectedStatusItem;
                 _genreFiler.ID = ChoiceGenreItems.IndexOf(SelectedGenreItem);
-                _selectedGenreItemPrv =  _genreFiler.Name = SelectedGenreItem;
+                _selectedGenreItemPrv = _genreFiler.Name = SelectedGenreItem;
                 _typeFiler.ID = ChoiceTypeItems.IndexOf(SelectedTypeItem);
-                _selectedTypeItemPrv =  _typeFiler.Name = SelectedTypeItem;
+                _selectedTypeItemPrv = _typeFiler.Name = SelectedTypeItem;
                 _chapterFiler.ID = ChoiceChapterItems.IndexOf(SelectedChapterItem);
                 _selectedChapterItemPrv = _chapterFiler.Name = SelectedChapterItem;
 
@@ -191,7 +193,7 @@ namespace NovelApp.ViewModels.Popup
                 {
                     _statusFiler,_genreFiler,_typeFiler,_chapterFiler
                 };
-               var result = await _databaseService.SaveFilters(list);
+                var result = await _databaseService.SaveFilters(list);
                 if (result)
                 {
                     var listFilters = await _databaseService.GetFilters();
@@ -238,7 +240,13 @@ namespace NovelApp.ViewModels.Popup
                                     IsDelete = filter.IsDelete
                                 };
                         }
+                        var param = new NavigationParameters();
+                        param.Add(AppConstants.FilterParameter.Status, _statusFiler.ID);
+                        param.Add(AppConstants.FilterParameter.Genre, _genreFiler.ID);
+                        param.Add(AppConstants.FilterParameter.Type, _typeFiler.ID);
+                        param.Add(AppConstants.FilterParameter.Chapters, _chapterFiler.ID);
                         DependencyService.Get<IToastMessage>().Show("Submit thành công");
+                        await NavigationService.GoBackAsync(param);
                     }
                 }
                 else
@@ -249,5 +257,5 @@ namespace NovelApp.ViewModels.Popup
             }
         }
     }
-    
+
 }

@@ -106,7 +106,7 @@
                                     FontSize="{StaticResource TextNormalSize}"
                                     HorizontalOptions="End"
                                     Text="Filter"
-                                    TextColor="Gray" />
+                                    TextColor="{DynamicResource HomeBlueColor}"  />
                                 <forms:SvgCachedImage
                                     Aspect="Fill"
                                     HeightRequest="15"
@@ -162,6 +162,12 @@
                                                     Spacing="5"
                                                     VerticalOptions="Center">
                                                     <Label
+                                                        FontSize="{StaticResource TextSmallSize}"
+                                                        TextColor="{DynamicResource HomeBlueColor}"
+                                                        Text="{Binding TagString}"
+                                                        IsVisible="{Binding Source={x:Reference listView}, Path=BindingContext. IsShowTags}"
+                                                        />
+                                                    <Label
                                                         FontSize="{StaticResource TextNormalSize}"
                                                         Text="{Binding Name}"
                                                         TextColor="{DynamicResource HomeTextTitleBookColor}" />
@@ -169,7 +175,8 @@
                                                         FontSize="{StaticResource TextSmallSize}"
                                                         Text="{Binding Author}"
                                                         TextColor="{StaticResource GrayColor}" />
-                                                    <Grid ColumnDefinitions="Auto,100">
+                                                    <Grid
+                                                        ColumnDefinitions="Auto,100">
                                                         <StackLayout
                                                             Grid.Column="0"
                                                             Orientation="Horizontal"
@@ -188,13 +195,19 @@
                                                                     Binding="{Binding Views}"
                                                                     TargetType="StackLayout"
                                                                     Value="0">
-                                                                    <Setter Property="IsVisible" Value="False" />
+                                                                    <Setter
+                                                                        Property="IsVisible"
+                                                                        Value="False" />
                                                                 </DataTrigger>
                                                             </StackLayout.Triggers>
                                                         </StackLayout>
-                                                        <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                                        <StackLayout
+                                                            Grid.Column="1"
+                                                            Orientation="Horizontal">
                                                             <StackLayout.GestureRecognizers>
-                                                                <TapGestureRecognizer Command="{Binding Source={x:Reference listView}, Path=BindingContext.FollowBookCommand}" CommandParameter="{Binding .}" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Source={x:Reference listView}, Path=BindingContext.FollowBookCommand}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </StackLayout.GestureRecognizers>
                                                             <Label
                                                                 FontFamily="AC"
@@ -209,7 +222,6 @@
                                                         </StackLayout>
                                                     </Grid>
                                                 </StackLayout>
-
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>

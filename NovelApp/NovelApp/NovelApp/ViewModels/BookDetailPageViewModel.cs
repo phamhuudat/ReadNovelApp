@@ -1,4 +1,5 @@
 ﻿using NovelApp.Bussiness;
+using NovelApp.Configurations;
 using NovelApp.DependencyServices;
 using NovelApp.Helpers;
 using NovelApp.Models.BookGwModels;
@@ -55,7 +56,7 @@ namespace NovelApp.ViewModels
             NavigationCmtCommand = new DelegateCommand(NavigationCommentPage);
             NavigationReadCommand = new DelegateCommand(NavigationReadNow);
             DownloadBookCommand = new DelegateCommand(DownLoadBook);
-            GobackCommand = new DelegateCommand(async() =>
+            GobackCommand = new DelegateCommand(async () =>
             {
                 var param = new NavigationParameters();
                 param.Add("BookDetail", 1);
@@ -68,16 +69,16 @@ namespace NovelApp.ViewModels
             var param = new NavigationParameters();
             param.Add("Novel", Novel);
             param.Add("ID", _novelId);
-            await NavigationService.NavigateAsync($"{nameof(DownloadPopup)}",param);
+            await NavigationService.NavigateAsync($"{nameof(DownloadPopup)}", param);
         }
         private async void FollowBook()
         {
-            var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel,2));
-            if(result == Models.Enums.StatusEnum.Success)
+            var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel, 2));
+            if (result == Models.Enums.StatusEnum.Success)
             {
                 DependencyService.Get<IToastMessage>().Show("Đã lưu thông tin sách");
             }
-            else if(result == Models.Enums.StatusEnum.Exist)
+            else if (result == Models.Enums.StatusEnum.Exist)
             {
                 DependencyService.Get<IToastMessage>().Show("Sách đã tồn tại trong bộ nhớ");
             }
@@ -87,7 +88,11 @@ namespace NovelApp.ViewModels
         }
         private async void NavigationReadNow()
         {
-            await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?ID={_novelId}");
+            var bookInfo = await _databaseService.GetBookInfo(_novelId);
+            var no = 0;
+            if (bookInfo != null)
+                no = bookInfo.ReadState;
+            await NavigationService.NavigateAsync($"{nameof(ReadBookPage)}?{AppConstants.NavigationParameter.NovelId}={_novelId}&{AppConstants.NavigationParameter.NoChapter}={no}");
             var result = await _databaseService.SaveBookInfo(NovelConverterHelper.NovelToConverterBook(novel, 1));
         }
         private async void NavigationCommentPage()
@@ -107,14 +112,19 @@ namespace NovelApp.ViewModels
             if (parameters.ContainsKey("ID"))
             {
                 _novelId = int.Parse(parameters["ID"].ToString());
+               
             }
-            Novel = await _bookService.GetDetailNovel(_novelId);
-            var list = await _bookService.GetCommentList(_novelId);
-            ListComment = list?.ToList();
-            CountReview = ListComment.Count();
-            var novelInfo = new DownloadInfo(_novelId);
-            _downloadService.InstanceDownloadInfo(ref novelInfo);
-            NovelDownloadInfo = novelInfo;
+            if (_novelId != 0)
+            {
+                Novel = await _bookService.GetDetailNovel(_novelId);
+                var list = await _bookService.GetCommentList(_novelId);
+                ListComment = list?.ToList();
+                CountReview = ListComment.Count();
+                var novelInfo = new DownloadInfo(_novelId);
+                _downloadService.InstanceDownloadInfo(ref novelInfo);
+                NovelDownloadInfo = novelInfo;
+            }
+           
         }
     }
 }
