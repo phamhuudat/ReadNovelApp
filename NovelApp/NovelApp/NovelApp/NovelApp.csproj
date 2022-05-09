@@ -71,6 +71,9 @@
     <EmbeddedResource Update="Views\Popup\SettingsPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Popup\SortReadingPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\ReadBookPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -131,7 +134,6 @@
     <Folder Include="Views\BookSelf\" />
     <Folder Include="ViewModels\BookSelf\" />
     <Folder Include="Bussiness\" />
-    <Folder Include="ViewModels\Popup\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

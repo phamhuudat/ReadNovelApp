@@ -4,45 +4,107 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:bookself="clr-namespace:NovelApp.Views.BookSelf"
-    xmlns:tabview="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms">
+    xmlns:tabview="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
     <ContentView.Content>
-        <tabview:SfTabView
-            DisplayMode="Text"
-            TabHeight="40"
-            VisibleHeaderCount="3">
-            <tabview:SfTabView.SelectionIndicatorSettings>
-                <tabview:SelectionIndicatorSettings
-                    Position="Bottom"
-                    StrokeThickness="2"
-                    Color="{DynamicResource HomeSelectionIndicatorColor}" />
-            </tabview:SfTabView.SelectionIndicatorSettings>
-            <!--  tin gần đây  -->
-            <tabview:SfTabItem
-                Title="Reading"
-                TitleFontAttributes="Bold"
-                TitleFontSize="15">
-                <tabview:SfTabItem.Content>
-                    <bookself:RecentReadingView />
-                </tabview:SfTabItem.Content>
-            </tabview:SfTabItem>
-            <!--  Tin đang theo dõi  -->
-            <tabview:SfTabItem
-                Title="Following"
-                TitleFontAttributes="Bold"
-                TitleFontSize="15">
-                <tabview:SfTabItem.Content>
-                    <bookself:FollowingView />
-                </tabview:SfTabItem.Content>
-            </tabview:SfTabItem>
-            <!--  tin đã download  -->
-            <tabview:SfTabItem
-                Title="Downloading"
-                TitleFontAttributes="Bold"
-                TitleFontSize="15">
-                <tabview:SfTabItem.Content>
-                    <bookself:DownloadView />
-                </tabview:SfTabItem.Content>
-            </tabview:SfTabItem>
-        </tabview:SfTabView>
+        <Grid
+            ColumnDefinitions="*,50"
+            RowDefinitions="40,*">
+            <!--Tab book-->
+            <tabview:SfTabView
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                DisplayMode="Text"
+                TabHeight="40">
+                <tabview:SfTabView.SelectionIndicatorSettings>
+                    <tabview:SelectionIndicatorSettings
+                        Position="Bottom"
+                        StrokeThickness="2"
+                        Color="{DynamicResource HomeSelectionIndicatorColor}" />
+                </tabview:SfTabView.SelectionIndicatorSettings>
+                <!--  tin gần đây  -->
+                <tabview:SfTabItem
+                    Title="Reading"
+                    TitleFontAttributes="Bold"
+                    TitleFontSize="15">
+                    <tabview:SfTabItem.Content>
+                        <bookself:RecentReadingView />
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+                <!--  Tin đang theo dõi  -->
+                <tabview:SfTabItem
+                    Title="Following"
+                    TitleFontAttributes="Bold"
+                    TitleFontSize="15">
+                    <tabview:SfTabItem.Content>
+                        <bookself:FollowingView />
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+                <!--  tin đã download  -->
+                <tabview:SfTabItem
+                    Title="Downloading"
+                    TitleFontAttributes="Bold"
+                    TitleFontSize="15">
+                    <tabview:SfTabItem.Content>
+                        <bookself:DownloadView />
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+            </tabview:SfTabView>
+            <!--Sorting book-->
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="1">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BookSelfVM.DisposeSortCommand}" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    Margin="0,0,10,10"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalOptions="EndAndExpand"
+                    Text="..."
+                    TextColor="{DynamicResource HomeBlueColor}"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+            <!--Popup danh sorting-->
+            <StackLayout
+                IsVisible="{Binding BookSelfVM.IsShowSortPopup}"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.Row="0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BookSelfVM.DisposeSortCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <Frame
+                IsVisible="{Binding BookSelfVM.IsShowSortPopup}"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.Row="0"
+                Margin="0,40,0,0"
+                Padding="5"
+                CornerRadius="5"
+                VerticalOptions="Start"
+                HorizontalOptions="EndAndExpand">
+                <syncfusion:SfRadioGroup
+                    VerticalOptions="Center"
+                    x:Name="radioGroup">
+                    <syncfusion:SfRadioButton
+                        x:Name="SortAZ"
+                        Text="A to Z"
+                        IsChecked="{Binding IsCheckedSortAZ, Mode=TwoWay}" />
+                    <syncfusion:SfRadioButton
+                        x:Name="SortRecent"
+                        Text="Recent reading"
+                        IsChecked="{Binding IsCheckedSortRecent, Mode=TwoWay}"/>
+                </syncfusion:SfRadioGroup>
+            </Frame>
+        </Grid>
     </ContentView.Content>
 </ContentView>
